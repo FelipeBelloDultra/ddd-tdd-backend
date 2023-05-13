@@ -1,7 +1,14 @@
+// Packages
 import { describe, it, expect, beforeEach } from "vitest";
 import { faker } from "@faker-js/faker";
+
+// Repositories
 import { FakeBarbershopRepository } from "~/repositories/fakes/FakeBarbershopRepository";
+
+// Domain
 import { Barbershop } from "~/domain/Barbershop";
+
+// Use case
 import { CreateBarbershop } from "./CreateBarbershop";
 
 describe("CreateBarbershop.ts", () => {

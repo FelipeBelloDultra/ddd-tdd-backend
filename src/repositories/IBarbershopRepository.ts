@@ -1,3 +1,4 @@
+// Domain
 import { Barbershop } from "~/domain/Barbershop";
 
 export interface ICraeteBarbershop {

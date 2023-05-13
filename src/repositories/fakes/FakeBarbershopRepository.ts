@@ -1,4 +1,7 @@
+// Domain
 import { Barbershop } from "~/domain/Barbershop";
+
+// Repository interface
 import {
   IBarbershopRepository,
   ICraeteBarbershop,
