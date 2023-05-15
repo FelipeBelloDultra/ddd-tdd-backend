@@ -5,11 +5,13 @@ interface IBarbershopProps {
   name: string;
   email: string;
   password: string;
-  address?: string;
+  street?: string;
+  neighborhood?: string;
+  number?: string;
   phone?: string;
+  avatarUrl?: string;
   createdAt?: Date;
   updatedAt?: Date;
-  avatarUrl?: string;
 }
 
 export class Barbershop {
@@ -17,7 +19,9 @@ export class Barbershop {
   readonly name: string;
   readonly email: string;
   readonly password: string;
-  readonly address?: string;
+  readonly street?: string;
+  readonly neighborhood?: string;
+  readonly number?: string;
   readonly phone?: string;
   readonly createdAt?: Date;
   readonly updatedAt?: Date;
@@ -27,7 +31,9 @@ export class Barbershop {
     this.name = props.name;
     this.email = props.email;
     this.password = props.password;
-    this.address = props.address;
+    this.street = props.street;
+    this.neighborhood = props.neighborhood;
+    this.number = props.number;
     this.phone = props.phone;
     this.createdAt = props.createdAt || new Date();
     this.updatedAt = new Date();
