@@ -5,9 +5,6 @@ import { describe, it, expect, beforeEach } from "vitest";
 // Repositories
 import { FakeEmployeeRepository } from "~/repositories/fakes/FakeEmployeeRepository";
 
-// Domain
-// import { Employee } from "~/domain/Employee";
-
 // Use case
 import { ListEmployeeByBarbershopId } from "./ListEmployeeByBarbershopId";
 

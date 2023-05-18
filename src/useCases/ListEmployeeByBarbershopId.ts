@@ -1,5 +1,5 @@
 // Domain
-import { Employee } from "~/domain/Employee";
+import { Employee } from "~/domain/entity/Employee";
 
 // Repository interface
 import { IEmployeeRepository } from "~/repositories/IEmployeeRepository";

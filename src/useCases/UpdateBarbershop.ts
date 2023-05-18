@@ -1,5 +1,5 @@
 // Domain
-import { Barbershop } from "~/domain/Barbershop";
+import { Barbershop } from "~/domain/entity/Barbershop";
 
 // Repository interface
 import { IBarbershopRepository } from "~/repositories/IBarbershopRepository";

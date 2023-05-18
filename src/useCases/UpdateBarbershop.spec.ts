@@ -6,7 +6,7 @@ import { faker } from "@faker-js/faker";
 import { FakeBarbershopRepository } from "~/repositories/fakes/FakeBarbershopRepository";
 
 // Domain
-import { Barbershop } from "~/domain/Barbershop";
+import { Barbershop } from "~/domain/entity/Barbershop";
 
 // Use case
 import { UpdateBarbershop } from "./UpdateBarbershop";

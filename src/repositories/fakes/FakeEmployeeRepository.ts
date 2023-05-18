@@ -2,10 +2,10 @@
 import { faker } from "@faker-js/faker";
 
 // Domain
-import { Employee } from "~/domain/Employee";
+import { Employee } from "~/domain/entity/Employee";
 
 // Interfaces
-import { IEmployeeRepository } from "../IEmployeeRepository";
+import { ICreateEmployee, IEmployeeRepository } from "../IEmployeeRepository";
 
 export class FakeEmployeeRepository implements IEmployeeRepository {
   private readonly employees: Employee[];
@@ -37,11 +37,25 @@ export class FakeEmployeeRepository implements IEmployeeRepository {
     this.employees = [...firstEmployees, ...secondEmployees];
   }
 
+  public async create(data: ICreateEmployee): Promise<Employee> {
+    const employee = new Employee(data, data.id);
+
+    this.employees.push(employee);
+
+    return employee;
+  }
+
   public async findByBarbershopId(barbershopId: string): Promise<Employee[]> {
     const finded = this.employees.filter(
       (employee) => employee.barbershopId === barbershopId
     );
 
     return Promise.resolve(finded);
+  }
+
+  public async findByEmail(email: string): Promise<Employee | undefined> {
+    const finded = this.employees.find((employee) => employee.email === email);
+
+    return finded;
   }
 }
