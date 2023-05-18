@@ -1,5 +1,6 @@
 // Domain
 import { Barbershop } from "~/domain/entity/Barbershop";
+
 export interface ICraeteBarbershop {
   id: string;
   name: string;

@@ -3,13 +3,12 @@ import { describe, it, expect, beforeEach } from "vitest";
 import { faker } from "@faker-js/faker";
 
 // Repositories
-import { FakeEmployeeRepository } from "~/repositories/fakes/FakeEmployeeRepository";
-import { FakeBarbershopRepository } from "~/repositories/fakes/FakeBarbershopRepository";
+import { FakeEmployeeRepository } from "~/application/repository/fakes/FakeEmployeeRepository";
+import { FakeBarbershopRepository } from "~/application/repository/fakes/FakeBarbershopRepository";
 
 // Domain
 import { Employee } from "~/domain/entity/Employee";
 import { Barbershop } from "~/domain/entity/Barbershop";
-import { EmailValidator } from "~/domain/entity/EmailValidator";
 
 // Use case
 import { CreateEmployee } from "./CreateEmployee";
@@ -19,15 +18,10 @@ describe("CreateEmployee", () => {
   let fakeEmployeeRepository: FakeEmployeeRepository;
   let fakeBarbershopRepository: FakeBarbershopRepository;
   let barbershop: Barbershop;
-  let emailValidator: EmailValidator;
 
   beforeEach(async () => {
     fakeEmployeeRepository = new FakeEmployeeRepository();
     fakeBarbershopRepository = new FakeBarbershopRepository();
-    emailValidator = new EmailValidator(
-      fakeEmployeeRepository,
-      fakeBarbershopRepository
-    );
     barbershop = await fakeBarbershopRepository.create({
       name: faker.person.fullName(),
       email: faker.internet.email(),
@@ -37,8 +31,7 @@ describe("CreateEmployee", () => {
 
     createEmployee = new CreateEmployee(
       fakeEmployeeRepository,
-      fakeBarbershopRepository,
-      emailValidator
+      fakeBarbershopRepository
     );
   });
 

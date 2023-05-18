@@ -2,7 +2,7 @@
 import { Barbershop } from "~/domain/entity/Barbershop";
 
 // Repository interface
-import { IBarbershopRepository } from "~/repositories/IBarbershopRepository";
+import { IBarbershopRepository } from "~/application/repository/IBarbershopRepository";
 
 interface IUpdateBarbershop {
   id: string;

@@ -3,7 +3,7 @@ import { describe, it, expect, beforeEach } from "vitest";
 // import { faker } from "@faker-js/faker";
 
 // Repositories
-import { FakeEmployeeRepository } from "~/repositories/fakes/FakeEmployeeRepository";
+import { FakeEmployeeRepository } from "~/application/repository/fakes/FakeEmployeeRepository";
 
 // Use case
 import { ListEmployeeByBarbershopId } from "./ListEmployeeByBarbershopId";

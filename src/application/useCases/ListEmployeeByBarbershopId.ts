@@ -2,7 +2,7 @@
 import { Employee } from "~/domain/entity/Employee";
 
 // Repository interface
-import { IEmployeeRepository } from "~/repositories/IEmployeeRepository";
+import { IEmployeeRepository } from "~/application/repository/IEmployeeRepository";
 
 interface IListEmployeeByBarbershopId {
   barbershopId: string;
