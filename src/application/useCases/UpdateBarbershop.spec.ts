@@ -3,7 +3,7 @@ import { FakeRepositoryFactory } from "~/infra/factory/fakes/FakeRepositoryFacto
 import { Barbershop } from "~/domain/entity/Barbershop";
 import { UpdateBarbershop } from "./UpdateBarbershop";
 
-const barbershop = new Barbershop({
+const barbershop = Barbershop.create({
   name: faker.person.fullName(),
   email: faker.internet.email(),
   password: faker.internet.password(),
@@ -18,12 +18,7 @@ describe("UpdateBarbershop", () => {
   let updateBarbershop: UpdateBarbershop;
 
   beforeEach(async () => {
-    await barbershopRepository.create({
-      _id: barbershop._id,
-      email: barbershop.email,
-      name: barbershop.name,
-      password: barbershop.password,
-    });
+    await barbershopRepository.create(barbershop);
 
     updateBarbershop = new UpdateBarbershop({
       createBarbershopRepository: () => barbershopRepository,
@@ -33,7 +28,7 @@ describe("UpdateBarbershop", () => {
 
   it("should update all Barbershop fields", async () => {
     const dataToUpdate = {
-      id: barbershop._id,
+      id: barbershop.id,
       name: `New ${barbershop.name}`,
       street: faker.location.street(),
       neighborhood: faker.location.secondaryAddress(),
@@ -45,13 +40,13 @@ describe("UpdateBarbershop", () => {
     const result = await updateBarbershop.execute(dataToUpdate);
 
     expect(result).toBeInstanceOf(Barbershop);
-    expect(result._id).toBe(barbershop._id);
+    expect(result.id).toBe(barbershop.id);
     expect(result.phone).toBe(dataToUpdate.phone);
   });
 
   it("should update one Barbershop field", async () => {
     const result = await updateBarbershop.execute({
-      id: barbershop._id,
+      id: barbershop.id,
       name: faker.person.fullName(),
     });
 

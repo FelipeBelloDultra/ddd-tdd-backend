@@ -33,18 +33,13 @@ describe("CreateBarbershop.ts", () => {
   it("should not be able to create Barbershop if email already registered by other barbershop", async () => {
     const email = faker.internet.email();
 
-    const barbershop = new Barbershop({
-      name: faker.person.fullName(),
-      email,
-      password: faker.internet.password(),
-    });
-
-    await barbershopRepository.create({
-      _id: barbershop._id,
-      email,
-      name: barbershop.name,
-      password: barbershop.password,
-    });
+    await barbershopRepository.create(
+      Barbershop.create({
+        name: faker.person.fullName(),
+        email,
+        password: faker.internet.password(),
+      })
+    );
 
     await expect(
       createBarbershop.execute({
@@ -58,7 +53,7 @@ describe("CreateBarbershop.ts", () => {
   it("should not be able to create Barbershop if email already registered by employee", async () => {
     const email = faker.internet.email();
 
-    const employee = new Employee({
+    const employee = Employee.create({
       name: faker.person.fullName(),
       email,
       phone: faker.phone.number(),
@@ -66,14 +61,7 @@ describe("CreateBarbershop.ts", () => {
       barbershopId: faker.string.uuid(),
     });
 
-    await employeeRepository.create({
-      _id: employee._id,
-      email: employee.email,
-      name: employee.name,
-      avatarUrl: employee.avatarUrl,
-      barbershopId: employee.barbershopId,
-      phone: employee.phone,
-    });
+    await employeeRepository.create(employee);
 
     await expect(
       createBarbershop.execute({

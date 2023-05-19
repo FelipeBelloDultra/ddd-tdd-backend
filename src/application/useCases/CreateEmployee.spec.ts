@@ -9,17 +9,16 @@ describe("CreateEmployee", () => {
   const barbershopRepository =
     fakeRepositoryFactory.createBarbershopRepository();
   const employeeRepository = fakeRepositoryFactory.createEmployeeRepository();
+  const barbershop = Barbershop.create({
+    name: faker.person.fullName(),
+    email: faker.internet.email(),
+    password: faker.internet.password(),
+  });
 
   let createEmployee: CreateEmployee;
-  let barbershop: Barbershop;
 
   beforeEach(async () => {
-    barbershop = await barbershopRepository.create({
-      name: faker.person.fullName(),
-      email: faker.internet.email(),
-      password: faker.internet.password(),
-      _id: faker.string.uuid(),
-    });
+    await barbershopRepository.create(barbershop);
 
     createEmployee = new CreateEmployee({
       createBarbershopRepository: () => barbershopRepository,
@@ -32,7 +31,7 @@ describe("CreateEmployee", () => {
       name: faker.person.fullName(),
       email: faker.internet.email(),
       avatarUrl: faker.internet.avatar(),
-      barbershopId: barbershop._id,
+      barbershopId: barbershop.id,
       phone: faker.phone.number(),
     });
 
@@ -43,29 +42,22 @@ describe("CreateEmployee", () => {
   it("should not be able to create Employee if email already used by other employee", async () => {
     const email = faker.internet.email();
 
-    const employee = new Employee({
+    const employee = Employee.create({
       name: faker.person.fullName(),
       email: email,
       phone: faker.phone.number(),
       avatarUrl: faker.internet.avatar(),
-      barbershopId: barbershop._id,
+      barbershopId: barbershop.id,
     });
 
-    await employeeRepository.create({
-      name: employee.name,
-      email: employee.email,
-      phone: employee.phone,
-      avatarUrl: employee.avatarUrl,
-      barbershopId: employee.barbershopId,
-      _id: employee._id,
-    });
+    await employeeRepository.create(employee);
 
     await expect(
       createEmployee.execute({
         name: faker.person.fullName(),
         email,
         avatarUrl: faker.internet.avatar(),
-        barbershopId: barbershop._id,
+        barbershopId: barbershop.id,
         phone: faker.phone.number(),
       })
     ).rejects.toThrowError("Email already registered");
@@ -77,7 +69,7 @@ describe("CreateEmployee", () => {
         name: faker.person.fullName(),
         email: barbershop.email,
         avatarUrl: faker.internet.avatar(),
-        barbershopId: barbershop._id,
+        barbershopId: barbershop.id,
         phone: faker.phone.number(),
       })
     ).rejects.toThrowError("Email already registered");

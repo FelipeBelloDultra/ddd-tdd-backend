@@ -1,15 +1,26 @@
 import { Barbershop } from "~/domain/entity/Barbershop";
 import { IBarbershopRepository } from "~/application/repository/IBarbershopRepository";
+import { BarbershopMapper } from "~/application/mappers/BarbershopMapper";
 
 export class FakeBarbershopRepository implements IBarbershopRepository {
-  private readonly barbershops: Barbershop[] = [];
+  private readonly barbershops: {
+    id_barbershop: string;
+    name: string;
+    email: string;
+    password: string;
+    street?: string;
+    neighborhood?: string;
+    number?: string;
+    phone?: string;
+    avatarUrl?: string;
+    createdAt?: Date;
+    updatedAt?: Date;
+  }[] = [];
 
   public async create(data: Barbershop): Promise<Barbershop> {
-    const barbershop = Barbershop.create(data, data._id);
+    this.barbershops.push(BarbershopMapper.toPersistence(data));
 
-    this.barbershops.push(barbershop);
-
-    return barbershop;
+    return Promise.resolve(data);
   }
 
   public async findByEmail(email: string): Promise<Barbershop | undefined> {
@@ -17,24 +28,28 @@ export class FakeBarbershopRepository implements IBarbershopRepository {
       (barbershop) => barbershop.email === email
     );
 
-    return finded;
+    if (!finded) return undefined;
+
+    return Promise.resolve(BarbershopMapper.toDomain(finded));
   }
 
   public async findById(id: string): Promise<Barbershop | undefined> {
-    const finded = this.barbershops.find((barbershop) => barbershop._id === id);
+    const finded = this.barbershops.find(
+      (barbershop) => barbershop.id_barbershop === id
+    );
 
-    return finded;
+    if (!finded) return undefined;
+
+    return Promise.resolve(BarbershopMapper.toDomain(finded));
   }
 
   public async update(data: Barbershop): Promise<Barbershop> {
     const finded = this.barbershops.findIndex(
-      (barbershop) => barbershop._id === data._id
+      (barbershop) => barbershop.id_barbershop === data.id
     );
 
-    const updated = Barbershop.create(data, data._id);
+    this.barbershops[finded] = BarbershopMapper.toPersistence(data);
 
-    this.barbershops[finded] = updated;
-
-    return updated;
+    return Promise.resolve(Barbershop.create(data, data.id));
   }
 }

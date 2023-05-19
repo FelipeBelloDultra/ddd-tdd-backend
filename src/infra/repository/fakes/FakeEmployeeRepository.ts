@@ -49,11 +49,9 @@ export class FakeEmployeeRepository implements IEmployeeRepository {
   }
 
   public async create(data: Employee): Promise<Employee> {
-    const employee = Employee.create(data, data._id);
+    this.employees.push(EmployeeMapper.toPersistence(data));
 
-    this.employees.push(EmployeeMapper.toPersistence(employee));
-
-    return employee;
+    return Promise.resolve(data);
   }
 
   public async findByBarbershopId(barbershopId: string): Promise<Employee[]> {
@@ -78,13 +76,15 @@ export class FakeEmployeeRepository implements IEmployeeRepository {
 
     if (!finded) return undefined;
 
-    return EmployeeMapper.toDomain({
-      name: finded.name,
-      email: finded.email,
-      avatar_url: finded.avatar_url,
-      barbershop_id: finded.barbershop_id,
-      id_employee: finded.id_employee,
-      phone: finded.phone,
-    });
+    return Promise.resolve(
+      EmployeeMapper.toDomain({
+        name: finded.name,
+        email: finded.email,
+        avatar_url: finded.avatar_url,
+        barbershop_id: finded.barbershop_id,
+        id_employee: finded.id_employee,
+        phone: finded.phone,
+      })
+    );
   }
 }

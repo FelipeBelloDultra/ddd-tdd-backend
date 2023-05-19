@@ -37,7 +37,7 @@ export class CreateEmployee {
     if (existingEmployeeEmail || existingBarbershopEmail)
       throw new Error("Email already registered");
 
-    const employee = new Employee({
+    const employee = Employee.create({
       name: data.name,
       email: data.email,
       avatarUrl: data.avatarUrl,
@@ -45,15 +45,8 @@ export class CreateEmployee {
       phone: data.phone,
     });
 
-    const createdEmployee = await this.employeeRepository.create({
-      _id: employee._id,
-      name: employee.name,
-      email: employee.email,
-      avatarUrl: employee.avatarUrl,
-      barbershopId: employee.barbershopId,
-      phone: employee.phone,
-    });
+    const createdEmployee = await this.employeeRepository.create(employee);
 
-    return createdEmployee._id;
+    return createdEmployee.id;
   }
 }

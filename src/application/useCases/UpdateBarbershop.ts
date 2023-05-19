@@ -24,16 +24,19 @@ export class UpdateBarbershop {
 
     if (!findedbyId) throw new Error("User does not exist");
 
-    const barbershop = new Barbershop(findedbyId, findedbyId._id);
+    const barbershop = Barbershop.create(
+      {
+        email: findedbyId.email,
+        password: findedbyId.password,
+        name: findedbyId.name,
+        createdAt: findedbyId.createdAt,
+        ...data,
+      },
+      findedbyId.id
+    );
 
-    const updatedUser = await this.barbershopRepository.update({
-      _id: barbershop._id,
-      email: barbershop.email,
-      name: barbershop.name,
-      password: barbershop.password,
-      ...data,
-    });
+    const updatedUser = await this.barbershopRepository.update(barbershop);
 
-    return new Barbershop(updatedUser, updatedUser._id);
+    return updatedUser;
   }
 }
