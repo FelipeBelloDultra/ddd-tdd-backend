@@ -3,7 +3,7 @@ import { describe, it, expect, beforeEach } from "vitest";
 import { faker } from "@faker-js/faker";
 
 // Repository factory
-import { FakeRepositoryFactory } from "~/application/factory/fakes/FakeRepositoryFactory";
+import { FakeRepositoryFactory } from "~/infra/factory/fakes/FakeRepositoryFactory";
 
 // Domain
 import { Barbershop } from "~/domain/entity/Barbershop";
@@ -48,7 +48,7 @@ describe("CreateBarbershop.ts", () => {
     });
 
     await barbershopRepository.create({
-      id: barbershop._id,
+      _id: barbershop._id,
       email,
       name: barbershop.name,
       password: barbershop.password,
@@ -75,7 +75,7 @@ describe("CreateBarbershop.ts", () => {
     });
 
     await employeeRepository.create({
-      id: employee._id,
+      _id: employee._id,
       email: employee.email,
       name: employee.name,
       avatarUrl: employee.avatarUrl,

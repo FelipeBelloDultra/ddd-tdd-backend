@@ -5,7 +5,7 @@ import { faker } from "@faker-js/faker";
 import { Employee } from "~/domain/entity/Employee";
 
 // Interfaces
-import { IEmployeeRepository } from "../IEmployeeRepository";
+import { IEmployeeRepository } from "~/application/repository/IEmployeeRepository";
 
 export class FakeEmployeeRepository implements IEmployeeRepository {
   private readonly employees: Employee[];

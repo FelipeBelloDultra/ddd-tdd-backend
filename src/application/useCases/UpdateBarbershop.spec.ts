@@ -3,7 +3,7 @@ import { describe, it, expect, beforeEach } from "vitest";
 import { faker } from "@faker-js/faker";
 
 // Repository factory
-import { FakeRepositoryFactory } from "~/application/factory/fakes/FakeRepositoryFactory";
+import { FakeRepositoryFactory } from "~/infra/factory/fakes/FakeRepositoryFactory";
 
 // Domain
 import { Barbershop } from "~/domain/entity/Barbershop";

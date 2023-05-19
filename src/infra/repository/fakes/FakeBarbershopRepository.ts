@@ -2,7 +2,7 @@
 import { Barbershop } from "~/domain/entity/Barbershop";
 
 // Interfaces
-import { IBarbershopRepository } from "../IBarbershopRepository";
+import { IBarbershopRepository } from "~/application/repository/IBarbershopRepository";
 
 export class FakeBarbershopRepository implements IBarbershopRepository {
   private readonly barbershops: Barbershop[] = [];
