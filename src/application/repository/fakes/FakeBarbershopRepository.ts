@@ -2,17 +2,13 @@
 import { Barbershop } from "~/domain/entity/Barbershop";
 
 // Interfaces
-import {
-  IBarbershopRepository,
-  ICraeteBarbershop,
-  IUpdateBarbershop,
-} from "../IBarbershopRepository";
+import { IBarbershopRepository } from "../IBarbershopRepository";
 
 export class FakeBarbershopRepository implements IBarbershopRepository {
   private readonly barbershops: Barbershop[] = [];
 
-  public async create(data: ICraeteBarbershop): Promise<Barbershop> {
-    const barbershop = new Barbershop(data, data.id);
+  public async create(data: Barbershop): Promise<Barbershop> {
+    const barbershop = new Barbershop(data, data._id);
 
     this.barbershops.push(barbershop);
 
@@ -33,20 +29,12 @@ export class FakeBarbershopRepository implements IBarbershopRepository {
     return finded;
   }
 
-  public async update(data: IUpdateBarbershop): Promise<Barbershop> {
+  public async update(data: Barbershop): Promise<Barbershop> {
     const finded = this.barbershops.findIndex(
-      (barbershop) => barbershop._id === data.id
+      (barbershop) => barbershop._id === data._id
     );
 
-    const updated = new Barbershop(
-      {
-        email: this.barbershops[finded].email,
-        password: this.barbershops[finded].password,
-        name: this.barbershops[finded].name,
-        ...data,
-      },
-      data.id
-    );
+    const updated = new Barbershop(data, data._id);
 
     this.barbershops[finded] = updated;
 

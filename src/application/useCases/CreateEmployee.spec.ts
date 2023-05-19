@@ -26,7 +26,7 @@ describe("CreateEmployee", () => {
       name: faker.person.fullName(),
       email: faker.internet.email(),
       password: faker.internet.password(),
-      id: faker.string.uuid(),
+      _id: faker.string.uuid(),
     });
 
     createEmployee = new CreateEmployee({
@@ -65,7 +65,7 @@ describe("CreateEmployee", () => {
       phone: employee.phone,
       avatarUrl: employee.avatarUrl,
       barbershopId: employee.barbershopId,
-      id: employee._id,
+      _id: employee._id,
     });
 
     await expect(

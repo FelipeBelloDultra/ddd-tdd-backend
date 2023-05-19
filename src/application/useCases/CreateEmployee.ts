@@ -51,7 +51,7 @@ export class CreateEmployee {
     });
 
     const createdEmployee = await this.employeeRepository.create({
-      id: employee._id,
+      _id: employee._id,
       name: employee.name,
       email: employee.email,
       avatarUrl: employee.avatarUrl,

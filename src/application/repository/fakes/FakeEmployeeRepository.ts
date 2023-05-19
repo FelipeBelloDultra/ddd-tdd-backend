@@ -5,7 +5,7 @@ import { faker } from "@faker-js/faker";
 import { Employee } from "~/domain/entity/Employee";
 
 // Interfaces
-import { ICreateEmployee, IEmployeeRepository } from "../IEmployeeRepository";
+import { IEmployeeRepository } from "../IEmployeeRepository";
 
 export class FakeEmployeeRepository implements IEmployeeRepository {
   private readonly employees: Employee[];
@@ -37,8 +37,8 @@ export class FakeEmployeeRepository implements IEmployeeRepository {
     this.employees = [...firstEmployees, ...secondEmployees];
   }
 
-  public async create(data: ICreateEmployee): Promise<Employee> {
-    const employee = new Employee(data, data.id);
+  public async create(data: Employee): Promise<Employee> {
+    const employee = new Employee(data, data._id);
 
     this.employees.push(employee);
 

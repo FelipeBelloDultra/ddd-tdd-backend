@@ -27,7 +27,7 @@ describe("UpdateBarbershop", () => {
 
   beforeEach(async () => {
     await barbershopRepository.create({
-      id: barbershop._id,
+      _id: barbershop._id,
       email: barbershop.email,
       name: barbershop.name,
       password: barbershop.password,
