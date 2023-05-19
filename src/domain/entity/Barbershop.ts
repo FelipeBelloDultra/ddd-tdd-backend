@@ -1,4 +1,4 @@
-import { randomUUID } from "node:crypto";
+import { randomUUID } from "crypto";
 
 interface IBarbershopProps {
   name: string;
@@ -27,6 +27,7 @@ export class Barbershop {
   readonly avatarUrl?: string;
 
   constructor(props: IBarbershopProps, _id?: string) {
+    this._id = _id || randomUUID();
     this.name = props.name;
     this.email = props.email;
     this.password = props.password;
@@ -37,6 +38,5 @@ export class Barbershop {
     this.createdAt = props.createdAt || new Date();
     this.updatedAt = new Date();
     this.avatarUrl = props.avatarUrl;
-    this._id = _id || randomUUID();
   }
 }

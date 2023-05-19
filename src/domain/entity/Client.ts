@@ -1,32 +1,26 @@
 import { randomUUID } from "crypto";
 
-interface IEmployeeProps {
+interface IClientProps {
   name: string;
   email: string;
-  phone: string;
-  avatarUrl: string;
-  barbershopId: string;
+  password: string;
   createdAt?: Date;
   updatedAt?: Date;
 }
 
-export class Employee {
+export class Client {
   readonly _id: string;
   readonly name: string;
   readonly email: string;
-  readonly phone: string;
-  readonly avatarUrl: string;
-  readonly barbershopId: string;
+  readonly password: string;
   readonly createdAt?: Date;
   readonly updatedAt?: Date;
 
-  constructor(props: IEmployeeProps, _id?: string) {
+  constructor(props: IClientProps, _id?: string) {
     this._id = _id || randomUUID();
     this.name = props.name;
     this.email = props.email;
-    this.phone = props.phone;
-    this.avatarUrl = props.avatarUrl;
-    this.barbershopId = props.barbershopId;
+    this.password = props.password;
     this.createdAt = props.createdAt || new Date();
     this.updatedAt = new Date();
   }
