@@ -5,7 +5,7 @@ export class FakeBarbershopRepository implements IBarbershopRepository {
   private readonly barbershops: Barbershop[] = [];
 
   public async create(data: Barbershop): Promise<Barbershop> {
-    const barbershop = new Barbershop(data, data._id);
+    const barbershop = Barbershop.create(data, data._id);
 
     this.barbershops.push(barbershop);
 
@@ -31,7 +31,7 @@ export class FakeBarbershopRepository implements IBarbershopRepository {
       (barbershop) => barbershop._id === data._id
     );
 
-    const updated = new Barbershop(data, data._id);
+    const updated = Barbershop.create(data, data._id);
 
     this.barbershops[finded] = updated;
 

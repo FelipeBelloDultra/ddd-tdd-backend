@@ -1,49 +1,74 @@
 import { faker } from "@faker-js/faker";
 import { Employee } from "~/domain/entity/Employee";
 import { IEmployeeRepository } from "~/application/repository/IEmployeeRepository";
+import { EmployeeMapper } from "~/application/mappers/EmployeeMapper";
 
 export class FakeEmployeeRepository implements IEmployeeRepository {
-  private readonly employees: Employee[];
+  private readonly employees: {
+    id_employee: string;
+    name: string;
+    email: string;
+    phone: string;
+    avatar_url: string;
+    barbershop_id: string;
+    createdAt?: Date;
+    updatedAt?: Date;
+  }[];
 
   constructor() {
     const firstBarbershopId = "123";
-    const firstEmployees = Array.from({ length: 5 }).map(
-      () =>
-        new Employee({
-          barbershopId: firstBarbershopId,
-          name: faker.person.fullName(),
-          email: faker.internet.email(),
-          phone: faker.phone.number(),
-          avatarUrl: faker.internet.avatar(),
-        })
-    );
+    const firstEmployees = Array.from({ length: 5 }).map(() => {
+      const employee = Employee.create({
+        barbershopId: firstBarbershopId,
+        name: faker.person.fullName(),
+        email: faker.internet.email(),
+        phone: faker.phone.number(),
+        avatarUrl: faker.internet.avatar(),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+
+      return EmployeeMapper.toPersistence(employee);
+    });
     const secondBarbershopId = "321";
-    const secondEmployees = Array.from({ length: 3 }).map(
-      () =>
-        new Employee({
-          barbershopId: secondBarbershopId,
-          name: faker.person.fullName(),
-          email: faker.internet.email(),
-          phone: faker.phone.number(),
-          avatarUrl: faker.internet.avatar(),
-        })
-    );
+    const secondEmployees = Array.from({ length: 3 }).map(() => {
+      const employee = Employee.create({
+        barbershopId: secondBarbershopId,
+        name: faker.person.fullName(),
+        email: faker.internet.email(),
+        phone: faker.phone.number(),
+        avatarUrl: faker.internet.avatar(),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+
+      return EmployeeMapper.toPersistence(employee);
+    });
 
     this.employees = [...firstEmployees, ...secondEmployees];
   }
 
   public async create(data: Employee): Promise<Employee> {
-    const employee = new Employee(data, data._id);
+    const employee = Employee.create(data, data._id);
 
-    this.employees.push(employee);
+    this.employees.push(EmployeeMapper.toPersistence(employee));
 
     return employee;
   }
 
   public async findByBarbershopId(barbershopId: string): Promise<Employee[]> {
-    const finded = this.employees.filter(
-      (employee) => employee.barbershopId === barbershopId
-    );
+    const finded = this.employees
+      .filter((employee) => employee.barbershop_id === barbershopId)
+      .map((employee) =>
+        EmployeeMapper.toDomain({
+          id_employee: employee.id_employee,
+          name: employee.name,
+          email: employee.email,
+          phone: employee.phone,
+          avatar_url: employee.avatar_url,
+          barbershop_id: employee.barbershop_id,
+        })
+      );
 
     return Promise.resolve(finded);
   }
@@ -51,6 +76,15 @@ export class FakeEmployeeRepository implements IEmployeeRepository {
   public async findByEmail(email: string): Promise<Employee | undefined> {
     const finded = this.employees.find((employee) => employee.email === email);
 
-    return finded;
+    if (!finded) return undefined;
+
+    return EmployeeMapper.toDomain({
+      name: finded.name,
+      email: finded.email,
+      avatar_url: finded.avatar_url,
+      barbershop_id: finded.barbershop_id,
+      id_employee: finded.id_employee,
+      phone: finded.phone,
+    });
   }
 }
