@@ -12,7 +12,7 @@ describe("Employee.ts", () => {
       email: faker.internet.email(),
       avatarUrl: faker.internet.avatar(),
       phone: faker.phone.number(),
-      barbershop_id: faker.string.uuid(),
+      barbershopId: faker.string.uuid(),
     });
 
     expect(employee).toBeInstanceOf(Employee);
