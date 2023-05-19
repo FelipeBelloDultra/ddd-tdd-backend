@@ -2,21 +2,25 @@
 import { describe, it, expect, beforeEach } from "vitest";
 // import { faker } from "@faker-js/faker";
 
-// Repositories
-import { FakeEmployeeRepository } from "~/application/repository/fakes/FakeEmployeeRepository";
+// Repository factory
+import { FakeRepositoryFactory } from "~/application/factory/fakes/FakeRepositoryFactory";
 
 // Use case
 import { ListEmployeeByBarbershopId } from "./ListEmployeeByBarbershopId";
 
 describe("ListEmployeeByBarbershopId", () => {
+  const fakeRepositoryFactory = new FakeRepositoryFactory();
+  const barbershopRepository =
+    fakeRepositoryFactory.createBarbershopRepository();
+  const employeeRepository = fakeRepositoryFactory.createEmployeeRepository();
+
   let listEmployeeByBarbershopId: ListEmployeeByBarbershopId;
-  let fakeEmployeeRepository: FakeEmployeeRepository;
 
   beforeEach(() => {
-    fakeEmployeeRepository = new FakeEmployeeRepository();
-    listEmployeeByBarbershopId = new ListEmployeeByBarbershopId(
-      fakeEmployeeRepository
-    );
+    listEmployeeByBarbershopId = new ListEmployeeByBarbershopId({
+      createBarbershopRepository: () => barbershopRepository,
+      createEmployeeRepository: () => employeeRepository,
+    });
   });
 
   it("should return an list of employees by barbershop id", async () => {

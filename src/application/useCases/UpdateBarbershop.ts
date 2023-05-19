@@ -4,6 +4,9 @@ import { Barbershop } from "~/domain/entity/Barbershop";
 // Repository interface
 import { IBarbershopRepository } from "~/application/repository/IBarbershopRepository";
 
+// Factory
+import { IRepositoryFactory } from "../factory/IRepositoryFactory";
+
 interface IUpdateBarbershop {
   id: string;
   name?: string;
@@ -15,7 +18,11 @@ interface IUpdateBarbershop {
 }
 
 export class UpdateBarbershop {
-  constructor(private readonly barbershopRepository: IBarbershopRepository) {}
+  private readonly barbershopRepository: IBarbershopRepository;
+
+  constructor(repositoryFactory: IRepositoryFactory) {
+    this.barbershopRepository = repositoryFactory.createBarbershopRepository();
+  }
 
   public async execute(data: IUpdateBarbershop): Promise<Barbershop> {
     const findedbyId = await this.barbershopRepository.findById(data.id);

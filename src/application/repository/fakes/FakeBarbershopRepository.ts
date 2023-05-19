@@ -9,7 +9,7 @@ import {
 } from "../IBarbershopRepository";
 
 export class FakeBarbershopRepository implements IBarbershopRepository {
-  constructor(private readonly barbershops: Barbershop[] = []) {}
+  private readonly barbershops: Barbershop[] = [];
 
   public async create(data: ICraeteBarbershop): Promise<Barbershop> {
     const barbershop = new Barbershop(data, data.id);

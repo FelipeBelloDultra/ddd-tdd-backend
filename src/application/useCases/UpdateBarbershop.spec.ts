@@ -2,8 +2,8 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { faker } from "@faker-js/faker";
 
-// Repositories
-import { FakeBarbershopRepository } from "~/application/repository/fakes/FakeBarbershopRepository";
+// Repository factory
+import { FakeRepositoryFactory } from "~/application/factory/fakes/FakeRepositoryFactory";
 
 // Domain
 import { Barbershop } from "~/domain/entity/Barbershop";
@@ -18,18 +18,25 @@ const barbershop = new Barbershop({
 });
 
 describe("UpdateBarbershop", () => {
-  let fakeBarbershopRepository: FakeBarbershopRepository;
+  const fakeRepositoryFactory = new FakeRepositoryFactory();
+  const barbershopRepository =
+    fakeRepositoryFactory.createBarbershopRepository();
+  const employeeRepository = fakeRepositoryFactory.createEmployeeRepository();
+
   let updateBarbershop: UpdateBarbershop;
 
-  beforeEach(() => {
-    fakeBarbershopRepository = new FakeBarbershopRepository();
-    fakeBarbershopRepository.create({
+  beforeEach(async () => {
+    await barbershopRepository.create({
       id: barbershop._id,
       email: barbershop.email,
       name: barbershop.name,
       password: barbershop.password,
     });
-    updateBarbershop = new UpdateBarbershop(fakeBarbershopRepository);
+
+    updateBarbershop = new UpdateBarbershop({
+      createBarbershopRepository: () => barbershopRepository,
+      createEmployeeRepository: () => employeeRepository,
+    });
   });
 
   it("should update all Barbershop fields", async () => {

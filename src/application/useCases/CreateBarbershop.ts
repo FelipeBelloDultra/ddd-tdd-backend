@@ -1,8 +1,12 @@
 // Domain
 import { Barbershop } from "~/domain/entity/Barbershop";
 
-// Repository interface
+// Repository
 import { IBarbershopRepository } from "~/application/repository/IBarbershopRepository";
+import { IEmployeeRepository } from "../repository/IEmployeeRepository";
+
+// Factory
+import { IRepositoryFactory } from "../factory/IRepositoryFactory";
 
 interface ICreateBarbershop {
   name: string;
@@ -11,16 +15,26 @@ interface ICreateBarbershop {
 }
 
 export class CreateBarbershop {
-  constructor(private readonly barbershopRepository: IBarbershopRepository) {}
+  private readonly employeeRepository: IEmployeeRepository;
+  private readonly barbershopRepository: IBarbershopRepository;
+
+  constructor(repositoryFactory: IRepositoryFactory) {
+    this.barbershopRepository = repositoryFactory.createBarbershopRepository();
+    this.employeeRepository = repositoryFactory.createEmployeeRepository();
+  }
 
   public async execute(data: ICreateBarbershop): Promise<string> {
     const barbershop = new Barbershop(data);
 
-    const findedByEmail = await this.barbershopRepository.findByEmail(
-      barbershop.email
+    const existingEmployeeEmail = await this.employeeRepository.findByEmail(
+      data.email
+    );
+    const existingBarbershopEmail = await this.barbershopRepository.findByEmail(
+      data.email
     );
 
-    if (findedByEmail) throw new Error("Email already registered");
+    if (existingEmployeeEmail || existingBarbershopEmail)
+      throw new Error("Email already registered");
 
     const createdBarbershop = await this.barbershopRepository.create({
       id: barbershop._id,
