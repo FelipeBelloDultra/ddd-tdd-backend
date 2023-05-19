@@ -9,6 +9,8 @@ interface IBarbershopProps {
   number?: string;
   phone?: string;
   avatarUrl?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export class Barbershop extends Entity<IBarbershopProps> {
@@ -17,11 +19,11 @@ export class Barbershop extends Entity<IBarbershopProps> {
   }
 
   get email(): string {
-    return this.props.name;
+    return this.props.email;
   }
 
   get password(): string {
-    return this.props.name;
+    return this.props.password;
   }
 
   get street(): string | undefined {
@@ -42,6 +44,14 @@ export class Barbershop extends Entity<IBarbershopProps> {
 
   get avatarUrl(): string | undefined {
     return this.props.avatarUrl;
+  }
+
+  get createdAt(): Date | undefined {
+    return this.props.createdAt;
+  }
+
+  get updatedAt(): Date | undefined {
+    return this.props.updatedAt;
   }
 
   private constructor(props: IBarbershopProps, id?: string) {

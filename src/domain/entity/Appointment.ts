@@ -12,7 +12,7 @@ export class Appointment extends Entity<IAppointmentProps> {
   }
 
   get clientId(): string {
-    return this.props.employeeId;
+    return this.props.clientId;
   }
 
   get date(): Date {
