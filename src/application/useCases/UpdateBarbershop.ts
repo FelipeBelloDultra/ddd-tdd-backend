@@ -1,10 +1,5 @@
-// Domain
 import { Barbershop } from "~/domain/entity/Barbershop";
-
-// Repository interface
 import { IBarbershopRepository } from "~/application/repository/IBarbershopRepository";
-
-// Factory
 import { IRepositoryFactory } from "../factory/IRepositoryFactory";
 
 interface IUpdateBarbershop {

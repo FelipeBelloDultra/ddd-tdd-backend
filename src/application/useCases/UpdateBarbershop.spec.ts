@@ -1,13 +1,6 @@
-// Packages
 import { faker } from "@faker-js/faker";
-
-// Repository factory
 import { FakeRepositoryFactory } from "~/infra/factory/fakes/FakeRepositoryFactory";
-
-// Domain
 import { Barbershop } from "~/domain/entity/Barbershop";
-
-// Use case
 import { UpdateBarbershop } from "./UpdateBarbershop";
 
 const barbershop = new Barbershop({

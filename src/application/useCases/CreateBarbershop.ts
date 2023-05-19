@@ -1,11 +1,6 @@
-// Domain
 import { Barbershop } from "~/domain/entity/Barbershop";
-
-// Repository
 import { IBarbershopRepository } from "~/application/repository/IBarbershopRepository";
 import { IEmployeeRepository } from "../repository/IEmployeeRepository";
-
-// Factory
 import { IRepositoryFactory } from "../factory/IRepositoryFactory";
 
 interface ICreateBarbershop {
@@ -37,7 +32,7 @@ export class CreateBarbershop {
       throw new Error("Email already registered");
 
     const createdBarbershop = await this.barbershopRepository.create({
-      id: barbershop._id,
+      _id: barbershop._id,
       name: barbershop.name,
       email: barbershop.email,
       password: barbershop.password,

@@ -1,7 +1,4 @@
-// Packages
 import { faker } from "@faker-js/faker";
-
-// Domain
 import { Barbershop } from "./Barbershop";
 
 describe("Barbershop.ts", () => {

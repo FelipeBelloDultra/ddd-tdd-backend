@@ -1,14 +1,7 @@
-// Packages
 import { faker } from "@faker-js/faker";
-
-// Repository factory
 import { FakeRepositoryFactory } from "~/infra/factory/fakes/FakeRepositoryFactory";
-
-// Domain
 import { Barbershop } from "~/domain/entity/Barbershop";
 import { Employee } from "~/domain/entity/Employee";
-
-// Use case
 import { CreateBarbershop } from "./CreateBarbershop";
 
 describe("CreateBarbershop.ts", () => {

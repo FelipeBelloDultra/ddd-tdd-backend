@@ -1,10 +1,4 @@
-// Imports
-// import { faker } from "@faker-js/faker";
-
-// Repository factory
 import { FakeRepositoryFactory } from "~/infra/factory/fakes/FakeRepositoryFactory";
-
-// Use case
 import { ListEmployeeByBarbershopId } from "./ListEmployeeByBarbershopId";
 
 describe("ListEmployeeByBarbershopId", () => {

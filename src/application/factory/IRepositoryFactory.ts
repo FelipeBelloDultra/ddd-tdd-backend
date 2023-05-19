@@ -1,4 +1,3 @@
-// Repositories
 import { IBarbershopRepository } from "../repository/IBarbershopRepository";
 import { IEmployeeRepository } from "../repository/IEmployeeRepository";
 

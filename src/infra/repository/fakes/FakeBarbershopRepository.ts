@@ -1,7 +1,4 @@
-// Domain
 import { Barbershop } from "~/domain/entity/Barbershop";
-
-// Interfaces
 import { IBarbershopRepository } from "~/application/repository/IBarbershopRepository";
 
 export class FakeBarbershopRepository implements IBarbershopRepository {

@@ -1,14 +1,7 @@
-// Imports
 import { faker } from "@faker-js/faker";
-
-// Repository factory
 import { FakeRepositoryFactory } from "~/infra/factory/fakes/FakeRepositoryFactory";
-
-// Domain
 import { Employee } from "~/domain/entity/Employee";
 import { Barbershop } from "~/domain/entity/Barbershop";
-
-// Use case
 import { CreateEmployee } from "./CreateEmployee";
 
 describe("CreateEmployee", () => {

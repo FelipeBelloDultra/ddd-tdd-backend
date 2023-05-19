@@ -1,7 +1,4 @@
-// Packages
 import { faker } from "@faker-js/faker";
-
-// Domain
 import { Employee } from "./Employee";
 
 describe("Employee.ts", () => {

@@ -1,4 +1,3 @@
-// Packages
 import { randomUUID } from "node:crypto";
 
 interface IEmployeeProps {

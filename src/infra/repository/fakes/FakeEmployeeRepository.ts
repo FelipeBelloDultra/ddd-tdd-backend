@@ -1,10 +1,5 @@
-// Packages
 import { faker } from "@faker-js/faker";
-
-// Domain
 import { Employee } from "~/domain/entity/Employee";
-
-// Interfaces
 import { IEmployeeRepository } from "~/application/repository/IEmployeeRepository";
 
 export class FakeEmployeeRepository implements IEmployeeRepository {

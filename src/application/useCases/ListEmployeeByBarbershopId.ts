@@ -1,10 +1,5 @@
-// Domain
 import { Employee } from "~/domain/entity/Employee";
-
-// Repository interface
 import { IEmployeeRepository } from "~/application/repository/IEmployeeRepository";
-
-// Factory
 import { IRepositoryFactory } from "../factory/IRepositoryFactory";
 
 interface IListEmployeeByBarbershopId {

@@ -1,4 +1,3 @@
-// Domain
 import { Employee } from "~/domain/entity/Employee";
 
 export interface IEmployeeRepository {
