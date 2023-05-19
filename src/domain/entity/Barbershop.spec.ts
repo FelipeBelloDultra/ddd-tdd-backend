@@ -3,7 +3,7 @@ import { Barbershop } from "./Barbershop";
 
 describe("Barbershop.ts", () => {
   it("should create Barbershop instance", () => {
-    const barbershop = new Barbershop({
+    const barbershop = Barbershop.create({
       name: faker.person.fullName(),
       email: faker.internet.email(),
       password: faker.internet.password(),

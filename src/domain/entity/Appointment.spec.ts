@@ -3,7 +3,7 @@ import { Appointment } from "./Appointment";
 
 describe("Appointment.ts", () => {
   it("should create Appointment instance", () => {
-    const appointment = new Appointment({
+    const appointment = Appointment.create({
       date: new Date(),
       clientId: faker.string.uuid(),
       employeeId: faker.string.uuid(),

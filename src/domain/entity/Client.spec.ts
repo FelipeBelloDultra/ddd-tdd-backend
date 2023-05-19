@@ -3,7 +3,7 @@ import { Client } from "./Client";
 
 describe("Client.ts", () => {
   it("should create Client instance", () => {
-    const client = new Client({
+    const client = Client.create({
       name: faker.person.fullName(),
       email: faker.internet.email(),
       password: faker.internet.password(),

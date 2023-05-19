@@ -1,27 +1,29 @@
-import { randomUUID } from "crypto";
+import { Entity } from "./base/Entity";
 
 interface IAppointmentProps {
   employeeId: string;
   clientId: string;
   date: Date;
-  createdAt?: Date;
-  updatedAt?: Date;
 }
 
-export class Appointment {
-  readonly _id: string;
-  readonly employeeId: string;
-  readonly clientId: string;
-  readonly date: Date;
-  readonly createdAt?: Date;
-  readonly updatedAt?: Date;
+export class Appointment extends Entity<IAppointmentProps> {
+  get employeeId(): string {
+    return this.props.employeeId;
+  }
 
-  constructor(props: IAppointmentProps, _id?: string) {
-    this._id = _id || randomUUID();
-    this.employeeId = props.employeeId;
-    this.clientId = props.clientId;
-    this.date = props.date;
-    this.createdAt = props.createdAt || new Date();
-    this.updatedAt = new Date();
+  get clientId(): string {
+    return this.props.employeeId;
+  }
+
+  get date(): Date {
+    return this.props.date;
+  }
+
+  private constructor(props: IAppointmentProps, id?: string) {
+    super(props, id);
+  }
+
+  public static create(props: IAppointmentProps, id?: string): Appointment {
+    return new Appointment(props, id);
   }
 }

@@ -1,4 +1,4 @@
-import { randomUUID } from "crypto";
+import { Entity } from "./base/Entity";
 
 interface IBarbershopProps {
   name: string;
@@ -9,34 +9,46 @@ interface IBarbershopProps {
   number?: string;
   phone?: string;
   avatarUrl?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
 }
 
-export class Barbershop {
-  readonly _id: string;
-  readonly name: string;
-  readonly email: string;
-  readonly password: string;
-  readonly street?: string;
-  readonly neighborhood?: string;
-  readonly number?: string;
-  readonly phone?: string;
-  readonly createdAt?: Date;
-  readonly updatedAt?: Date;
-  readonly avatarUrl?: string;
+export class Barbershop extends Entity<IBarbershopProps> {
+  get name(): string {
+    return this.props.name;
+  }
 
-  constructor(props: IBarbershopProps, _id?: string) {
-    this._id = _id || randomUUID();
-    this.name = props.name;
-    this.email = props.email;
-    this.password = props.password;
-    this.street = props.street;
-    this.neighborhood = props.neighborhood;
-    this.number = props.number;
-    this.phone = props.phone;
-    this.createdAt = props.createdAt || new Date();
-    this.updatedAt = new Date();
-    this.avatarUrl = props.avatarUrl;
+  get email(): string {
+    return this.props.name;
+  }
+
+  get password(): string {
+    return this.props.name;
+  }
+
+  get street(): string | undefined {
+    return this.props.street;
+  }
+
+  get neighborhood(): string | undefined {
+    return this.props.neighborhood;
+  }
+
+  get number(): string | undefined {
+    return this.props.number;
+  }
+
+  get phone(): string | undefined {
+    return this.props.phone;
+  }
+
+  get avatarUrl(): string | undefined {
+    return this.props.avatarUrl;
+  }
+
+  private constructor(props: IBarbershopProps, id?: string) {
+    super(props, id);
+  }
+
+  public static create(props: IBarbershopProps, id?: string): Barbershop {
+    return new Barbershop(props, id);
   }
 }

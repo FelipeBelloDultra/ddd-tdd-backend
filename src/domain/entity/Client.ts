@@ -1,27 +1,29 @@
-import { randomUUID } from "crypto";
+import { Entity } from "./base/Entity";
 
 interface IClientProps {
   name: string;
   email: string;
   password: string;
-  createdAt?: Date;
-  updatedAt?: Date;
 }
 
-export class Client {
-  readonly _id: string;
-  readonly name: string;
-  readonly email: string;
-  readonly password: string;
-  readonly createdAt?: Date;
-  readonly updatedAt?: Date;
+export class Client extends Entity<IClientProps> {
+  get name(): string {
+    return this.props.name;
+  }
 
-  constructor(props: IClientProps, _id?: string) {
-    this._id = _id || randomUUID();
-    this.name = props.name;
-    this.email = props.email;
-    this.password = props.password;
-    this.createdAt = props.createdAt || new Date();
-    this.updatedAt = new Date();
+  get email(): string {
+    return this.props.email;
+  }
+
+  get password(): string {
+    return this.props.password;
+  }
+
+  private constructor(props: IClientProps, id?: string) {
+    super(props, id);
+  }
+
+  public static create(props: IClientProps, id?: string): Client {
+    return new Client(props, id);
   }
 }

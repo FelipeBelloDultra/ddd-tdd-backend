@@ -3,7 +3,7 @@ import { Employee } from "./Employee";
 
 describe("Employee.ts", () => {
   it("should create Employee instance", () => {
-    const employee = new Employee({
+    const employee = Employee.create({
       name: faker.person.fullName(),
       email: faker.internet.email(),
       avatarUrl: faker.internet.avatar(),
