@@ -1,7 +1,7 @@
-import { FakeBarbershopRepository } from "~/repositories/fakes/FakeBarbershopRepository";
-import { CreateBarbershop } from "~/useCases/CreateBarbershop";
+import { FakeRepositoryFactory } from "~/infra/factory/fakes/FakeRepositoryFactory";
+import { CreateBarbershop } from "~/application/useCases/CreateBarbershop";
 
-new CreateBarbershop(new FakeBarbershopRepository())
+new CreateBarbershop(new FakeRepositoryFactory())
   .execute({
     name: "Fake Barbershop",
     email: "fake@fakebarbershop.com",
