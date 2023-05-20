@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { Client } from "./Client";
+import { Client } from "~/domain/entity/Client";
 
 describe("Client.ts", () => {
   it("should create Client instance", () => {

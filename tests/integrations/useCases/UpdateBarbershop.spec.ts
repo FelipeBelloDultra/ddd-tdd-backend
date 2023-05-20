@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { FakeRepositoryFactory } from "~/infra/factory/fakes/FakeRepositoryFactory";
 import { Barbershop } from "~/domain/entity/Barbershop";
-import { UpdateBarbershop } from "./UpdateBarbershop";
+import { UpdateBarbershop } from "~/application/useCases/UpdateBarbershop";
 
 const barbershop = Barbershop.create({
   name: faker.person.fullName(),

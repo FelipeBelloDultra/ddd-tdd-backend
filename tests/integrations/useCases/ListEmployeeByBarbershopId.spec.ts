@@ -1,5 +1,5 @@
 import { FakeRepositoryFactory } from "~/infra/factory/fakes/FakeRepositoryFactory";
-import { ListEmployeeByBarbershopId } from "./ListEmployeeByBarbershopId";
+import { ListEmployeeByBarbershopId } from "~/application/useCases/ListEmployeeByBarbershopId";
 
 describe("ListEmployeeByBarbershopId", () => {
   const fakeRepositoryFactory = new FakeRepositoryFactory();

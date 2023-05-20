@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "test": "vitest src/**"
+    "test:all": "vitest tests/**",
+    "test:units": "vitest tests/units/**",
+    "test:integrations": "vitest tests/integrations/**",
+    "test:cov": "vitest --coverage"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +18,7 @@
     "@types/node": "^20.1.2",
     "@typescript-eslint/eslint-plugin": "^5.59.5",
     "@typescript-eslint/parser": "^5.59.5",
+    "@vitest/coverage-c8": "^0.31.1",
     "eslint": "^8.40.0",
     "typescript": "^5.0.4",
     "vitest": "^0.31.0"

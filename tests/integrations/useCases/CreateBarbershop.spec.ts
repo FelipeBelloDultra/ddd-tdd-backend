@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker";
 import { FakeRepositoryFactory } from "~/infra/factory/fakes/FakeRepositoryFactory";
 import { Barbershop } from "~/domain/entity/Barbershop";
 import { Employee } from "~/domain/entity/Employee";
-import { CreateBarbershop } from "./CreateBarbershop";
+import { CreateBarbershop } from "~/application/useCases/CreateBarbershop";
 
 describe("CreateBarbershop.ts", () => {
   const fakeRepositoryFactory = new FakeRepositoryFactory();

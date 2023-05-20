@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker";
 import { FakeRepositoryFactory } from "~/infra/factory/fakes/FakeRepositoryFactory";
 import { Employee } from "~/domain/entity/Employee";
 import { Barbershop } from "~/domain/entity/Barbershop";
-import { CreateEmployee } from "./CreateEmployee";
+import { CreateEmployee } from "~/application/useCases/CreateEmployee";
 
 describe("CreateEmployee", () => {
   const fakeRepositoryFactory = new FakeRepositoryFactory();

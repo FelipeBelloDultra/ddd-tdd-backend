@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { Barbershop } from "./Barbershop";
+import { Barbershop } from "~/domain/entity/Barbershop";
 
 describe("Barbershop.ts", () => {
   it("should create Barbershop instance", () => {
