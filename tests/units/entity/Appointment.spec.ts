@@ -62,6 +62,6 @@ describe("Appointment.ts", () => {
   });
 
   afterAll(() => {
-    vi.useRealTimers();
+    vi.clearAllTimers();
   });
 });
