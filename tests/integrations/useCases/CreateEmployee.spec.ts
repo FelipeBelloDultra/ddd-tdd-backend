@@ -9,6 +9,8 @@ describe("CreateEmployee", () => {
   const barbershopRepository =
     fakeRepositoryFactory.createBarbershopRepository();
   const employeeRepository = fakeRepositoryFactory.createEmployeeRepository();
+  const appointmentRepository =
+    fakeRepositoryFactory.createAppointmentRepository();
   const barbershop = Barbershop.create({
     name: faker.person.fullName(),
     email: faker.internet.email(),
@@ -23,6 +25,7 @@ describe("CreateEmployee", () => {
     createEmployee = new CreateEmployee({
       createBarbershopRepository: () => barbershopRepository,
       createEmployeeRepository: () => employeeRepository,
+      createAppointmentRepository: () => appointmentRepository,
     });
   });
 

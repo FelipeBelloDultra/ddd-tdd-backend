@@ -9,6 +9,8 @@ describe("CreateBarbershop.ts", () => {
   const barbershopRepository =
     fakeRepositoryFactory.createBarbershopRepository();
   const employeeRepository = fakeRepositoryFactory.createEmployeeRepository();
+  const appointmentRepository =
+    fakeRepositoryFactory.createAppointmentRepository();
 
   let createBarbershop: CreateBarbershop;
 
@@ -16,6 +18,7 @@ describe("CreateBarbershop.ts", () => {
     createBarbershop = new CreateBarbershop({
       createBarbershopRepository: () => barbershopRepository,
       createEmployeeRepository: () => employeeRepository,
+      createAppointmentRepository: () => appointmentRepository,
     });
   });
 

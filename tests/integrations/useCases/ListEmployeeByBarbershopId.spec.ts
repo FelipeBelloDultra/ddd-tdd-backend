@@ -6,6 +6,8 @@ describe("ListEmployeeByBarbershopId", () => {
   const barbershopRepository =
     fakeRepositoryFactory.createBarbershopRepository();
   const employeeRepository = fakeRepositoryFactory.createEmployeeRepository();
+  const appointmentRepository =
+    fakeRepositoryFactory.createAppointmentRepository();
 
   let listEmployeeByBarbershopId: ListEmployeeByBarbershopId;
 
@@ -13,6 +15,7 @@ describe("ListEmployeeByBarbershopId", () => {
     listEmployeeByBarbershopId = new ListEmployeeByBarbershopId({
       createBarbershopRepository: () => barbershopRepository,
       createEmployeeRepository: () => employeeRepository,
+      createAppointmentRepository: () => appointmentRepository,
     });
   });
 

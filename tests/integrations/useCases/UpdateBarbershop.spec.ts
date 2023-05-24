@@ -14,6 +14,8 @@ describe("UpdateBarbershop", () => {
   const barbershopRepository =
     fakeRepositoryFactory.createBarbershopRepository();
   const employeeRepository = fakeRepositoryFactory.createEmployeeRepository();
+  const appointmentRepository =
+    fakeRepositoryFactory.createAppointmentRepository();
 
   let updateBarbershop: UpdateBarbershop;
 
@@ -23,6 +25,7 @@ describe("UpdateBarbershop", () => {
     updateBarbershop = new UpdateBarbershop({
       createBarbershopRepository: () => barbershopRepository,
       createEmployeeRepository: () => employeeRepository,
+      createAppointmentRepository: () => appointmentRepository,
     });
   });
 
