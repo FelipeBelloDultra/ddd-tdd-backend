@@ -4,6 +4,8 @@ interface IClientProps {
   name: string;
   email: string;
   password: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export class Client extends Entity<IClientProps> {
@@ -17,6 +19,14 @@ export class Client extends Entity<IClientProps> {
 
   get password(): string {
     return this.props.password;
+  }
+
+  get createdAt(): Date | undefined {
+    return this.props.createdAt;
+  }
+
+  get updatedAt(): Date | undefined {
+    return this.props.updatedAt;
   }
 
   private constructor(props: IClientProps, id?: string) {

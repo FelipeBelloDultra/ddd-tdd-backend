@@ -4,6 +4,8 @@ interface IAppointmentProps {
   employeeId: string;
   clientId: string;
   date: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export class Appointment extends Entity<IAppointmentProps> {
@@ -20,6 +22,14 @@ export class Appointment extends Entity<IAppointmentProps> {
 
   get date(): Date {
     return this.props.date;
+  }
+
+  get createdAt(): Date | undefined {
+    return this.props.createdAt;
+  }
+
+  get updatedAt(): Date | undefined {
+    return this.props.updatedAt;
   }
 
   private constructor(props: IAppointmentProps, id?: string) {
