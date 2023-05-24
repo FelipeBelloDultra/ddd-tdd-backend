@@ -7,6 +7,9 @@ interface IAppointmentProps {
 }
 
 export class Appointment extends Entity<IAppointmentProps> {
+  private START_WORK_TIME = 8;
+  private END_WORK_TIME = 17;
+
   get employeeId(): string {
     return this.props.employeeId;
   }
@@ -25,5 +28,17 @@ export class Appointment extends Entity<IAppointmentProps> {
 
   public static create(props: IAppointmentProps, id?: string): Appointment {
     return new Appointment(props, id);
+  }
+
+  public hourIsAvailable(): boolean {
+    const hours = this.date.getHours();
+
+    if (this.date.getTime() < new Date().getTime()) return false;
+
+    if (hours < this.START_WORK_TIME || hours > this.END_WORK_TIME) {
+      return false;
+    }
+
+    return true;
   }
 }
