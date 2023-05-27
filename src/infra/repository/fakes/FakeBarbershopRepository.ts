@@ -1,21 +1,12 @@
 import { Barbershop } from "~/domain/entity/Barbershop";
 import { IBarbershopRepository } from "~/application/repository/IBarbershopRepository";
-import { BarbershopMapper } from "~/application/mappers/BarbershopMapper";
+import {
+  BarbershopMapper,
+  IPersistenceBarbershop,
+} from "~/application/mappers/BarbershopMapper";
 
 export class FakeBarbershopRepository implements IBarbershopRepository {
-  private readonly barbershops: {
-    id_barbershop: string;
-    name: string;
-    email: string;
-    password: string;
-    street?: string;
-    neighborhood?: string;
-    number?: string;
-    phone?: string;
-    avatarUrl?: string;
-    createdAt?: Date;
-    updatedAt?: Date;
-  }[] = [];
+  private readonly barbershops: IPersistenceBarbershop[] = [];
 
   public async create(data: Barbershop): Promise<Barbershop> {
     this.barbershops.push(BarbershopMapper.toPersistence(data));

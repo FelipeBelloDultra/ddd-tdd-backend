@@ -1,6 +1,6 @@
 import { Appointment } from "~/domain/entity/Appointment";
 
-interface IAppointment {
+export interface IPersistenceAppointment {
   id_appointment: string;
   employee_id: string;
   client_id: string;
@@ -10,7 +10,7 @@ interface IAppointment {
 }
 
 export class AppointmentMapper {
-  static toDomain(raw: IAppointment): Appointment {
+  static toDomain(raw: IPersistenceAppointment): Appointment {
     const appointment = Appointment.create(
       {
         employeeId: raw.employee_id,
@@ -25,7 +25,7 @@ export class AppointmentMapper {
     return appointment;
   }
 
-  static toPersistence(appointment: Appointment): IAppointment {
+  static toPersistence(appointment: Appointment): IPersistenceAppointment {
     return {
       id_appointment: appointment.id,
       employee_id: appointment.employeeId,

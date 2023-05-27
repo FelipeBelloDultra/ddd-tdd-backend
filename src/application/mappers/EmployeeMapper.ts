@@ -1,6 +1,6 @@
 import { Employee } from "~/domain/entity/Employee";
 
-interface IPersistenceEmployee {
+export interface IPersistenceEmployee {
   id_employee: string;
   name: string;
   email: string;

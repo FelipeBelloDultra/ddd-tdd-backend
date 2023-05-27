@@ -9,8 +9,8 @@ interface IAppointmentProps {
 }
 
 export class Appointment extends Entity<IAppointmentProps> {
-  private START_WORK_TIME = 8;
-  private END_WORK_TIME = 17;
+  private START_WORK_TIME_AT = 8;
+  private FINISH_WORK_TIME_AT = 17;
 
   get employeeId(): string {
     return this.props.employeeId;
@@ -45,7 +45,7 @@ export class Appointment extends Entity<IAppointmentProps> {
 
     if (this.date.getTime() < new Date().getTime()) return false;
 
-    if (hours < this.START_WORK_TIME || hours > this.END_WORK_TIME) {
+    if (hours < this.START_WORK_TIME_AT || hours > this.FINISH_WORK_TIME_AT) {
       return false;
     }
 

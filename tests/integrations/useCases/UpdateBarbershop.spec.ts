@@ -3,29 +3,26 @@ import { FakeRepositoryFactory } from "~/infra/factory/fakes/FakeRepositoryFacto
 import { Barbershop } from "~/domain/entity/Barbershop";
 import { UpdateBarbershop } from "~/application/useCases/UpdateBarbershop";
 
+const fakeRepositoryFactory = FakeRepositoryFactory.create();
+
 const barbershop = Barbershop.create({
   name: faker.person.fullName(),
   email: faker.internet.email(),
   password: faker.internet.password(),
 });
 
+let updateBarbershop: UpdateBarbershop;
+
 describe("UpdateBarbershop", () => {
-  const fakeRepositoryFactory = new FakeRepositoryFactory();
-  const barbershopRepository =
-    fakeRepositoryFactory.createBarbershopRepository();
-  const employeeRepository = fakeRepositoryFactory.createEmployeeRepository();
-  const appointmentRepository =
-    fakeRepositoryFactory.createAppointmentRepository();
-
-  let updateBarbershop: UpdateBarbershop;
-
   beforeEach(async () => {
-    await barbershopRepository.create(barbershop);
+    await fakeRepositoryFactory.barbershopRepository.create(barbershop);
 
     updateBarbershop = new UpdateBarbershop({
-      createBarbershopRepository: () => barbershopRepository,
-      createEmployeeRepository: () => employeeRepository,
-      createAppointmentRepository: () => appointmentRepository,
+      createBarbershopRepository: () =>
+        fakeRepositoryFactory.barbershopRepository,
+      createEmployeeRepository: () => fakeRepositoryFactory.employeeRepository,
+      createAppointmentRepository: () =>
+        fakeRepositoryFactory.appointmentRepository,
     });
   });
 

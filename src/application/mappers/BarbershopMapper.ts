@@ -1,6 +1,6 @@
 import { Barbershop } from "~/domain/entity/Barbershop";
 
-interface IPersistenceBarbershop {
+export interface IPersistenceBarbershop {
   id_barbershop: string;
   name: string;
   email: string;

@@ -1,19 +1,13 @@
 import { faker } from "@faker-js/faker";
 import { Employee } from "~/domain/entity/Employee";
 import { IEmployeeRepository } from "~/application/repository/IEmployeeRepository";
-import { EmployeeMapper } from "~/application/mappers/EmployeeMapper";
+import {
+  EmployeeMapper,
+  IPersistenceEmployee,
+} from "~/application/mappers/EmployeeMapper";
 
 export class FakeEmployeeRepository implements IEmployeeRepository {
-  private readonly employees: {
-    id_employee: string;
-    name: string;
-    email: string;
-    phone: string;
-    avatar_url: string;
-    barbershop_id: string;
-    createdAt?: Date;
-    updatedAt?: Date;
-  }[];
+  private readonly employees: IPersistenceEmployee[];
 
   constructor() {
     const firstBarbershopId = "123";
@@ -86,5 +80,15 @@ export class FakeEmployeeRepository implements IEmployeeRepository {
         phone: finded.phone,
       })
     );
+  }
+
+  public async findById(id: string): Promise<Employee | undefined> {
+    const finded = this.employees.find(
+      (employee) => employee.id_employee === id
+    );
+
+    if (!finded) return undefined;
+
+    return Promise.resolve(EmployeeMapper.toDomain(finded));
   }
 }

@@ -1,21 +1,18 @@
 import { FakeRepositoryFactory } from "~/infra/factory/fakes/FakeRepositoryFactory";
 import { ListEmployeeByBarbershopId } from "~/application/useCases/ListEmployeeByBarbershopId";
 
+const fakeRepositoryFactory = FakeRepositoryFactory.create();
+
+let listEmployeeByBarbershopId: ListEmployeeByBarbershopId;
+
 describe("ListEmployeeByBarbershopId", () => {
-  const fakeRepositoryFactory = new FakeRepositoryFactory();
-  const barbershopRepository =
-    fakeRepositoryFactory.createBarbershopRepository();
-  const employeeRepository = fakeRepositoryFactory.createEmployeeRepository();
-  const appointmentRepository =
-    fakeRepositoryFactory.createAppointmentRepository();
-
-  let listEmployeeByBarbershopId: ListEmployeeByBarbershopId;
-
   beforeEach(() => {
     listEmployeeByBarbershopId = new ListEmployeeByBarbershopId({
-      createBarbershopRepository: () => barbershopRepository,
-      createEmployeeRepository: () => employeeRepository,
-      createAppointmentRepository: () => appointmentRepository,
+      createBarbershopRepository: () =>
+        fakeRepositoryFactory.barbershopRepository,
+      createEmployeeRepository: () => fakeRepositoryFactory.employeeRepository,
+      createAppointmentRepository: () =>
+        fakeRepositoryFactory.appointmentRepository,
     });
   });
 

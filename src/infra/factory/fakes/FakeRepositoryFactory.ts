@@ -7,6 +7,24 @@ import { FakeEmployeeRepository } from "~/infra/repository/fakes/FakeEmployeeRep
 import { FakeAppointmentRepository } from "~/infra/repository/fakes/FakeAppointmentRepository";
 
 export class FakeRepositoryFactory implements IRepositoryFactory {
+  static create() {
+    const {
+      createAppointmentRepository,
+      createBarbershopRepository,
+      createEmployeeRepository,
+    } = new FakeRepositoryFactory();
+
+    const barbershopRepository = createBarbershopRepository();
+    const employeeRepository = createEmployeeRepository();
+    const appointmentRepository = createAppointmentRepository();
+
+    return {
+      barbershopRepository,
+      employeeRepository,
+      appointmentRepository,
+    };
+  }
+
   public createBarbershopRepository(): IBarbershopRepository {
     return new FakeBarbershopRepository();
   }

@@ -4,21 +4,18 @@ import { Barbershop } from "~/domain/entity/Barbershop";
 import { Employee } from "~/domain/entity/Employee";
 import { CreateBarbershop } from "~/application/useCases/CreateBarbershop";
 
+const fakeRepositoryFactory = FakeRepositoryFactory.create();
+
+let createBarbershop: CreateBarbershop;
+
 describe("CreateBarbershop.ts", () => {
-  const fakeRepositoryFactory = new FakeRepositoryFactory();
-  const barbershopRepository =
-    fakeRepositoryFactory.createBarbershopRepository();
-  const employeeRepository = fakeRepositoryFactory.createEmployeeRepository();
-  const appointmentRepository =
-    fakeRepositoryFactory.createAppointmentRepository();
-
-  let createBarbershop: CreateBarbershop;
-
   beforeEach(() => {
     createBarbershop = new CreateBarbershop({
-      createBarbershopRepository: () => barbershopRepository,
-      createEmployeeRepository: () => employeeRepository,
-      createAppointmentRepository: () => appointmentRepository,
+      createBarbershopRepository: () =>
+        fakeRepositoryFactory.barbershopRepository,
+      createEmployeeRepository: () => fakeRepositoryFactory.employeeRepository,
+      createAppointmentRepository: () =>
+        fakeRepositoryFactory.appointmentRepository,
     });
   });
 
@@ -36,7 +33,7 @@ describe("CreateBarbershop.ts", () => {
   it("should not be able to create Barbershop if email already registered by other barbershop", async () => {
     const email = faker.internet.email();
 
-    await barbershopRepository.create(
+    await fakeRepositoryFactory.barbershopRepository.create(
       Barbershop.create({
         name: faker.person.fullName(),
         email,
@@ -64,7 +61,7 @@ describe("CreateBarbershop.ts", () => {
       barbershopId: faker.string.uuid(),
     });
 
-    await employeeRepository.create(employee);
+    await fakeRepositoryFactory.employeeRepository.create(employee);
 
     await expect(
       createBarbershop.execute({

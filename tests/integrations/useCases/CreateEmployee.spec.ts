@@ -4,28 +4,26 @@ import { Employee } from "~/domain/entity/Employee";
 import { Barbershop } from "~/domain/entity/Barbershop";
 import { CreateEmployee } from "~/application/useCases/CreateEmployee";
 
+const fakeRepositoryFactory = FakeRepositoryFactory.create();
+
+const barbershop = Barbershop.create({
+  name: faker.person.fullName(),
+  email: faker.internet.email(),
+  password: faker.internet.password(),
+});
+
+let createEmployee: CreateEmployee;
+
 describe("CreateEmployee", () => {
-  const fakeRepositoryFactory = new FakeRepositoryFactory();
-  const barbershopRepository =
-    fakeRepositoryFactory.createBarbershopRepository();
-  const employeeRepository = fakeRepositoryFactory.createEmployeeRepository();
-  const appointmentRepository =
-    fakeRepositoryFactory.createAppointmentRepository();
-  const barbershop = Barbershop.create({
-    name: faker.person.fullName(),
-    email: faker.internet.email(),
-    password: faker.internet.password(),
-  });
-
-  let createEmployee: CreateEmployee;
-
   beforeEach(async () => {
-    await barbershopRepository.create(barbershop);
+    await fakeRepositoryFactory.barbershopRepository.create(barbershop);
 
     createEmployee = new CreateEmployee({
-      createBarbershopRepository: () => barbershopRepository,
-      createEmployeeRepository: () => employeeRepository,
-      createAppointmentRepository: () => appointmentRepository,
+      createBarbershopRepository: () =>
+        fakeRepositoryFactory.barbershopRepository,
+      createEmployeeRepository: () => fakeRepositoryFactory.employeeRepository,
+      createAppointmentRepository: () =>
+        fakeRepositoryFactory.appointmentRepository,
     });
   });
 
@@ -53,7 +51,7 @@ describe("CreateEmployee", () => {
       barbershopId: barbershop.id,
     });
 
-    await employeeRepository.create(employee);
+    await fakeRepositoryFactory.employeeRepository.create(employee);
 
     await expect(
       createEmployee.execute({
