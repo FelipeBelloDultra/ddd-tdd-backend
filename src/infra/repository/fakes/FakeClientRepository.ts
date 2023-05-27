@@ -15,4 +15,18 @@ export class FakeClientRepository implements IClientRepository {
 
     return Promise.resolve(ClientMapper.toDomain(finded));
   }
+
+  public async findByEmail(email: string): Promise<Client | undefined> {
+    const finded = this.clients.find((client) => (client.email = email));
+
+    if (!finded) return undefined;
+
+    return Promise.resolve(ClientMapper.toDomain(finded));
+  }
+
+  public async create(data: Client): Promise<Client> {
+    this.clients.push(ClientMapper.toPersistence(data));
+
+    return Promise.resolve(data);
+  }
 }
