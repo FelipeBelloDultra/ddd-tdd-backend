@@ -16,6 +16,7 @@ describe("CreateBarbershop.ts", () => {
       createEmployeeRepository: () => fakeRepositoryFactory.employeeRepository,
       createAppointmentRepository: () =>
         fakeRepositoryFactory.appointmentRepository,
+      createClientRepository: () => fakeRepositoryFactory.clientRepository,
     });
   });
 

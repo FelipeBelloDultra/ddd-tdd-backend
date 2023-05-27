@@ -37,6 +37,7 @@ describe("ScheduleAppointment", () => {
       createEmployeeRepository: () => fakeRepositoryFactory.employeeRepository,
       createAppointmentRepository: () =>
         fakeRepositoryFactory.appointmentRepository,
+      createClientRepository: () => fakeRepositoryFactory.clientRepository,
     });
   });
 

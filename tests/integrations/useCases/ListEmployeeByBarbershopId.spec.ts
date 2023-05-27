@@ -13,6 +13,7 @@ describe("ListEmployeeByBarbershopId", () => {
       createEmployeeRepository: () => fakeRepositoryFactory.employeeRepository,
       createAppointmentRepository: () =>
         fakeRepositoryFactory.appointmentRepository,
+      createClientRepository: () => fakeRepositoryFactory.clientRepository,
     });
   });
 

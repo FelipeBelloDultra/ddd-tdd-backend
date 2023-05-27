@@ -24,6 +24,7 @@ describe("CreateEmployee", () => {
       createEmployeeRepository: () => fakeRepositoryFactory.employeeRepository,
       createAppointmentRepository: () =>
         fakeRepositoryFactory.appointmentRepository,
+      createClientRepository: () => fakeRepositoryFactory.clientRepository,
     });
   });
 
