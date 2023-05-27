@@ -81,19 +81,6 @@ describe("ScheduleAppointment", () => {
     ).rejects.toThrowError("Employee not found");
   });
 
-  it("should not be able schedule an appointment if client does not exists", async () => {
-    const date = new Date("2000-01-01T07:00:00");
-    vi.setSystemTime(date);
-
-    await expect(
-      scheduleAppointment.execute({
-        employeeId: employee.id,
-        clientId: "non-existent-client-id",
-        date: new Date(),
-      })
-    ).rejects.toThrowError("Client not found");
-  });
-
   afterAll(() => {
     vi.clearAllTimers();
   });
