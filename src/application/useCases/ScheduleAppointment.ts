@@ -38,6 +38,12 @@ export class ScheduleAppointment {
       throw new Error("Hour is not available");
     }
 
+    const findAppointmentInSameDate =
+      await this.appointmentRepository.findByDate(data.date, data.employeeId);
+
+    if (findAppointmentInSameDate)
+      throw new Error("This appointment is already booked");
+
     await this.appointmentRepository.create(appointment);
 
     return appointment.id;

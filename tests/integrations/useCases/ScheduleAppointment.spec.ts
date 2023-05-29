@@ -3,6 +3,7 @@ import { faker } from "@faker-js/faker";
 import { FakeRepositoryFactory } from "~/infra/factory/fakes/FakeRepositoryFactory";
 import { Barbershop } from "~/domain/entity/Barbershop";
 import { Employee } from "~/domain/entity/Employee";
+import { Appointment } from "~/domain/entity/Appointment";
 import { ScheduleAppointment } from "~/application/useCases/ScheduleAppointment";
 
 const fakeRepositoryFactory = FakeRepositoryFactory.create();
@@ -79,6 +80,27 @@ describe("ScheduleAppointment", () => {
         date: new Date(),
       })
     ).rejects.toThrowError("Employee not found");
+  });
+
+  it("should not be able to schedule if another schedule exists", async () => {
+    const date = new Date("2000-01-01T08:00:00");
+    vi.setSystemTime(date);
+
+    await fakeRepositoryFactory.appointmentRepository.create(
+      Appointment.create({
+        employeeId: employee.id,
+        clientId: faker.string.uuid(),
+        date: new Date(),
+      })
+    );
+
+    await expect(
+      scheduleAppointment.execute({
+        employeeId: employee.id,
+        clientId: faker.string.uuid(),
+        date: new Date(),
+      })
+    ).rejects.toThrowError("This appointment is already booked");
   });
 
   afterAll(() => {
