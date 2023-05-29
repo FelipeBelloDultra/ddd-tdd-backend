@@ -2,6 +2,7 @@ import { Employee } from "~/domain/entity/Employee";
 import { IEmployeeRepository } from "~/application/repository/IEmployeeRepository";
 import { IBarbershopRepository } from "~/application/repository/IBarbershopRepository";
 import { IRepositoryFactory } from "../factory/IRepositoryFactory";
+import { EmailValidatorService } from "../services/EmailValidatorService";
 
 interface ICreateEmployee {
   name: string;
@@ -14,10 +15,17 @@ interface ICreateEmployee {
 export class CreateEmployee {
   private readonly employeeRepository: IEmployeeRepository;
   private readonly barbershopRepository: IBarbershopRepository;
+  private readonly emailValidatorService: EmailValidatorService;
 
   constructor(repositoryFactory: IRepositoryFactory) {
     this.employeeRepository = repositoryFactory.createEmployeeRepository();
     this.barbershopRepository = repositoryFactory.createBarbershopRepository();
+
+    this.emailValidatorService = new EmailValidatorService({
+      barbershopRepository: repositoryFactory.createBarbershopRepository(),
+      employeeRepository: repositoryFactory.createEmployeeRepository(),
+      clientRepository: repositoryFactory.createClientRepository(),
+    });
   }
 
   public async execute(data: ICreateEmployee): Promise<string> {
@@ -27,14 +35,7 @@ export class CreateEmployee {
 
     if (!existingBarbershop) throw new Error("Barbershop not found");
 
-    const existingEmployeeEmail = await this.employeeRepository.findByEmail(
-      data.email
-    );
-    const existingBarbershopEmail = await this.barbershopRepository.findByEmail(
-      data.email
-    );
-
-    if (existingEmployeeEmail || existingBarbershopEmail)
+    if (await this.emailValidatorService.isUsed(data.email))
       throw new Error("Email already registered");
 
     const employee = Employee.create({

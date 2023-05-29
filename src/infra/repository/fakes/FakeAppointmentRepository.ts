@@ -11,6 +11,6 @@ export class FakeAppointmentRepository implements IAppointmentRepository {
   public async create(data: Appointment): Promise<Appointment> {
     this.appointments.push(AppointmentMapper.toPersistence(data));
 
-    return data;
+    return Promise.resolve(data);
   }
 }

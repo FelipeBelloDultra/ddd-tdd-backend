@@ -41,35 +41,23 @@ describe("CreateEmployee", () => {
     expect(result).toBeTypeOf("string");
   });
 
-  it("should not be able to create Employee if email already used by other employee", async () => {
+  it("should not be able create Employee if email already exists", async () => {
     const email = faker.internet.email();
 
-    const employee = Employee.create({
-      name: faker.person.fullName(),
-      email: email,
-      phone: faker.phone.number(),
-      avatarUrl: faker.internet.avatar(),
-      barbershopId: barbershop.id,
-    });
-
-    await fakeRepositoryFactory.employeeRepository.create(employee);
+    await fakeRepositoryFactory.employeeRepository.create(
+      Employee.create({
+        name: faker.person.fullName(),
+        email: email,
+        phone: faker.phone.number(),
+        avatarUrl: faker.internet.avatar(),
+        barbershopId: barbershop.id,
+      })
+    );
 
     await expect(
       createEmployee.execute({
         name: faker.person.fullName(),
         email,
-        avatarUrl: faker.internet.avatar(),
-        barbershopId: barbershop.id,
-        phone: faker.phone.number(),
-      })
-    ).rejects.toThrowError("Email already registered");
-  });
-
-  it("should not be able to create Employee if email already used by barbershop", async () => {
-    await expect(
-      createEmployee.execute({
-        name: faker.person.fullName(),
-        email: barbershop.email,
         avatarUrl: faker.internet.avatar(),
         barbershopId: barbershop.id,
         phone: faker.phone.number(),

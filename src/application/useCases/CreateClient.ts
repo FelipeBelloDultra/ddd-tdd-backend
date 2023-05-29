@@ -1,6 +1,7 @@
 import { IClientRepository } from "../repository/IClientRepository";
 import { IRepositoryFactory } from "../factory/IRepositoryFactory";
 import { Client } from "~/domain/entity/Client";
+import { EmailValidatorService } from "../services/EmailValidatorService";
 
 interface ICreateClient {
   name: string;
@@ -10,15 +11,21 @@ interface ICreateClient {
 
 export class CreateClient {
   private readonly clientRepository: IClientRepository;
+  private readonly emailValidatorService: EmailValidatorService;
 
   constructor(repositoryFactory: IRepositoryFactory) {
     this.clientRepository = repositoryFactory.createClientRepository();
+
+    this.emailValidatorService = new EmailValidatorService({
+      barbershopRepository: repositoryFactory.createBarbershopRepository(),
+      employeeRepository: repositoryFactory.createEmployeeRepository(),
+      clientRepository: repositoryFactory.createClientRepository(),
+    });
   }
 
   public async execute(data: ICreateClient): Promise<string> {
-    const usedEamil = await this.clientRepository.findByEmail(data.email);
-
-    if (usedEamil) throw new Error("Email already registered");
+    if (await this.emailValidatorService.isUsed(data.email))
+      throw new Error("Email already registered");
 
     const client = Client.create(data);
 
