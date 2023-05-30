@@ -6,11 +6,13 @@ export interface IAppointmentRepository {
     date: Date,
     employeeId: string
   ) => Promise<Appointment | undefined>;
-  findAllInMonthFromEmployee: ({
-    month,
-    year,
-    employeeId,
-  }: {
+  findAllInMonthFromEmployee: (data: {
+    month: number;
+    year: number;
+    employeeId: string;
+  }) => Promise<Appointment[]>;
+  findAllInDayFromEmployee: (data: {
+    day: number;
     month: number;
     year: number;
     employeeId: string;

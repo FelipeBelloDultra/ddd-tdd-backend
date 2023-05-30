@@ -30,20 +30,36 @@ export class FakeAppointmentRepository implements IAppointmentRepository {
     return Promise.resolve(AppointmentMapper.toDomain(finded));
   }
 
-  public async findAllInMonthFromEmployee({
-    month,
-    year,
-    employeeId,
-  }: {
+  public async findAllInMonthFromEmployee(data: {
     month: number;
     year: number;
     employeeId: string;
   }): Promise<Appointment[]> {
     const filtred = this.appointments.filter(
       (appointment) => (
-        appointment.employee_id === employeeId,
-        appointment.date.getMonth() + 1 === month,
-        appointment.date.getFullYear() === year
+        appointment.employee_id === data.employeeId,
+        appointment.date.getMonth() + 1 === data.month,
+        appointment.date.getFullYear() === data.year
+      )
+    );
+
+    const appointments = filtred.map(AppointmentMapper.toDomain);
+
+    return appointments;
+  }
+
+  public async findAllInDayFromEmployee(data: {
+    day: number;
+    month: number;
+    year: number;
+    employeeId: string;
+  }): Promise<Appointment[]> {
+    const filtred = this.appointments.filter(
+      (appointment) => (
+        appointment.employee_id === data.employeeId,
+        appointment.date.getMonth() + 1 === data.month,
+        appointment.date.getFullYear() === data.year,
+        appointment.date.getDate() === data.day
       )
     );
 
