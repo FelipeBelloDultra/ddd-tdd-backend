@@ -6,4 +6,13 @@ export interface IAppointmentRepository {
     date: Date,
     employeeId: string
   ) => Promise<Appointment | undefined>;
+  findAllInMonthFromEmployee: ({
+    month,
+    year,
+    employeeId,
+  }: {
+    month: number;
+    year: number;
+    employeeId: string;
+  }) => Promise<Appointment[]>;
 }

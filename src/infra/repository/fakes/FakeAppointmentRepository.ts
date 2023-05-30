@@ -29,4 +29,26 @@ export class FakeAppointmentRepository implements IAppointmentRepository {
 
     return Promise.resolve(AppointmentMapper.toDomain(finded));
   }
+
+  public async findAllInMonthFromEmployee({
+    month,
+    year,
+    employeeId,
+  }: {
+    month: number;
+    year: number;
+    employeeId: string;
+  }): Promise<Appointment[]> {
+    const filtred = this.appointments.filter(
+      (appointment) => (
+        appointment.employee_id === employeeId,
+        appointment.date.getMonth() + 1 === month,
+        appointment.date.getFullYear() === year
+      )
+    );
+
+    const appointments = filtred.map(AppointmentMapper.toDomain);
+
+    return appointments;
+  }
 }
