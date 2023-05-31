@@ -1,4 +1,4 @@
-import { DateService } from "~/domain/entity/DateService";
+import { AppointmentAvailability } from "~/domain/entity/AppointmentAvailability";
 import { IRepositoryFactory } from "../factory/IRepositoryFactory";
 import { IAppointmentRepository } from "../repository/IAppointmentRepository";
 
@@ -31,32 +31,12 @@ export class ListEmployeeDayAvailability {
         day: data.day,
       });
 
-    const START_HOUR = 8;
-    const MAX_APPOINTMENTS_PER_DAY = 10;
+    const appointmentAvailability = new AppointmentAvailability(appointments);
 
-    const eachHourArray = Array.from(
-      { length: MAX_APPOINTMENTS_PER_DAY },
-      (_, index) => index + START_HOUR
-    );
-
-    const currentDate = new Date(Date.now());
-
-    const availability = eachHourArray.map((hour) => {
-      const hasAppointmentInHour = appointments.find(
-        (appointment) => new Date(appointment.date).getHours() === hour
-      );
-
-      const compareDate = new Date(data.year, data.month - 1, data.day, hour);
-
-      return {
-        hour,
-        available:
-          !hasAppointmentInHour &&
-          DateService.isAfter({
-            date: compareDate,
-            dateToCompare: currentDate,
-          }),
-      };
+    const availability = appointmentAvailability.checkDay({
+      day: data.day,
+      month: data.month,
+      year: data.year,
     });
 
     return availability;

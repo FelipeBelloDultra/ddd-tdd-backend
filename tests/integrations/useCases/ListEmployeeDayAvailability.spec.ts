@@ -29,6 +29,7 @@ describe("ListEmployeeDayAvailability", () => {
   });
 
   it("should list available appointments", async () => {
+    vi.setSystemTime(new Date(`${YEAR}-${MONTH}-02T08:00:00`));
     vi.spyOn(Date, "now").mockImplementationOnce(() =>
       new Date(`${YEAR}-${MONTH}-${DAY}T10:00:00`).getTime()
     );
@@ -74,11 +75,8 @@ describe("ListEmployeeDayAvailability", () => {
     ).toBe(true);
   });
 
-  afterEach(() => {
-    vi.clearAllMocks();
-  });
-
   afterAll(() => {
+    vi.clearAllMocks();
     vi.clearAllTimers();
   });
 });

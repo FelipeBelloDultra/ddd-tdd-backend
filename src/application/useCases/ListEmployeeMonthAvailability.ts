@@ -1,4 +1,4 @@
-import { DateService } from "~/domain/entity/DateService";
+import { AppointmentAvailability } from "~/domain/entity/AppointmentAvailability";
 import { IRepositoryFactory } from "../factory/IRepositoryFactory";
 import { IAppointmentRepository } from "../repository/IAppointmentRepository";
 
@@ -29,30 +29,11 @@ export class ListEmployeeMonthAvailability {
         employeeId: data.employeeId,
       });
 
-    const arrayDateByDaysOfMonth = Array.from(
-      {
-        length: DateService.getDaysInMonth({
-          month: data.month - 1,
-          year: data.year,
-        }),
-      },
-      (_, i) => i + 1
-    );
+    const appointmentAvailability = new AppointmentAvailability(appointments);
 
-    const availability = arrayDateByDaysOfMonth.map((day) => {
-      const compareDate = new Date(data.year, data.month - 1, day, 23, 59, 59);
-      const appointmentsInDay = appointments.filter(
-        (appointment) => DateService.getDate(appointment.date) === day
-      );
-
-      return {
-        day,
-        available:
-          DateService.isAfter({
-            date: compareDate,
-            dateToCompare: new Date(),
-          }) && appointmentsInDay.length < 10,
-      };
+    const availability = appointmentAvailability.checkMonth({
+      month: data.month,
+      year: data.year,
     });
 
     return availability;
