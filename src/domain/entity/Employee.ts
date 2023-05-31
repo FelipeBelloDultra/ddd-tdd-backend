@@ -1,4 +1,4 @@
-import { Entity } from "./base/Entity";
+import { Entity } from "./core/Entity";
 
 interface IEmployeeProps {
   name: string;
