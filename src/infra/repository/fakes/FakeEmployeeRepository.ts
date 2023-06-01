@@ -1,10 +1,10 @@
 import { faker } from "@faker-js/faker";
-import { Employee } from "~/domain/entity/Employee";
-import { IEmployeeRepository } from "~/application/repository/IEmployeeRepository";
+import { Employee } from "@modules/employee/domain/entity/Employee";
+import { IEmployeeRepository } from "@modules/employee/application/repository/IEmployeeRepository";
 import {
   EmployeeMapper,
   IPersistenceEmployee,
-} from "~/application/mappers/EmployeeMapper";
+} from "@modules/employee/application/mappers/EmployeeMapper";
 
 export class FakeEmployeeRepository implements IEmployeeRepository {
   private readonly employees: IPersistenceEmployee[];

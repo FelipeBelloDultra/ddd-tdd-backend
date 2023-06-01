@@ -1,9 +1,9 @@
-import { Client } from "~/domain/entity/Client";
-import { IClientRepository } from "~/application/repository/IClientRepository";
+import { Client } from "@modules/client/domain/entity/Client";
+import { IClientRepository } from "@modules/client/application/repository/IClientRepository";
 import {
   ClientMapper,
   IPersistenceClient,
-} from "~/application/mappers/ClientMapper";
+} from "@modules/client/application/mappers/ClientMapper";
 
 export class FakeClientRepository implements IClientRepository {
   private readonly clients: IPersistenceClient[] = [];

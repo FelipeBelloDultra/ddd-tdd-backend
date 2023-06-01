@@ -1,9 +1,9 @@
-import { Appointment } from "~/domain/entity/Appointment";
-import { IAppointmentRepository } from "~/application/repository/IAppointmentRepository";
+import { Appointment } from "@modules/appointment/domain/entity/Appointment";
+import { IAppointmentRepository } from "@modules/appointment/application/repository/IAppointmentRepository";
 import {
   AppointmentMapper,
   IPersistenceAppointment,
-} from "~/application/mappers/AppointmentMapper";
+} from "@modules/appointment/application/mappers/AppointmentMapper";
 
 export class FakeAppointmentRepository implements IAppointmentRepository {
   private readonly appointments: IPersistenceAppointment[] = [];

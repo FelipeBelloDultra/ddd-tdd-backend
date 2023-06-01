@@ -5,9 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "test:all": "vitest tests/**",
-    "test:units": "vitest tests/units/**",
-    "test:integrations": "vitest tests/integrations/**",
+    "test:all": "vitest src/**",
     "test:cov": "vitest --coverage"
   },
   "keywords": [],

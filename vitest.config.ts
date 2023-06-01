@@ -9,8 +9,16 @@ export default defineConfig({
     },
     alias: [
       {
-        find: "~",
-        replacement: resolve(__dirname, "src"),
+        find: "@modules",
+        replacement: resolve(__dirname, "src", "modules"),
+      },
+      {
+        find: "@core",
+        replacement: resolve(__dirname, "src", "core"),
+      },
+      {
+        find: "@infra",
+        replacement: resolve(__dirname, "src", "infra"),
       },
     ],
   },

@@ -1,5 +1,5 @@
-import { FakeRepositoryFactory } from "~/infra/factory/fakes/FakeRepositoryFactory";
-import { CreateBarbershop } from "~/application/useCases/CreateBarbershop";
+import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
+import { CreateBarbershop } from "@modules/barbershop/application/useCases/CreateBarbershop";
 
 new CreateBarbershop(new FakeRepositoryFactory())
   .execute({

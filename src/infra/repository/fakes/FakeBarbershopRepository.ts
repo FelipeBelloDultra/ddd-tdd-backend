@@ -1,9 +1,9 @@
-import { Barbershop } from "~/domain/entity/Barbershop";
-import { IBarbershopRepository } from "~/application/repository/IBarbershopRepository";
+import { Barbershop } from "@modules/barbershop/domain/entity/Barbershop";
+import { IBarbershopRepository } from "@modules/barbershop/application/repository/IBarbershopRepository";
 import {
   BarbershopMapper,
   IPersistenceBarbershop,
-} from "~/application/mappers/BarbershopMapper";
+} from "@modules/barbershop/application/mappers/BarbershopMapper";
 
 export class FakeBarbershopRepository implements IBarbershopRepository {
   private readonly barbershops: IPersistenceBarbershop[] = [];
