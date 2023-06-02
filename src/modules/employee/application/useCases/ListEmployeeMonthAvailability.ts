@@ -1,4 +1,4 @@
-import { AppointmentAvailability } from "@modules/appointment/domain/entity/AppointmentAvailability";
+import { AppointmentAvailability } from "@modules/appointment/domain/AppointmentAvailability";
 import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
 import { IAppointmentRepository } from "@modules/appointment/application/repository/IAppointmentRepository";
 

@@ -1,4 +1,4 @@
-import { Client } from "@modules/client/domain/entity/Client";
+import { Client } from "@modules/client/domain/Client";
 
 export interface IClientRepository {
   findById: (id: string) => Promise<Client | undefined>;

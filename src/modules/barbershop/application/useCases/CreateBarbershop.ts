@@ -1,4 +1,4 @@
-import { Barbershop } from "@modules/barbershop/domain/entity/Barbershop";
+import { Barbershop } from "@modules/barbershop/domain/Barbershop";
 import { IBarbershopRepository } from "@modules/barbershop/application/repository/IBarbershopRepository";
 import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
 import { EmailValidatorService } from "@core/application/services/EmailValidatorService";

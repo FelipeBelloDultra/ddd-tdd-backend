@@ -1,4 +1,4 @@
-import { DateService } from "@core/domain/entity/DateService";
+import { DateService } from "@core/domain/DateService";
 import { Appointment } from "./Appointment";
 
 interface ICheckMonth {

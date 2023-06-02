@@ -9,9 +9,9 @@ import {
 } from "vitest";
 import { faker } from "@faker-js/faker";
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
-import { Barbershop } from "@modules/barbershop/domain/entity/Barbershop";
-import { Employee } from "@modules/employee/domain/entity/Employee";
-import { Appointment } from "@modules/appointment/domain/entity/Appointment";
+import { Barbershop } from "@modules/barbershop/domain/Barbershop";
+import { Employee } from "@modules/employee/domain/Employee";
+import { Appointment } from "@modules/appointment/domain/Appointment";
 import { ScheduleAppointment } from "./ScheduleAppointment";
 
 const fakeRepositoryFactory = FakeRepositoryFactory.create();

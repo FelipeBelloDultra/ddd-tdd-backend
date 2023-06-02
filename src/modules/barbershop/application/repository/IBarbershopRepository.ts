@@ -1,4 +1,4 @@
-import { Barbershop } from "@modules/barbershop/domain/entity/Barbershop";
+import { Barbershop } from "@modules/barbershop/domain/Barbershop";
 
 export interface IBarbershopRepository {
   create: (data: Barbershop) => Promise<Barbershop>;

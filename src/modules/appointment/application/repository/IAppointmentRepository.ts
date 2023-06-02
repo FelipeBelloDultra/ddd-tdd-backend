@@ -1,4 +1,4 @@
-import { Appointment } from "@modules/appointment/domain/entity/Appointment";
+import { Appointment } from "@modules/appointment/domain/Appointment";
 
 export interface IAppointmentRepository {
   create: (data: Appointment) => Promise<Appointment>;

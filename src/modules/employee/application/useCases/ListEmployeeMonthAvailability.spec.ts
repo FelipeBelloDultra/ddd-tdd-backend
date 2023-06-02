@@ -9,8 +9,8 @@ import {
 } from "vitest";
 import { faker } from "@faker-js/faker";
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
-import { Appointment } from "@modules/appointment/domain/entity/Appointment";
-import { DateService } from "@core/domain/entity/DateService";
+import { Appointment } from "@modules/appointment/domain/Appointment";
+import { DateService } from "@core/domain/DateService";
 import { ListEmployeeMonthAvailability } from "./ListEmployeeMonthAvailability";
 
 const fakeRepositoryFactory = FakeRepositoryFactory.create();

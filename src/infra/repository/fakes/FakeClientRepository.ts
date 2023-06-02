@@ -1,4 +1,4 @@
-import { Client } from "@modules/client/domain/entity/Client";
+import { Client } from "@modules/client/domain/Client";
 import { IClientRepository } from "@modules/client/application/repository/IClientRepository";
 import {
   ClientMapper,

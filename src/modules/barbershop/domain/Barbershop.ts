@@ -1,4 +1,4 @@
-import { Entity } from "@core/domain/entity/Entity";
+import { Entity } from "@core/domain/Entity";
 
 interface IBarbershopProps {
   name: string;

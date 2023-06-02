@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { Employee } from "@modules/employee/domain/entity/Employee";
+import { Employee } from "@modules/employee/domain/Employee";
 import { IEmployeeRepository } from "@modules/employee/application/repository/IEmployeeRepository";
 import {
   EmployeeMapper,

@@ -1,4 +1,4 @@
-import { Barbershop } from "@modules/barbershop/domain/entity/Barbershop";
+import { Barbershop } from "@modules/barbershop/domain/Barbershop";
 
 export interface IPersistenceBarbershop {
   id_barbershop: string;

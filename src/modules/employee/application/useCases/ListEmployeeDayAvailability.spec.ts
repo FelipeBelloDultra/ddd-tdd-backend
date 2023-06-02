@@ -9,7 +9,7 @@ import {
 } from "vitest";
 import { faker } from "@faker-js/faker";
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
-import { Appointment } from "@modules/appointment/domain/entity/Appointment";
+import { Appointment } from "@modules/appointment/domain/Appointment";
 import { ListEmployeeDayAvailability } from "./ListEmployeeDayAvailability";
 
 const fakeRepositoryFactory = FakeRepositoryFactory.create();
