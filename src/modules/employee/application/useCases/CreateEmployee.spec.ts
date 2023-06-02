@@ -1,3 +1,4 @@
+import { describe, beforeEach, it, expect } from "vitest";
 import { faker } from "@faker-js/faker";
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 import { Employee } from "@modules/employee/domain/entity/Employee";

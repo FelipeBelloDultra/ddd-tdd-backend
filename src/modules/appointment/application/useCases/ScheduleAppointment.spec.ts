@@ -1,4 +1,12 @@
-import { vi } from "vitest";
+import {
+  describe,
+  beforeAll,
+  beforeEach,
+  it,
+  vi,
+  afterAll,
+  expect,
+} from "vitest";
 import { faker } from "@faker-js/faker";
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 import { Barbershop } from "@modules/barbershop/domain/entity/Barbershop";

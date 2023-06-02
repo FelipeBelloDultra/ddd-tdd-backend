@@ -1,4 +1,4 @@
-import { vi } from "vitest";
+import { describe, beforeAll, it, vi, afterAll, expect } from "vitest";
 import { faker } from "@faker-js/faker";
 import { Appointment } from "./Appointment";
 
