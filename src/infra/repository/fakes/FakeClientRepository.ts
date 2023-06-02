@@ -1,4 +1,4 @@
-import { Client } from "@modules/client/domain/Client";
+import { Client } from "@modules/client/domain/client/client";
 import { IClientRepository } from "@modules/client/application/repository/IClientRepository";
 import {
   ClientMapper,
@@ -25,7 +25,9 @@ export class FakeClientRepository implements IClientRepository {
   }
 
   public async create(data: Client): Promise<Client> {
-    this.clients.push(ClientMapper.toPersistence(data));
+    const toPersistence = await ClientMapper.toPersistence(data);
+
+    this.clients.push(toPersistence);
 
     return Promise.resolve(data);
   }

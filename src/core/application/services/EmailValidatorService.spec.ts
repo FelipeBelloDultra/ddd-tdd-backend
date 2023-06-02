@@ -2,8 +2,8 @@ import { describe, beforeEach, it, expect } from "vitest";
 import { faker } from "@faker-js/faker";
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 import { Barbershop } from "@modules/barbershop/domain/Barbershop";
-import { Client } from "@modules/client/domain/Client";
 import { Employee } from "@modules/employee/domain/Employee";
+import { ClientFactory } from "@test/factory/ClientFactory";
 import { EmailValidatorService } from "./EmailValidatorService";
 
 const fakeRepositoryFactory = FakeRepositoryFactory.create();
@@ -29,13 +29,7 @@ describe("EmailValidatorService.ts", () => {
   });
 
   it("should return true if email was registred by Client", async () => {
-    await fakeRepositoryFactory.clientRepository.create(
-      Client.create({
-        name: faker.person.fullName(),
-        email: registredEmail,
-        password: faker.internet.password(),
-      })
-    );
+    await fakeRepositoryFactory.clientRepository.create(ClientFactory.create());
 
     await expect(
       emailValidatorService.isUsed(registredEmail)

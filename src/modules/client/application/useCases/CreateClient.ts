@@ -1,8 +1,14 @@
-import { Client } from "@modules/client/domain/Client";
+import { Either, left, right } from "@core/logic/Either";
+import { Client } from "@modules/client/domain/client/client";
+import { Name } from "@modules/client/domain/client/name";
+import { Email } from "@modules/client/domain/client/email";
+import { Password } from "@modules/client/domain/client/password";
 import { IClientRepository } from "@modules/client/application/repository/IClientRepository";
 import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
 import { EmailValidatorService } from "@core/application/services/EmailValidatorService";
-import { Either, left, right } from "@core/logic/Either";
+import { InvalidClientEmailError } from "@modules/client/domain/client/errors/InvalidClientEmailError";
+import { InvalidClientNameError } from "@modules/client/domain/client/errors/InvalidClientNameError";
+import { InvalidClientPasswordError } from "@modules/client/domain/client/errors/InvalidClientPasswordError";
 import { ClientEmailAlreadyUsedError } from "./errors/ClientEmailAlreadyUsedError";
 
 interface ICreateClient {
@@ -11,7 +17,13 @@ interface ICreateClient {
   password: string;
 }
 
-type ICreateClientResponse = Either<ClientEmailAlreadyUsedError, string>;
+type ICreateClientResponse = Either<
+  | InvalidClientEmailError
+  | InvalidClientNameError
+  | InvalidClientPasswordError
+  | ClientEmailAlreadyUsedError,
+  string
+>;
 
 export class CreateClient {
   private readonly clientRepository: IClientRepository;
@@ -28,13 +40,36 @@ export class CreateClient {
   }
 
   public async execute(data: ICreateClient): Promise<ICreateClientResponse> {
+    const email = Email.create(data.email);
+    if (email.isLeft()) {
+      return left(email.value);
+    }
+
     if (await this.emailValidatorService.isUsed(data.email)) {
       return left(new ClientEmailAlreadyUsedError());
     }
 
-    const client = Client.create(data);
+    const name = Name.create(data.name);
+    if (name.isLeft()) {
+      return left(name.value);
+    }
 
-    const createdClient = await this.clientRepository.create(client);
+    const password = Password.create(data.password);
+    if (password.isLeft()) {
+      return left(password.value);
+    }
+
+    const client = Client.create({
+      email: email.value,
+      name: name.value,
+      password: password.value,
+    });
+
+    if (client.isLeft()) {
+      return left(client.value);
+    }
+
+    const createdClient = await this.clientRepository.create(client.value);
 
     return right(createdClient.id);
   }
