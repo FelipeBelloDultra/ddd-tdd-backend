@@ -13,6 +13,9 @@ import { Barbershop } from "@modules/barbershop/domain/Barbershop";
 import { Employee } from "@modules/employee/domain/Employee";
 import { Appointment } from "@modules/appointment/domain/Appointment";
 import { ScheduleAppointment } from "./ScheduleAppointment";
+import { EmployeeNotFoundError } from "./errors/EmployeeNotFoundError";
+import { UnavailableHoursError } from "./errors/UnavailableHoursError";
+import { AppointmentAlreadyBookedError } from "./errors/AppointmentAlreadyBookedError";
 
 const fakeRepositoryFactory = FakeRepositoryFactory.create();
 
@@ -60,34 +63,36 @@ describe("ScheduleAppointment.ts", () => {
       date: new Date(),
     });
 
-    expect(result).toBeTruthy();
-    expect(result).toBeTypeOf("string");
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value).toBeTypeOf("string");
   });
 
   it("should not schedule a new appointment if hours is not available", async () => {
     const date = new Date("2000-01-01T07:00:00");
     vi.setSystemTime(date);
 
-    await expect(
-      scheduleAppointment.execute({
-        employeeId: employee.id,
-        clientId: faker.string.uuid(),
-        date: new Date(),
-      })
-    ).rejects.toThrowError("Hour is not available");
+    const error = await scheduleAppointment.execute({
+      employeeId: employee.id,
+      clientId: faker.string.uuid(),
+      date: new Date(),
+    });
+
+    expect(error.isLeft());
+    expect(error.value).toEqual(new UnavailableHoursError());
   });
 
   it("should not be able schedule an appointment if employee does not exists", async () => {
     const date = new Date("2000-01-01T07:00:00");
     vi.setSystemTime(date);
 
-    await expect(
-      scheduleAppointment.execute({
-        employeeId: "non-existent-employee-id",
-        clientId: faker.string.uuid(),
-        date: new Date(),
-      })
-    ).rejects.toThrowError("Employee not found");
+    const error = await scheduleAppointment.execute({
+      employeeId: "non-existent-employee-id",
+      clientId: faker.string.uuid(),
+      date: new Date(),
+    });
+
+    expect(error.isLeft());
+    expect(error.value).toEqual(new EmployeeNotFoundError());
   });
 
   it("should not be able to schedule if another schedule exists", async () => {
@@ -102,13 +107,14 @@ describe("ScheduleAppointment.ts", () => {
       })
     );
 
-    await expect(
-      scheduleAppointment.execute({
-        employeeId: employee.id,
-        clientId: faker.string.uuid(),
-        date: new Date(),
-      })
-    ).rejects.toThrowError("This appointment is already booked");
+    const error = await scheduleAppointment.execute({
+      employeeId: employee.id,
+      clientId: faker.string.uuid(),
+      date: new Date(),
+    });
+
+    expect(error.isLeft());
+    expect(error.value).toEqual(new AppointmentAlreadyBookedError());
   });
 
   afterAll(() => {

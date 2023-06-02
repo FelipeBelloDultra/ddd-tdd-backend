@@ -3,6 +3,7 @@ import { faker } from "@faker-js/faker";
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 import { Barbershop } from "@modules/barbershop/domain/Barbershop";
 import { CreateBarbershop } from "./CreateBarbershop";
+import { BarbershopEmailAlreadyUsedError } from "./errors/BarbershopEmailAlreadyUsedError";
 
 const fakeRepositoryFactory = FakeRepositoryFactory.create();
 
@@ -27,8 +28,8 @@ describe("CreateBarbershop.ts", () => {
       password: faker.internet.password(),
     });
 
-    expect(result).toBeTruthy();
-    expect(result).toBeTypeOf("string");
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value).toBeTypeOf("string");
   });
 
   it("should not be able create Barbershop if email already exists", async () => {
@@ -42,12 +43,13 @@ describe("CreateBarbershop.ts", () => {
       })
     );
 
-    await expect(
-      createBarbershop.execute({
-        name: faker.person.fullName(),
-        email,
-        password: faker.internet.password(),
-      })
-    ).rejects.toThrowError("Email already registered");
+    const result = await createBarbershop.execute({
+      name: faker.person.fullName(),
+      email,
+      password: faker.internet.password(),
+    });
+
+    expect(result.isLeft()).toBeTruthy();
+    expect(result.value).toEqual(new BarbershopEmailAlreadyUsedError());
   });
 });

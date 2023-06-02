@@ -1,6 +1,8 @@
 import { Barbershop } from "@modules/barbershop/domain/Barbershop";
 import { IBarbershopRepository } from "@modules/barbershop/application/repository/IBarbershopRepository";
 import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
+import { Either, left, right } from "@core/logic/Either";
+import { BarbershopNotFoundError } from "./errors/BarbershopNotFoundError";
 
 interface IUpdateBarbershop {
   id: string;
@@ -12,6 +14,8 @@ interface IUpdateBarbershop {
   avatarUrl?: string;
 }
 
+type IUpdateBarbershopResponse = Either<BarbershopNotFoundError, Barbershop>;
+
 export class UpdateBarbershop {
   private readonly barbershopRepository: IBarbershopRepository;
 
@@ -19,10 +23,12 @@ export class UpdateBarbershop {
     this.barbershopRepository = repositoryFactory.createBarbershopRepository();
   }
 
-  public async execute(data: IUpdateBarbershop): Promise<Barbershop> {
+  public async execute(
+    data: IUpdateBarbershop
+  ): Promise<IUpdateBarbershopResponse> {
     const findedbyId = await this.barbershopRepository.findById(data.id);
 
-    if (!findedbyId) throw new Error("User does not exist");
+    if (!findedbyId) return left(new BarbershopNotFoundError());
 
     const barbershop = Barbershop.create(
       {
@@ -37,6 +43,6 @@ export class UpdateBarbershop {
 
     const updatedUser = await this.barbershopRepository.update(barbershop);
 
-    return updatedUser;
+    return right(updatedUser);
   }
 }

@@ -41,11 +41,16 @@ describe("ListEmployeeMonthAvailability.ts", () => {
   it("should list all month days availability", async () => {
     vi.setSystemTime(new Date(`${YEAR}-${MONTH}-01T10:00:00`));
 
-    const result = await listEmployeeMonthAvailability.execute({
-      employeeId: faker.string.uuid(),
-      month: Number(MONTH),
-      year: Number(YEAR),
-    });
+    const employeeMonthAvailability =
+      await listEmployeeMonthAvailability.execute({
+        employeeId: faker.string.uuid(),
+        month: Number(MONTH),
+        year: Number(YEAR),
+      });
+    const result = employeeMonthAvailability.value as {
+      day: number;
+      available: boolean;
+    }[];
 
     expect(result.length).toEqual(
       DateService.getDaysInMonth({
@@ -83,11 +88,16 @@ describe("ListEmployeeMonthAvailability.ts", () => {
 
     await Promise.all(promises);
 
-    const result = await listEmployeeMonthAvailability.execute({
-      employeeId,
-      month: Number(MONTH),
-      year: Number(YEAR),
-    });
+    const employeeMonthAvailability =
+      await listEmployeeMonthAvailability.execute({
+        employeeId,
+        month: Number(MONTH),
+        year: Number(YEAR),
+      });
+    const result = employeeMonthAvailability.value as {
+      day: number;
+      available: boolean;
+    }[];
 
     expect(result).toEqual(
       expect.arrayContaining([

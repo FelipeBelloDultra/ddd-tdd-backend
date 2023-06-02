@@ -1,12 +1,21 @@
 import { AppointmentAvailability } from "@modules/appointment/domain/AppointmentAvailability";
 import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
 import { IAppointmentRepository } from "@modules/appointment/application/repository/IAppointmentRepository";
+import { Either, right } from "@core/logic/Either";
 
 interface IListEmployeeMonthAvailability {
   employeeId: string;
   month: number;
   year: number;
 }
+
+type IListEmployeeMonthAvailabilityResponse = Either<
+  void,
+  {
+    day: number;
+    available: boolean;
+  }[]
+>;
 
 export class ListEmployeeMonthAvailability {
   private readonly appointmentRepository: IAppointmentRepository;
@@ -16,12 +25,9 @@ export class ListEmployeeMonthAvailability {
       repositoryFactory.createAppointmentRepository();
   }
 
-  public async execute(data: IListEmployeeMonthAvailability): Promise<
-    {
-      day: number;
-      available: boolean;
-    }[]
-  > {
+  public async execute(
+    data: IListEmployeeMonthAvailability
+  ): Promise<IListEmployeeMonthAvailabilityResponse> {
     const appointments =
       await this.appointmentRepository.findAllInMonthFromEmployee({
         month: data.month,
@@ -36,6 +42,6 @@ export class ListEmployeeMonthAvailability {
       year: data.year,
     });
 
-    return availability;
+    return right(availability);
   }
 }

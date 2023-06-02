@@ -1,5 +1,6 @@
 import { describe, beforeEach, it, expect } from "vitest";
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
+import { Employee } from "@modules/employee/domain/Employee";
 import { ListEmployeeByBarbershopId } from "./ListEmployeeByBarbershopId";
 
 const fakeRepositoryFactory = FakeRepositoryFactory.create();
@@ -20,9 +21,11 @@ describe("ListEmployeeByBarbershopId.ts", () => {
 
   it("should return an list of employees by barbershop id", async () => {
     const barbershopId = "123";
-    const result = await listEmployeeByBarbershopId.execute({
+    const employeeList = await listEmployeeByBarbershopId.execute({
       barbershopId,
     });
+
+    const result = employeeList.value as Employee[];
 
     const everyEmployeeHasSameBarbershopId =
       result.length > 0

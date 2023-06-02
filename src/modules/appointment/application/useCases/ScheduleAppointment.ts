@@ -2,12 +2,21 @@ import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory
 import { Appointment } from "@modules/appointment/domain/Appointment";
 import { IAppointmentRepository } from "@modules/appointment/application/repository/IAppointmentRepository";
 import { IEmployeeRepository } from "@modules/employee/application/repository/IEmployeeRepository";
+import { Either, left, right } from "@core/logic/Either";
+import { EmployeeNotFoundError } from "./errors/EmployeeNotFoundError";
+import { UnavailableHoursError } from "./errors/UnavailableHoursError";
+import { AppointmentAlreadyBookedError } from "./errors/AppointmentAlreadyBookedError";
 
 interface IScheduleAppointment {
   employeeId: string;
   clientId: string;
   date: Date;
 }
+
+type IScheduleAppointmentResponse = Either<
+  EmployeeNotFoundError | UnavailableHoursError | AppointmentAlreadyBookedError,
+  string
+>;
 
 export class ScheduleAppointment {
   private readonly appointmentRepository: IAppointmentRepository;
@@ -19,13 +28,15 @@ export class ScheduleAppointment {
     this.employeeRepository = repositoryFactory.createEmployeeRepository();
   }
 
-  public async execute(data: IScheduleAppointment): Promise<string> {
+  public async execute(
+    data: IScheduleAppointment
+  ): Promise<IScheduleAppointmentResponse> {
     const existentEmployee = await this.employeeRepository.findById(
       data.employeeId
     );
 
     if (!existentEmployee) {
-      throw new Error("Employee not found");
+      return left(new EmployeeNotFoundError());
     }
 
     const appointment = Appointment.create({
@@ -35,17 +46,17 @@ export class ScheduleAppointment {
     });
 
     if (!appointment.hourIsAvailable()) {
-      throw new Error("Hour is not available");
+      return left(new UnavailableHoursError());
     }
 
     const findAppointmentInSameDate =
       await this.appointmentRepository.findByDate(data.date, data.employeeId);
 
     if (findAppointmentInSameDate)
-      throw new Error("This appointment is already booked");
+      return left(new AppointmentAlreadyBookedError());
 
     await this.appointmentRepository.create(appointment);
 
-    return appointment.id;
+    return right(appointment.id);
   }
 }

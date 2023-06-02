@@ -61,12 +61,16 @@ describe("ListEmployeeDayAvailability.ts", () => {
       ),
     ]);
 
-    const result = await listEmployeeDayAvailability.execute({
+    const employeeDayAvailability = await listEmployeeDayAvailability.execute({
       employeeId,
       month: Number(MONTH),
       year: Number(YEAR),
       day: Number(DAY),
     });
+    const result = employeeDayAvailability.value as {
+      hour: number;
+      available: boolean;
+    }[];
 
     const AVAILABLE_HOURS_TO_SCHEDULE = [11, 12, 13, 15, 17];
     const NOT_AVAILABLE_HOURS_TO_SCHEDULE = [8, 9, 10, 14, 16];

@@ -2,12 +2,19 @@ import { Barbershop } from "@modules/barbershop/domain/Barbershop";
 import { IBarbershopRepository } from "@modules/barbershop/application/repository/IBarbershopRepository";
 import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
 import { EmailValidatorService } from "@core/application/services/EmailValidatorService";
+import { Either, left, right } from "@core/logic/Either";
+import { BarbershopEmailAlreadyUsedError } from "./errors/BarbershopEmailAlreadyUsedError";
 
 interface ICreateBarbershop {
   name: string;
   email: string;
   password: string;
 }
+
+type ICreateBarbershopResponse = Either<
+  BarbershopEmailAlreadyUsedError,
+  string
+>;
 
 export class CreateBarbershop {
   private readonly barbershopRepository: IBarbershopRepository;
@@ -23,9 +30,12 @@ export class CreateBarbershop {
     });
   }
 
-  public async execute(data: ICreateBarbershop): Promise<string> {
-    if (await this.emailValidatorService.isUsed(data.email))
-      throw new Error("Email already registered");
+  public async execute(
+    data: ICreateBarbershop
+  ): Promise<ICreateBarbershopResponse> {
+    if (await this.emailValidatorService.isUsed(data.email)) {
+      return left(new BarbershopEmailAlreadyUsedError());
+    }
 
     const barbershop = Barbershop.create(data);
 
@@ -33,6 +43,6 @@ export class CreateBarbershop {
       barbershop
     );
 
-    return createdBarbershop.id;
+    return right(createdBarbershop.id);
   }
 }

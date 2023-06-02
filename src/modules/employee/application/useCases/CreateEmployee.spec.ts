@@ -4,6 +4,8 @@ import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactor
 import { Employee } from "@modules/employee/domain/Employee";
 import { Barbershop } from "@modules/barbershop/domain/Barbershop";
 import { CreateEmployee } from "./CreateEmployee";
+import { EmployeeEmailAlreadyUsedError } from "./errors/EmployeeEmailAlreadyUsedError";
+import { EmployeeBarbershopNotFoundError } from "./errors/EmployeeBarbershopNotFoundError";
 
 const fakeRepositoryFactory = FakeRepositoryFactory.create();
 
@@ -38,8 +40,21 @@ describe("CreateEmployee.ts", () => {
       phone: faker.phone.number(),
     });
 
-    expect(result).toBeTruthy();
-    expect(result).toBeTypeOf("string");
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value).toBeTypeOf("string");
+  });
+
+  it("should not be able create Employee if barbershop is not found", async () => {
+    const result = await createEmployee.execute({
+      name: faker.person.fullName(),
+      email: faker.internet.email(),
+      avatarUrl: faker.internet.avatar(),
+      barbershopId: faker.string.uuid(),
+      phone: faker.phone.number(),
+    });
+
+    expect(result.isLeft()).toBeTruthy();
+    expect(result.value).toEqual(new EmployeeBarbershopNotFoundError());
   });
 
   it("should not be able create Employee if email already exists", async () => {
@@ -55,14 +70,15 @@ describe("CreateEmployee.ts", () => {
       })
     );
 
-    await expect(
-      createEmployee.execute({
-        name: faker.person.fullName(),
-        email,
-        avatarUrl: faker.internet.avatar(),
-        barbershopId: barbershop.id,
-        phone: faker.phone.number(),
-      })
-    ).rejects.toThrowError("Email already registered");
+    const result = await createEmployee.execute({
+      name: faker.person.fullName(),
+      email,
+      avatarUrl: faker.internet.avatar(),
+      barbershopId: barbershop.id,
+      phone: faker.phone.number(),
+    });
+
+    expect(result.isLeft()).toBeTruthy();
+    expect(result.value).toEqual(new EmployeeEmailAlreadyUsedError());
   });
 });

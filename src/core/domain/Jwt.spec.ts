@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { expect, it, describe } from "vitest";
 import { Jwt } from "./Jwt";
+import { InvalidJwtTokenError } from "./errors/InvalidJwtTokenError";
 
 const user = {
   id: faker.string.uuid(),
@@ -27,12 +28,14 @@ describe("TokenGenerator.ts", () => {
 
     const result = Jwt.decodeToken(token);
 
-    expect(result).toHaveProperty("id", user.id);
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value).toHaveProperty("id", user.id);
   });
 
   it("should not be able decode invalid token", () => {
-    expect(() => Jwt.decodeToken("invalid-token")).toThrowError(
-      "Invalid token"
-    );
+    const error = Jwt.decodeToken("invalid-token");
+
+    expect(error.isLeft()).toBeTruthy();
+    expect(error.value).toEqual(new InvalidJwtTokenError());
   });
 });

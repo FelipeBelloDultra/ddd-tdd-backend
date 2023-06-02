@@ -3,6 +3,9 @@ import { IEmployeeRepository } from "@modules/employee/application/repository/IE
 import { IBarbershopRepository } from "@modules/barbershop/application/repository/IBarbershopRepository";
 import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
 import { EmailValidatorService } from "@core/application/services/EmailValidatorService";
+import { Either, left, right } from "@core/logic/Either";
+import { EmployeeEmailAlreadyUsedError } from "./errors/EmployeeEmailAlreadyUsedError";
+import { EmployeeBarbershopNotFoundError } from "./errors/EmployeeBarbershopNotFoundError";
 
 interface ICreateEmployee {
   name: string;
@@ -11,6 +14,11 @@ interface ICreateEmployee {
   avatarUrl: string;
   barbershopId: string;
 }
+
+type ICreateEmployeeResponse = Either<
+  EmployeeBarbershopNotFoundError | EmployeeEmailAlreadyUsedError,
+  string
+>;
 
 export class CreateEmployee {
   private readonly employeeRepository: IEmployeeRepository;
@@ -28,15 +36,18 @@ export class CreateEmployee {
     });
   }
 
-  public async execute(data: ICreateEmployee): Promise<string> {
+  public async execute(
+    data: ICreateEmployee
+  ): Promise<ICreateEmployeeResponse> {
     const existingBarbershop = await this.barbershopRepository.findById(
       data.barbershopId
     );
 
-    if (!existingBarbershop) throw new Error("Barbershop not found");
+    if (!existingBarbershop) return left(new EmployeeBarbershopNotFoundError());
 
-    if (await this.emailValidatorService.isUsed(data.email))
-      throw new Error("Email already registered");
+    if (await this.emailValidatorService.isUsed(data.email)) {
+      return left(new EmployeeEmailAlreadyUsedError());
+    }
 
     const employee = Employee.create({
       name: data.name,
@@ -48,6 +59,6 @@ export class CreateEmployee {
 
     const createdEmployee = await this.employeeRepository.create(employee);
 
-    return createdEmployee.id;
+    return right(createdEmployee.id);
   }
 }

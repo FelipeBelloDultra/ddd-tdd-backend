@@ -1,4 +1,6 @@
+import { Either, right, left } from "@core/logic/Either";
 import { sign, verify } from "jsonwebtoken";
+import { InvalidJwtTokenError } from "./errors/InvalidJwtTokenError";
 
 interface ISignature {
   id: string;
@@ -10,6 +12,10 @@ interface ISignature {
 interface IJwtProps {
   authenticatedId: string;
   token: string;
+}
+
+interface IJwtPayload extends ISignature {
+  exp: number;
 }
 
 const EXPIRES_IN = "1d";
@@ -24,7 +30,7 @@ export class Jwt {
     this.token = token;
   }
 
-  static sign(signature: ISignature) {
+  static sign(signature: ISignature): Jwt {
     const token = sign(
       {
         id: signature.id,
@@ -44,13 +50,13 @@ export class Jwt {
     });
   }
 
-  static decodeToken(token: string) {
+  static decodeToken(token: string): Either<InvalidJwtTokenError, IJwtPayload> {
     try {
-      const decoded = verify(token, KEY);
+      const decoded = verify(token, KEY) as IJwtPayload;
 
-      return decoded;
+      return right(decoded);
     } catch (error) {
-      throw new Error("Invalid token");
+      return left(new InvalidJwtTokenError());
     }
   }
 }
