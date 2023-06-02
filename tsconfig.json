@@ -6,7 +6,8 @@
     "paths": {
       "@modules/*": ["./src/modules/*"],
       "@core/*": ["./src/core/*"],
-      "@infra/*": ["./src/infra/*"]
+      "@infra/*": ["./src/infra/*"],
+      "@test/*": ["./src/test/*"]
     },
     "outDir": "./dist",
     "esModuleInterop": true,

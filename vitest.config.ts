@@ -19,6 +19,10 @@ export default defineConfig({
         find: "@infra",
         replacement: resolve(__dirname, "src", "infra"),
       },
+      {
+        find: "@test",
+        replacement: resolve(__dirname, "src", "test"),
+      },
     ],
   },
 });
