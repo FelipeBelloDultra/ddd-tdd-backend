@@ -22,7 +22,7 @@ const START_WORK_TIME_AT = 8;
 
 let listEmployeeMonthAvailability: ListEmployeeMonthAvailability;
 
-describe("ListEmployeeMonthAvailability", () => {
+describe("ListEmployeeMonthAvailability.ts", () => {
   beforeAll(() => {
     vi.useFakeTimers();
   });

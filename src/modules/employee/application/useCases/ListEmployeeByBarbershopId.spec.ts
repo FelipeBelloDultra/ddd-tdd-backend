@@ -6,7 +6,7 @@ const fakeRepositoryFactory = FakeRepositoryFactory.create();
 
 let listEmployeeByBarbershopId: ListEmployeeByBarbershopId;
 
-describe("ListEmployeeByBarbershopId", () => {
+describe("ListEmployeeByBarbershopId.ts", () => {
   beforeEach(() => {
     listEmployeeByBarbershopId = new ListEmployeeByBarbershopId({
       createBarbershopRepository: () =>

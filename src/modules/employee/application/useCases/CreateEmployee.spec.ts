@@ -15,7 +15,7 @@ const barbershop = Barbershop.create({
 
 let createEmployee: CreateEmployee;
 
-describe("CreateEmployee", () => {
+describe("CreateEmployee.ts", () => {
   beforeEach(async () => {
     await fakeRepositoryFactory.barbershopRepository.create(barbershop);
 

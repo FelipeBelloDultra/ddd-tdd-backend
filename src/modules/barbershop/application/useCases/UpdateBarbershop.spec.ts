@@ -14,7 +14,7 @@ const barbershop = Barbershop.create({
 
 let updateBarbershop: UpdateBarbershop;
 
-describe("UpdateBarbershop", () => {
+describe("UpdateBarbershop.ts", () => {
   beforeEach(async () => {
     await fakeRepositoryFactory.barbershopRepository.create(barbershop);
 

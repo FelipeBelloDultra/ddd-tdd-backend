@@ -31,7 +31,7 @@ const employee = Employee.create({
 
 let scheduleAppointment: ScheduleAppointment;
 
-describe("ScheduleAppointment", () => {
+describe("ScheduleAppointment.ts", () => {
   beforeAll(() => {
     vi.useFakeTimers();
   });

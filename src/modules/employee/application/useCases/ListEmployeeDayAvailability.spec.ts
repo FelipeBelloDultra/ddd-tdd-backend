@@ -20,7 +20,7 @@ const MONTH = "02";
 
 let listEmployeeDayAvailability: ListEmployeeDayAvailability;
 
-describe("ListEmployeeDayAvailability", () => {
+describe("ListEmployeeDayAvailability.ts", () => {
   beforeAll(() => {
     vi.useFakeTimers();
   });
