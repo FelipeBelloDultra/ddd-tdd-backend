@@ -1,5 +1,5 @@
 import { Either, right, left } from "@core/logic/Either";
-import { InvalidClientEmailError } from "./errors/InvalidClientEmailError";
+import { InvalidEmailError } from "./errors/InvalidEmailError";
 
 export class Email {
   private readonly email: string;
@@ -12,9 +12,9 @@ export class Email {
     this.email = email;
   }
 
-  static create(email: string): Either<InvalidClientEmailError, Email> {
+  static create(email: string): Either<InvalidEmailError, Email> {
     if (!this.validate(email)) {
-      return left(new InvalidClientEmailError(email));
+      return left(new InvalidEmailError(email));
     }
 
     const formatted = this.format(email);

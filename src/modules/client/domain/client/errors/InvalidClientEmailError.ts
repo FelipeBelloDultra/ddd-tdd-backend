@@ -1,8 +1,1 @@
-import { DomainError } from "@core/domain/errors/DomainError";
-
-export class InvalidClientEmailError extends Error implements DomainError {
-  constructor(email: string) {
-    super(`The email "${email}" is invalid.`);
-    this.name = InvalidClientEmailError.name;
-  }
-}
+export { InvalidEmailError as InvalidClientEmailError } from "@_shared/domain/errors/InvalidEmailError";

@@ -1,5 +1,5 @@
 import { Either, right, left } from "@core/logic/Either";
-import { InvalidClientNameError } from "./errors/InvalidClientNameError";
+import { InvalidNameError } from "./errors/InvalidNameError";
 
 export class Name {
   private readonly name: string;
@@ -20,9 +20,9 @@ export class Name {
     return true;
   }
 
-  static create(name: string): Either<InvalidClientNameError, Name> {
+  static create(name: string): Either<InvalidNameError, Name> {
     if (!this.validate(name)) {
-      return left(new InvalidClientNameError(name));
+      return left(new InvalidNameError(name));
     }
 
     return right(new Name(name));

@@ -1,11 +1,11 @@
 import { Entity } from "@core/domain/Entity";
 import { Either, right } from "@core/logic/Either";
-import { Name } from "./name";
-import { Email } from "./email";
-import { Password } from "./password";
 import { InvalidClientNameError } from "./errors/InvalidClientNameError";
 import { InvalidClientEmailError } from "./errors/InvalidClientEmailError";
 import { InvalidClientPasswordError } from "./errors/InvalidClientPasswordError";
+import { Name } from "@_shared/domain/name";
+import { Email } from "@_shared/domain/email";
+import { Password } from "@_shared/domain/password";
 
 interface IClientProps {
   name: Name;

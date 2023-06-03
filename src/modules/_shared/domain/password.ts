@@ -1,6 +1,6 @@
 import bcryptjs from "bcryptjs";
 import { Either, right, left } from "@core/logic/Either";
-import { InvalidClientPasswordError } from "./errors/InvalidClientPasswordError";
+import { InvalidPasswordError } from "./errors/InvalidPasswordError";
 
 export class Password {
   private readonly password: string;
@@ -42,9 +42,9 @@ export class Password {
   static create(
     password: string,
     hashed = false
-  ): Either<InvalidClientPasswordError, Password> {
+  ): Either<InvalidPasswordError, Password> {
     if (!hashed && !this.validate(password)) {
-      return left(new InvalidClientPasswordError());
+      return left(new InvalidPasswordError());
     }
 
     return right(new Password(password, hashed));
