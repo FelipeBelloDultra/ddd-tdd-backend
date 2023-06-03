@@ -1,8 +1,8 @@
 import { faker } from "@faker-js/faker";
-import { Client } from "@modules/client/domain/client/client";
-import { Email } from "@_shared/domain/email";
-import { Password } from "@_shared/domain/password";
-import { Name } from "@_shared/domain/name";
+import { Client } from "@modules/client/domain/client/Client";
+import { Email } from "@_shared/domain/Email";
+import { Password } from "@_shared/domain/Password";
+import { Name } from "@_shared/domain/Name";
 
 export class ClientFactory {
   static create(): Client {

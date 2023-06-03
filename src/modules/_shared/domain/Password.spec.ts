@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import { describe, it, expect } from "vitest";
 import { faker } from "@faker-js/faker";
-import { Password } from "./password";
+import { Password } from "./Password";
 
 describe("Password.ts", () => {
   it("should accept valid password", () => {

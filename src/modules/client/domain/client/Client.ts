@@ -3,9 +3,9 @@ import { Either, right } from "@core/logic/Either";
 import { InvalidClientNameError } from "./errors/InvalidClientNameError";
 import { InvalidClientEmailError } from "./errors/InvalidClientEmailError";
 import { InvalidClientPasswordError } from "./errors/InvalidClientPasswordError";
-import { Name } from "@_shared/domain/name";
-import { Email } from "@_shared/domain/email";
-import { Password } from "@_shared/domain/password";
+import { Name } from "@_shared/domain/Name";
+import { Email } from "@_shared/domain/Email";
+import { Password } from "@_shared/domain/Password";
 
 interface IClientProps {
   name: Name;

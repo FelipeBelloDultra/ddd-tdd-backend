@@ -1,8 +1,8 @@
 import { Either, left, right } from "@core/logic/Either";
-import { Client } from "@modules/client/domain/client/client";
-import { Name } from "@_shared/domain/name";
-import { Email } from "@_shared/domain/email";
-import { Password } from "@_shared/domain/password";
+import { Client } from "@modules/client/domain/client/Client";
+import { Name } from "@_shared/domain/Name";
+import { Email } from "@_shared/domain/Email";
+import { Password } from "@_shared/domain/Password";
 import { IClientRepository } from "@modules/client/application/repository/IClientRepository";
 import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
 import { EmailValidatorService } from "@_shared/application/services/EmailValidatorService";
