@@ -1,9 +1,12 @@
+import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
+import { Either, left, right } from "@core/logic/Either";
+
 import { Employee } from "@modules/employee/domain/Employee";
 import { IEmployeeRepository } from "@modules/employee/application/repository/IEmployeeRepository";
 import { IBarbershopRepository } from "@modules/barbershop/application/repository/IBarbershopRepository";
-import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
+
 import { EmailValidatorService } from "@_shared/application/services/EmailValidatorService";
-import { Either, left, right } from "@core/logic/Either";
+
 import { EmployeeEmailAlreadyUsedError } from "./errors/EmployeeEmailAlreadyUsedError";
 import { EmployeeBarbershopNotFoundError } from "./errors/EmployeeBarbershopNotFoundError";
 

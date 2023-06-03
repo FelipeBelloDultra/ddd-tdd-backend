@@ -1,11 +1,16 @@
 import { describe, beforeEach, it, expect } from "vitest";
 import { faker } from "@faker-js/faker";
+
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
+
 import { Employee } from "@modules/employee/domain/Employee";
+
 import { BarbershopFactory } from "@test/factory/BarbershopFactory";
-import { CreateEmployee } from "./CreateEmployee";
+
 import { EmployeeEmailAlreadyUsedError } from "./errors/EmployeeEmailAlreadyUsedError";
 import { EmployeeBarbershopNotFoundError } from "./errors/EmployeeBarbershopNotFoundError";
+
+import { CreateEmployee } from "./CreateEmployee";
 
 const fakeRepositoryFactory = FakeRepositoryFactory.create();
 

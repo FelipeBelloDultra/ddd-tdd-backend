@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { describe, beforeAll, it, vi, afterAll, expect } from "vitest";
+
 import { AppointmentAvailability } from "./AppointmentAvailability";
 import { Appointment } from "./Appointment";
 

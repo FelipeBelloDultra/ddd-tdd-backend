@@ -1,6 +1,8 @@
 import { describe, it, expect } from "vitest";
 import { faker } from "@faker-js/faker";
+
 import { BarbershopFactory } from "@test/factory/BarbershopFactory";
+
 import { Barbershop } from "./Barbershop";
 import { Street } from "./Street";
 

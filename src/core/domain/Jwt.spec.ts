@@ -1,6 +1,8 @@
 import { faker } from "@faker-js/faker";
 import { expect, it, describe } from "vitest";
+
 import { Jwt } from "./Jwt";
+
 import { InvalidJwtTokenError } from "./errors/InvalidJwtTokenError";
 
 const user = {

@@ -8,11 +8,16 @@ import {
   expect,
 } from "vitest";
 import { faker } from "@faker-js/faker";
+
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
-import { BarbershopFactory } from "@test/factory/BarbershopFactory";
+
 import { Employee } from "@modules/employee/domain/Employee";
 import { Appointment } from "@modules/appointment/domain/Appointment";
+
+import { BarbershopFactory } from "@test/factory/BarbershopFactory";
+
 import { ScheduleAppointment } from "./ScheduleAppointment";
+
 import { EmployeeNotFoundError } from "./errors/EmployeeNotFoundError";
 import { UnavailableHoursError } from "./errors/UnavailableHoursError";
 import { AppointmentAlreadyBookedError } from "./errors/AppointmentAlreadyBookedError";

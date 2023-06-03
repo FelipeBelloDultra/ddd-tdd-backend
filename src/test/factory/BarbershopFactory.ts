@@ -1,5 +1,7 @@
 import { faker } from "@faker-js/faker";
+
 import { Barbershop } from "@modules/barbershop/domain/barbershop/Barbershop";
+
 import { Email } from "@_shared/domain/Email";
 import { Password } from "@_shared/domain/Password";
 import { Name } from "@_shared/domain/Name";

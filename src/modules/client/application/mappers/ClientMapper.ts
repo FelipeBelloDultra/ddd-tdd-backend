@@ -1,4 +1,5 @@
 import { Client } from "@modules/client/domain/client/Client";
+
 import { Name } from "@_shared/domain/Name";
 import { Email } from "@_shared/domain/Email";
 import { Password } from "@_shared/domain/Password";

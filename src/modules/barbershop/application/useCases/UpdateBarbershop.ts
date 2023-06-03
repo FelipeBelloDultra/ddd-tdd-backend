@@ -1,3 +1,6 @@
+import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
+import { Either, left, right } from "@core/logic/Either";
+
 import { Barbershop } from "@modules/barbershop/domain/barbershop/Barbershop";
 import { AvatarUrl } from "@modules/barbershop/domain/barbershop/AvatarUrl";
 import { Neighborhood } from "@modules/barbershop/domain/barbershop/Neighborhood";
@@ -5,8 +8,7 @@ import { Phone } from "@modules/barbershop/domain/barbershop/Phone";
 import { Street } from "@modules/barbershop/domain/barbershop/Street";
 import { StreetNumber } from "@modules/barbershop/domain/barbershop/StreetNumber";
 import { IBarbershopRepository } from "@modules/barbershop/application/repository/IBarbershopRepository";
-import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
-import { Either, left, right } from "@core/logic/Either";
+
 import { BarbershopNotFoundError } from "./errors/BarbershopNotFoundError";
 
 interface IUpdateBarbershop {

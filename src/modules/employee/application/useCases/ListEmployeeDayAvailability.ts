@@ -1,7 +1,8 @@
-import { AppointmentAvailability } from "@modules/appointment/domain/AppointmentAvailability";
 import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
-import { IAppointmentRepository } from "@modules/appointment/application/repository/IAppointmentRepository";
 import { Either, right } from "@core/logic/Either";
+
+import { AppointmentAvailability } from "@modules/appointment/domain/AppointmentAvailability";
+import { IAppointmentRepository } from "@modules/appointment/application/repository/IAppointmentRepository";
 
 interface IListEmployeeDayAvailability {
   employeeId: string;

@@ -1,12 +1,15 @@
 import { Entity } from "@core/domain/Entity";
 import { Either, right } from "@core/logic/Either";
+
 import { Email } from "@_shared/domain/Email";
 import { Name } from "@_shared/domain/Name";
 import { Password } from "@_shared/domain/Password";
+
 import { InvalidBarbershopEmailError } from "./errors/InvalidBarbershopEmailError";
 import { InvalidBarbershopNameError } from "./errors/InvalidBarbershopNameError";
 import { InvalidBarbershopPasswordError } from "./errors/InvalidBarbershopPasswordError";
 import { InvalidBarbershopPhoneError } from "./errors/InvalidBarbershopPhoneError";
+
 import { Street } from "./Street";
 import { StreetNumber } from "./StreetNumber";
 import { Neighborhood } from "./Neighborhood";

@@ -1,11 +1,14 @@
-import { Barbershop } from "@modules/barbershop/domain/barbershop/Barbershop";
+import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
+import { Either, left, right } from "@core/logic/Either";
+
 import { Name } from "@_shared/domain/Name";
 import { Email } from "@_shared/domain/Email";
 import { Password } from "@_shared/domain/Password";
-import { IBarbershopRepository } from "@modules/barbershop/application/repository/IBarbershopRepository";
-import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
-import { Either, left, right } from "@core/logic/Either";
 import { EmailValidatorService } from "@_shared/application/services/EmailValidatorService";
+
+import { IBarbershopRepository } from "@modules/barbershop/application/repository/IBarbershopRepository";
+import { Barbershop } from "@modules/barbershop/domain/barbershop/Barbershop";
+
 import { BarbershopEmailAlreadyUsedError } from "./errors/BarbershopEmailAlreadyUsedError";
 
 interface ICreateBarbershop {

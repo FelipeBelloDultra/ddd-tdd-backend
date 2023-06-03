@@ -1,8 +1,10 @@
 import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
+import { Either, left, right } from "@core/logic/Either";
+
 import { Appointment } from "@modules/appointment/domain/Appointment";
 import { IAppointmentRepository } from "@modules/appointment/application/repository/IAppointmentRepository";
 import { IEmployeeRepository } from "@modules/employee/application/repository/IEmployeeRepository";
-import { Either, left, right } from "@core/logic/Either";
+
 import { EmployeeNotFoundError } from "./errors/EmployeeNotFoundError";
 import { UnavailableHoursError } from "./errors/UnavailableHoursError";
 import { AppointmentAlreadyBookedError } from "./errors/AppointmentAlreadyBookedError";

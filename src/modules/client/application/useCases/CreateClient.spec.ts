@@ -1,9 +1,13 @@
 import { describe, beforeEach, it, expect } from "vitest";
 import { faker } from "@faker-js/faker";
+
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
+
 import { ClientFactory } from "@test/factory/ClientFactory";
-import { CreateClient } from "./CreateClient";
+
 import { ClientEmailAlreadyUsedError } from "./errors/ClientEmailAlreadyUsedError";
+
+import { CreateClient } from "./CreateClient";
 
 const fakeRepositoryFactory = FakeRepositoryFactory.create();
 

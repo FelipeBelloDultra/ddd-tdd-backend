@@ -1,7 +1,8 @@
-import { Employee } from "@modules/employee/domain/Employee";
-import { IEmployeeRepository } from "@modules/employee/application/repository/IEmployeeRepository";
 import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
 import { Either, right } from "@core/logic/Either";
+
+import { Employee } from "@modules/employee/domain/Employee";
+import { IEmployeeRepository } from "@modules/employee/application/repository/IEmployeeRepository";
 
 interface IListEmployeeByBarbershopId {
   barbershopId: string;

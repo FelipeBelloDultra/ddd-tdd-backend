@@ -1,5 +1,7 @@
 import { describe, it, expect } from "vitest";
+
 import { ClientFactory } from "./ClientFactory";
+
 import { Client } from "@modules/client/domain/client/Client";
 
 describe("ClientFactory.ts", () => {

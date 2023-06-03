@@ -1,8 +1,10 @@
 import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
+
 import { IBarbershopRepository } from "@modules/barbershop/application/repository/IBarbershopRepository";
 import { IEmployeeRepository } from "@modules/employee/application/repository/IEmployeeRepository";
 import { IAppointmentRepository } from "@modules/appointment/application/repository/IAppointmentRepository";
 import { IClientRepository } from "@modules/client/application/repository/IClientRepository";
+
 import { FakeBarbershopRepository } from "@infra/repository/fakes/FakeBarbershopRepository";
 import { FakeEmployeeRepository } from "@infra/repository/fakes/FakeEmployeeRepository";
 import { FakeAppointmentRepository } from "@infra/repository/fakes/FakeAppointmentRepository";

@@ -1,4 +1,5 @@
 import { Either, right, left } from "@core/logic/Either";
+
 import { InvalidNameError } from "./errors/InvalidNameError";
 
 export class Name {

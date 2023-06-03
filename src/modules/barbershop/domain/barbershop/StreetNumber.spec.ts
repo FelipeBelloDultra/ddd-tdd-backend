@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { describe, it, expect } from "vitest";
+
 import { StreetNumber } from "./StreetNumber";
 
 describe("StreetNumber.ts", () => {

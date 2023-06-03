@@ -1,9 +1,13 @@
 import { describe, beforeEach, it, expect } from "vitest";
 import { faker } from "@faker-js/faker";
+
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
+
 import { Employee } from "@modules/employee/domain/Employee";
+
 import { ClientFactory } from "@test/factory/ClientFactory";
 import { BarbershopFactory } from "@test/factory/BarbershopFactory";
+
 import { EmailValidatorService } from "./EmailValidatorService";
 
 const fakeRepositoryFactory = FakeRepositoryFactory.create();

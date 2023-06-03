@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { expect, describe, it } from "vitest";
+
 import { Entity } from "./Entity";
 
 class CustomEntity extends Entity<{ name?: string }> {}

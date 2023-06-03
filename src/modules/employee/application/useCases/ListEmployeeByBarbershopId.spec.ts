@@ -1,6 +1,9 @@
 import { describe, beforeEach, it, expect } from "vitest";
+
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
+
 import { Employee } from "@modules/employee/domain/Employee";
+
 import { ListEmployeeByBarbershopId } from "./ListEmployeeByBarbershopId";
 
 const fakeRepositoryFactory = FakeRepositoryFactory.create();

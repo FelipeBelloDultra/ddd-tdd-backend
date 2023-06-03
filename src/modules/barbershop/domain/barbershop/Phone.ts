@@ -1,4 +1,5 @@
 import { Either, right, left } from "@core/logic/Either";
+
 import { InvalidBarbershopPhoneError } from "./errors/InvalidBarbershopPhoneError";
 
 export class Phone {

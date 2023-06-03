@@ -1,11 +1,14 @@
 import { Either, left, right } from "@core/logic/Either";
-import { Client } from "@modules/client/domain/client/Client";
+import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
+
 import { Name } from "@_shared/domain/Name";
 import { Email } from "@_shared/domain/Email";
 import { Password } from "@_shared/domain/Password";
-import { IClientRepository } from "@modules/client/application/repository/IClientRepository";
-import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
 import { EmailValidatorService } from "@_shared/application/services/EmailValidatorService";
+
+import { Client } from "@modules/client/domain/client/Client";
+import { IClientRepository } from "@modules/client/application/repository/IClientRepository";
+
 import { ClientEmailAlreadyUsedError } from "./errors/ClientEmailAlreadyUsedError";
 
 interface ICreateClient {

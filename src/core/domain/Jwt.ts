@@ -1,5 +1,7 @@
-import { Either, right, left } from "@core/logic/Either";
 import { sign, verify } from "jsonwebtoken";
+
+import { Either, right, left } from "@core/logic/Either";
+
 import { InvalidJwtTokenError } from "./errors/InvalidJwtTokenError";
 
 interface ISignature {
