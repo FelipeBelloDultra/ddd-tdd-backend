@@ -1,11 +1,12 @@
-import { faker } from "@faker-js/faker";
 import { describe, it, expect } from "vitest";
+
+import { BaseFactory } from "@test/factory/BaseFactory";
 
 import { Neighborhood } from "./Neighborhood";
 
 describe("Neighborhood.ts", () => {
   it("should create an neighborhood location", () => {
-    const neighborhoodValue = faker.location.streetAddress();
+    const neighborhoodValue = BaseFactory.makeAddressNeighborhood();
     const neighborhood = Neighborhood.create(neighborhoodValue);
 
     expect(neighborhood.isRight()).toBeTruthy();

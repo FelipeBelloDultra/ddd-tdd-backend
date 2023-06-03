@@ -1,8 +1,8 @@
 import { describe, beforeEach, it, expect } from "vitest";
-import { faker } from "@faker-js/faker";
 
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 
+import { BaseFactory } from "@test/factory/BaseFactory";
 import { BarbershopFactory } from "@test/factory/BarbershopFactory";
 
 import { UpdateBarbershop } from "./UpdateBarbershop";
@@ -30,11 +30,11 @@ describe("UpdateBarbershop.ts", () => {
   it("should update all Barbershop fields", async () => {
     const dataToUpdate = {
       id: barbershop.id,
-      street: faker.location.street(),
-      neighborhood: faker.location.secondaryAddress(),
-      number: faker.location.buildingNumber(),
-      avatarUrl: faker.internet.avatar(),
-      phone: faker.phone.number("+55 99 99999-9999"),
+      street: BaseFactory.makeAddressStreet(),
+      neighborhood: BaseFactory.makeAddressNeighborhood(),
+      number: BaseFactory.makeAddressNumber(),
+      avatarUrl: BaseFactory.makeAvatar(),
+      phone: BaseFactory.makePhone(),
     };
 
     const result = await updateBarbershop.execute(dataToUpdate);
@@ -49,7 +49,7 @@ describe("UpdateBarbershop.ts", () => {
   });
 
   it("should update one Barbershop field", async () => {
-    const street = faker.location.street();
+    const street = BaseFactory.makeAddressStreet();
 
     const result = await updateBarbershop.execute({
       id: barbershop.id,
@@ -67,7 +67,7 @@ describe("UpdateBarbershop.ts", () => {
   it("should not update Barbershop by id if user does not exists", async () => {
     const result = await updateBarbershop.execute({
       id: "no-exist",
-      street: faker.location.street(),
+      street: BaseFactory.makeAddressStreet(),
     });
 
     expect(result.isLeft()).toBeTruthy();

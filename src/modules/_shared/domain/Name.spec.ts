@@ -1,11 +1,12 @@
 import { describe, it, expect } from "vitest";
-import { faker } from "@faker-js/faker";
+
+import { BaseFactory } from "@test/factory/BaseFactory";
 
 import { Name } from "./Name";
 
 describe("Name.ts", () => {
   it("should accept valid name", () => {
-    const name = Name.create(faker.person.fullName());
+    const name = Name.create(BaseFactory.makeFullName());
 
     expect(name.isRight()).toBeTruthy();
   });

@@ -1,11 +1,12 @@
 import { describe, it, expect } from "vitest";
-import { faker } from "@faker-js/faker";
 
 import { Email } from "./Email";
 
+import { BaseFactory } from "@test/factory/BaseFactory";
+
 describe("Email.ts", () => {
   it("should accept valid email address", () => {
-    const email = Email.create(faker.internet.email());
+    const email = Email.create(BaseFactory.makeEmail());
 
     expect(email.isRight()).toBeTruthy();
   });

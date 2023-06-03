@@ -10,11 +10,4 @@ describe("ClientFactory.ts", () => {
 
     expect(result).toBeInstanceOf(Client);
   });
-
-  it("should create 3 instances of Client", () => {
-    const clients = ClientFactory.createSome(3);
-
-    expect(clients.length).toBe(3);
-    expect(clients.every((client) => client instanceof Client)).toBeTruthy();
-  });
 });

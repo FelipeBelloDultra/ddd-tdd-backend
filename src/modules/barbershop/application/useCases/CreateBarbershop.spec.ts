@@ -1,8 +1,8 @@
 import { describe, beforeEach, it, expect } from "vitest";
-import { faker } from "@faker-js/faker";
 
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 
+import { BaseFactory } from "@test/factory/BaseFactory";
 import { BarbershopFactory } from "@test/factory/BarbershopFactory";
 
 import { CreateBarbershop } from "./CreateBarbershop";
@@ -27,9 +27,9 @@ describe("CreateBarbershop.ts", () => {
 
   it("should create Barbershop", async () => {
     const result = await createBarbershop.execute({
-      name: faker.person.fullName(),
-      email: faker.internet.email(),
-      password: faker.internet.password(),
+      name: BaseFactory.makeFullName(),
+      email: BaseFactory.makeEmail(),
+      password: BaseFactory.makePassword(),
     });
 
     expect(result.isRight()).toBeTruthy();
@@ -52,9 +52,9 @@ describe("CreateBarbershop.ts", () => {
     await fakeRepositoryFactory.barbershopRepository.create(barbershop);
 
     const result = await createBarbershop.execute({
-      name: faker.person.fullName(),
+      name: BaseFactory.makeFullName(),
       email: barbershop.email.value,
-      password: faker.internet.password(),
+      password: BaseFactory.makePassword(),
     });
 
     expect(result.isLeft()).toBeTruthy();

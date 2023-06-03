@@ -1,5 +1,6 @@
 import { describe, beforeAll, it, vi, afterAll, expect } from "vitest";
-import { faker } from "@faker-js/faker";
+
+import { BaseFactory } from "@test/factory/BaseFactory";
 
 import { Appointment } from "./Appointment";
 
@@ -11,8 +12,8 @@ describe("Appointment.ts", () => {
   it("should create Appointment instance", () => {
     const appointment = Appointment.create({
       date: new Date(),
-      clientId: faker.string.uuid(),
-      employeeId: faker.string.uuid(),
+      clientId: BaseFactory.makeUuid(),
+      employeeId: BaseFactory.makeUuid(),
     });
 
     expect(appointment).toBeInstanceOf(Appointment);
@@ -24,8 +25,8 @@ describe("Appointment.ts", () => {
 
     const appointment = Appointment.create({
       date: new Date(),
-      clientId: faker.string.uuid(),
-      employeeId: faker.string.uuid(),
+      clientId: BaseFactory.makeUuid(),
+      employeeId: BaseFactory.makeUuid(),
     });
 
     const result = appointment.hourIsAvailable();
@@ -39,8 +40,8 @@ describe("Appointment.ts", () => {
 
     const appointment = Appointment.create({
       date: new Date(),
-      clientId: faker.string.uuid(),
-      employeeId: faker.string.uuid(),
+      clientId: BaseFactory.makeUuid(),
+      employeeId: BaseFactory.makeUuid(),
     });
 
     const result = appointment.hourIsAvailable();
@@ -53,8 +54,8 @@ describe("Appointment.ts", () => {
 
     const appointment = Appointment.create({
       date,
-      clientId: faker.string.uuid(),
-      employeeId: faker.string.uuid(),
+      clientId: BaseFactory.makeUuid(),
+      employeeId: BaseFactory.makeUuid(),
     });
 
     const result = appointment.hourIsAvailable();

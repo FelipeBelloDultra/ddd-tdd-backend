@@ -1,10 +1,10 @@
 import { describe, beforeEach, it, expect } from "vitest";
-import { faker } from "@faker-js/faker";
 
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 
 import { Employee } from "@modules/employee/domain/Employee";
 
+import { BaseFactory } from "@test/factory/BaseFactory";
 import { BarbershopFactory } from "@test/factory/BarbershopFactory";
 
 import { EmployeeEmailAlreadyUsedError } from "./errors/EmployeeEmailAlreadyUsedError";
@@ -34,11 +34,11 @@ describe("CreateEmployee.ts", () => {
 
   it("should create Employee", async () => {
     const result = await createEmployee.execute({
-      name: faker.person.fullName(),
-      email: faker.internet.email(),
-      avatarUrl: faker.internet.avatar(),
+      name: BaseFactory.makeFullName(),
+      email: BaseFactory.makeEmail(),
+      avatarUrl: BaseFactory.makeAvatar(),
       barbershopId: barbershop.id,
-      phone: faker.phone.number(),
+      phone: BaseFactory.makePhone(),
     });
 
     expect(result.isRight()).toBeTruthy();
@@ -47,11 +47,11 @@ describe("CreateEmployee.ts", () => {
 
   it("should not be able create Employee if barbershop is not found", async () => {
     const result = await createEmployee.execute({
-      name: faker.person.fullName(),
-      email: faker.internet.email(),
-      avatarUrl: faker.internet.avatar(),
-      barbershopId: faker.string.uuid(),
-      phone: faker.phone.number(),
+      name: BaseFactory.makeFullName(),
+      email: BaseFactory.makeEmail(),
+      avatarUrl: BaseFactory.makeAvatar(),
+      barbershopId: BaseFactory.makeUuid(),
+      phone: BaseFactory.makePhone(),
     });
 
     expect(result.isLeft()).toBeTruthy();
@@ -59,24 +59,24 @@ describe("CreateEmployee.ts", () => {
   });
 
   it("should not be able create Employee if email already exists", async () => {
-    const email = faker.internet.email();
+    const email = BaseFactory.makeEmail();
 
     await fakeRepositoryFactory.employeeRepository.create(
       Employee.create({
-        name: faker.person.fullName(),
+        name: BaseFactory.makeFullName(),
         email: email,
-        phone: faker.phone.number(),
-        avatarUrl: faker.internet.avatar(),
+        phone: BaseFactory.makePhone(),
+        avatarUrl: BaseFactory.makeAvatar(),
         barbershopId: barbershop.id,
       })
     );
 
     const result = await createEmployee.execute({
-      name: faker.person.fullName(),
+      name: BaseFactory.makeFullName(),
       email,
-      avatarUrl: faker.internet.avatar(),
+      avatarUrl: BaseFactory.makeAvatar(),
       barbershopId: barbershop.id,
-      phone: faker.phone.number(),
+      phone: BaseFactory.makePhone(),
     });
 
     expect(result.isLeft()).toBeTruthy();

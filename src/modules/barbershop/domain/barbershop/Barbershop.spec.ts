@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { faker } from "@faker-js/faker";
 
+import { BaseFactory } from "@test/factory/BaseFactory";
 import { BarbershopFactory } from "@test/factory/BarbershopFactory";
 
 import { Barbershop } from "./Barbershop";
@@ -15,7 +15,8 @@ describe("Barbershop.ts", () => {
 
   it("should update Barbershop instance", () => {
     const createdBarbershop = BarbershopFactory.create();
-    const street = Street.create(faker.location.street()).value as Street;
+    const street = Street.create(BaseFactory.makeAddressStreet())
+      .value as Street;
 
     const barbershop = Barbershop.create(createdBarbershop);
 

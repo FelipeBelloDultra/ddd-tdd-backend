@@ -1,5 +1,6 @@
-import { faker } from "@faker-js/faker";
 import { expect, describe, it } from "vitest";
+
+import { BaseFactory } from "@test/factory/BaseFactory";
 
 import { Entity } from "./Entity";
 
@@ -13,7 +14,7 @@ describe("Entity.ts", () => {
   });
 
   it("should use the provided id if provided", () => {
-    const id = faker.string.uuid();
+    const id = BaseFactory.makeUuid();
     const customEntity = new CustomEntity({}, id);
 
     expect(customEntity.id).toEqual(id);

@@ -7,7 +7,6 @@ import {
   afterAll,
   expect,
 } from "vitest";
-import { faker } from "@faker-js/faker";
 
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 
@@ -15,6 +14,7 @@ import { Employee } from "@modules/employee/domain/Employee";
 import { Appointment } from "@modules/appointment/domain/Appointment";
 
 import { BarbershopFactory } from "@test/factory/BarbershopFactory";
+import { BaseFactory } from "@test/factory/BaseFactory";
 
 import { ScheduleAppointment } from "./ScheduleAppointment";
 
@@ -26,11 +26,11 @@ const fakeRepositoryFactory = FakeRepositoryFactory.create();
 
 const barbershop = BarbershopFactory.create();
 const employee = Employee.create({
-  name: faker.person.fullName(),
-  email: faker.internet.email(),
-  avatarUrl: faker.internet.avatar(),
+  name: BaseFactory.makeFullName(),
+  email: BaseFactory.makeEmail(),
+  avatarUrl: BaseFactory.makeAvatar(),
   barbershopId: barbershop.id,
-  phone: faker.phone.number(),
+  phone: BaseFactory.makePhone(),
 });
 
 let scheduleAppointment: ScheduleAppointment;
@@ -62,7 +62,7 @@ describe("ScheduleAppointment.ts", () => {
 
     const result = await scheduleAppointment.execute({
       employeeId: employee.id,
-      clientId: faker.string.uuid(),
+      clientId: BaseFactory.makeUuid(),
       date: new Date(),
     });
 
@@ -76,7 +76,7 @@ describe("ScheduleAppointment.ts", () => {
 
     const error = await scheduleAppointment.execute({
       employeeId: employee.id,
-      clientId: faker.string.uuid(),
+      clientId: BaseFactory.makeUuid(),
       date: new Date(),
     });
 
@@ -90,7 +90,7 @@ describe("ScheduleAppointment.ts", () => {
 
     const error = await scheduleAppointment.execute({
       employeeId: "non-existent-employee-id",
-      clientId: faker.string.uuid(),
+      clientId: BaseFactory.makeUuid(),
       date: new Date(),
     });
 
@@ -105,14 +105,14 @@ describe("ScheduleAppointment.ts", () => {
     await fakeRepositoryFactory.appointmentRepository.create(
       Appointment.create({
         employeeId: employee.id,
-        clientId: faker.string.uuid(),
+        clientId: BaseFactory.makeUuid(),
         date: new Date(),
       })
     );
 
     const error = await scheduleAppointment.execute({
       employeeId: employee.id,
-      clientId: faker.string.uuid(),
+      clientId: BaseFactory.makeUuid(),
       date: new Date(),
     });
 

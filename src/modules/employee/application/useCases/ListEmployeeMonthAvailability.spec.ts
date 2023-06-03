@@ -7,11 +7,12 @@ import {
   afterAll,
   expect,
 } from "vitest";
-import { faker } from "@faker-js/faker";
 
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 
 import { Appointment } from "@modules/appointment/domain/Appointment";
+
+import { BaseFactory } from "@test/factory/BaseFactory";
 
 import { DateService } from "@core/domain/DateService";
 
@@ -47,7 +48,7 @@ describe("ListEmployeeMonthAvailability.ts", () => {
 
     const employeeMonthAvailability =
       await listEmployeeMonthAvailability.execute({
-        employeeId: faker.string.uuid(),
+        employeeId: BaseFactory.makeUuid(),
         month: Number(MONTH),
         year: Number(YEAR),
       });
@@ -74,7 +75,7 @@ describe("ListEmployeeMonthAvailability.ts", () => {
   it("should list available days in month with appointments scheduled", async () => {
     vi.setSystemTime(new Date(`${YEAR}-${MONTH}-02T08:00:00`));
 
-    const employeeId = faker.string.uuid();
+    const employeeId = BaseFactory.makeUuid();
     const scheduledHoursPerDay = Array.from(
       { length: MAX_APPOINTMENTS_PER_DAY },
       (_, index) => (index + START_WORK_TIME_AT).toString().padStart(2, "0")
@@ -84,7 +85,7 @@ describe("ListEmployeeMonthAvailability.ts", () => {
       fakeRepositoryFactory.appointmentRepository.create(
         Appointment.create({
           employeeId,
-          clientId: faker.string.uuid(),
+          clientId: BaseFactory.makeUuid(),
           date: new Date(`${YEAR}-${MONTH}-02T${hour}:00:00`),
         })
       )

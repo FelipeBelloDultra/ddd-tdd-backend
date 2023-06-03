@@ -7,11 +7,12 @@ import {
   afterAll,
   expect,
 } from "vitest";
-import { faker } from "@faker-js/faker";
 
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 
 import { Appointment } from "@modules/appointment/domain/Appointment";
+
+import { BaseFactory } from "@test/factory/BaseFactory";
 
 import { ListEmployeeDayAvailability } from "./ListEmployeeDayAvailability";
 
@@ -45,20 +46,20 @@ describe("ListEmployeeDayAvailability.ts", () => {
       new Date(`${YEAR}-${MONTH}-${DAY}T10:00:00`).getTime()
     );
 
-    const employeeId = faker.string.uuid();
+    const employeeId = BaseFactory.makeUuid();
 
     await Promise.all([
       fakeRepositoryFactory.appointmentRepository.create(
         Appointment.create({
           employeeId,
-          clientId: faker.string.uuid(),
+          clientId: BaseFactory.makeUuid(),
           date: new Date(`${YEAR}-${MONTH}-${DAY}T14:00:00`),
         })
       ),
       fakeRepositoryFactory.appointmentRepository.create(
         Appointment.create({
           employeeId,
-          clientId: faker.string.uuid(),
+          clientId: BaseFactory.makeUuid(),
           date: new Date(`${YEAR}-${MONTH}-${DAY}T16:00:00`),
         })
       ),

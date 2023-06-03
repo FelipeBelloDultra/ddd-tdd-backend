@@ -1,11 +1,12 @@
-import { faker } from "@faker-js/faker";
 import { describe, it, expect } from "vitest";
+
+import { BaseFactory } from "@test/factory/BaseFactory";
 
 import { StreetNumber } from "./StreetNumber";
 
 describe("StreetNumber.ts", () => {
   it("should create an street number location", () => {
-    const streetNumberValue = faker.location.buildingNumber();
+    const streetNumberValue = BaseFactory.makeAddressNumber();
     const streetNumber = StreetNumber.create(streetNumberValue);
 
     expect(streetNumber.isRight()).toBeTruthy();

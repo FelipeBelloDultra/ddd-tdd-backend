@@ -1,5 +1,4 @@
 import { describe, beforeEach, it, expect } from "vitest";
-import { faker } from "@faker-js/faker";
 
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 
@@ -7,6 +6,7 @@ import { Employee } from "@modules/employee/domain/Employee";
 
 import { ClientFactory } from "@test/factory/ClientFactory";
 import { BarbershopFactory } from "@test/factory/BarbershopFactory";
+import { BaseFactory } from "@test/factory/BaseFactory";
 
 import { EmailValidatorService } from "./EmailValidatorService";
 
@@ -17,7 +17,7 @@ let emailValidatorService: EmailValidatorService;
 
 describe("EmailValidatorService.ts", () => {
   beforeEach(() => {
-    registredEmail = faker.internet.email();
+    registredEmail = BaseFactory.makeEmail();
 
     emailValidatorService = new EmailValidatorService({
       barbershopRepository: fakeRepositoryFactory.barbershopRepository,
@@ -43,11 +43,11 @@ describe("EmailValidatorService.ts", () => {
   it("should return true if email was registred by Employee", async () => {
     await fakeRepositoryFactory.employeeRepository.create(
       Employee.create({
-        name: faker.person.fullName(),
+        name: BaseFactory.makeFullName(),
         email: registredEmail,
-        avatarUrl: faker.internet.avatar(),
-        phone: faker.phone.number(),
-        barbershopId: faker.string.uuid(),
+        avatarUrl: BaseFactory.makeAvatar(),
+        phone: BaseFactory.makePhone(),
+        barbershopId: BaseFactory.makeUuid(),
       })
     );
 

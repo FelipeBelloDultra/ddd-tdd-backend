@@ -1,10 +1,11 @@
-import { faker } from "@faker-js/faker";
 import { Employee } from "@modules/employee/domain/Employee";
 import { IEmployeeRepository } from "@modules/employee/application/repository/IEmployeeRepository";
 import {
   EmployeeMapper,
   IPersistenceEmployee,
 } from "@modules/employee/application/mappers/EmployeeMapper";
+
+import { BaseFactory } from "@test/factory/BaseFactory";
 
 export class FakeEmployeeRepository implements IEmployeeRepository {
   private readonly employees: IPersistenceEmployee[];
@@ -14,10 +15,10 @@ export class FakeEmployeeRepository implements IEmployeeRepository {
     const firstEmployees = Array.from({ length: 5 }).map(() => {
       const employee = Employee.create({
         barbershopId: firstBarbershopId,
-        name: faker.person.fullName(),
-        email: faker.internet.email(),
-        phone: faker.phone.number(),
-        avatarUrl: faker.internet.avatar(),
+        name: BaseFactory.makeFullName(),
+        email: BaseFactory.makeEmail(),
+        phone: BaseFactory.makePhone(),
+        avatarUrl: BaseFactory.makeAvatar(),
         createdAt: new Date(),
         updatedAt: new Date(),
       });
@@ -28,10 +29,10 @@ export class FakeEmployeeRepository implements IEmployeeRepository {
     const secondEmployees = Array.from({ length: 3 }).map(() => {
       const employee = Employee.create({
         barbershopId: secondBarbershopId,
-        name: faker.person.fullName(),
-        email: faker.internet.email(),
-        phone: faker.phone.number(),
-        avatarUrl: faker.internet.avatar(),
+        name: BaseFactory.makeFullName(),
+        email: BaseFactory.makeEmail(),
+        phone: BaseFactory.makePhone(),
+        avatarUrl: BaseFactory.makeAvatar(),
         createdAt: new Date(),
         updatedAt: new Date(),
       });

@@ -9,13 +9,4 @@ describe("BarbershopFactory.ts", () => {
 
     expect(result).toBeInstanceOf(Barbershop);
   });
-
-  it("should create 3 instances of Barbershop", () => {
-    const barbershops = BarbershopFactory.createSome(3);
-
-    expect(barbershops.length).toBe(3);
-    expect(
-      barbershops.every((client) => client instanceof Barbershop)
-    ).toBeTruthy();
-  });
 });

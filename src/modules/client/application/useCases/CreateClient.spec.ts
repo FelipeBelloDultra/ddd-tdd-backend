@@ -1,8 +1,8 @@
 import { describe, beforeEach, it, expect } from "vitest";
-import { faker } from "@faker-js/faker";
 
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 
+import { BaseFactory } from "@test/factory/BaseFactory";
 import { ClientFactory } from "@test/factory/ClientFactory";
 
 import { ClientEmailAlreadyUsedError } from "./errors/ClientEmailAlreadyUsedError";
@@ -27,9 +27,9 @@ describe("CreateClient.ts", () => {
 
   it("should create Client", async () => {
     const result = await createClient.execute({
-      name: faker.person.fullName(),
-      email: faker.internet.email(),
-      password: faker.internet.password(),
+      name: BaseFactory.makeFullName(),
+      email: BaseFactory.makeEmail(),
+      password: BaseFactory.makePassword(),
     });
 
     expect(result.isRight()).toBeTruthy();
@@ -52,9 +52,9 @@ describe("CreateClient.ts", () => {
     await fakeRepositoryFactory.clientRepository.create(client);
 
     const result = await createClient.execute({
-      name: faker.person.fullName(),
+      name: BaseFactory.makeFullName(),
       email: client.email.value,
-      password: faker.internet.password(),
+      password: BaseFactory.makePassword(),
     });
 
     expect(result.isLeft()).toBeTruthy();

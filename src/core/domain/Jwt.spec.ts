@@ -1,14 +1,15 @@
-import { faker } from "@faker-js/faker";
 import { expect, it, describe } from "vitest";
+
+import { BaseFactory } from "@test/factory/BaseFactory";
 
 import { Jwt } from "./Jwt";
 
 import { InvalidJwtTokenError } from "./errors/InvalidJwtTokenError";
 
 const user = {
-  id: faker.string.uuid(),
-  email: faker.internet.email(),
-  name: faker.person.fullName(),
+  id: BaseFactory.makeUuid(),
+  email: BaseFactory.makeEmail(),
+  name: BaseFactory.makeFullName(),
   roles: ["admin"],
 };
 

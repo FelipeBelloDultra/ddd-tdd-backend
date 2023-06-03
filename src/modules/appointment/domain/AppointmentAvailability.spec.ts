@@ -1,5 +1,6 @@
-import { faker } from "@faker-js/faker";
 import { describe, beforeAll, it, vi, afterAll, expect } from "vitest";
+
+import { BaseFactory } from "@test/factory/BaseFactory";
 
 import { AppointmentAvailability } from "./AppointmentAvailability";
 import { Appointment } from "./Appointment";
@@ -17,7 +18,7 @@ describe("AppointmentAvailability.ts", () => {
   });
 
   it("should return an appointment availability by month", () => {
-    const employeeId = faker.string.uuid();
+    const employeeId = BaseFactory.makeUuid();
     const scheduledHoursPerDay = Array.from(
       { length: MAX_APPOINTMENTS_PER_DAY },
       (_, index) => (index + START_WORK_TIME_AT).toString().padStart(2, "0")
@@ -25,7 +26,7 @@ describe("AppointmentAvailability.ts", () => {
     const appointments = scheduledHoursPerDay.map((hour) =>
       Appointment.create({
         employeeId,
-        clientId: faker.string.uuid(),
+        clientId: BaseFactory.makeUuid(),
         date: new Date(`${YEAR}-${MONTH}-02T${hour}:00:00`),
       })
     );
@@ -50,17 +51,17 @@ describe("AppointmentAvailability.ts", () => {
       new Date(`${YEAR}-${MONTH}-${DAY}T10:00:00`).getTime()
     );
 
-    const employeeId = faker.string.uuid();
+    const employeeId = BaseFactory.makeUuid();
 
     const appointments = [
       Appointment.create({
         employeeId,
-        clientId: faker.string.uuid(),
+        clientId: BaseFactory.makeUuid(),
         date: new Date(`${YEAR}-${MONTH}-${DAY}T14:00:00`),
       }),
       Appointment.create({
         employeeId,
-        clientId: faker.string.uuid(),
+        clientId: BaseFactory.makeUuid(),
         date: new Date(`${YEAR}-${MONTH}-${DAY}T16:00:00`),
       }),
     ];
