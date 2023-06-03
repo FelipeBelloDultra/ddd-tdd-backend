@@ -20,6 +20,10 @@ export default defineConfig({
         replacement: resolve(__dirname, "src", "infra"),
       },
       {
+        find: "@_shared",
+        replacement: resolve(__dirname, "src", "modules", "_shared"),
+      },
+      {
         find: "@test",
         replacement: resolve(__dirname, "src", "test"),
       },

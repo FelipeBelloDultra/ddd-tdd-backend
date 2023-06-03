@@ -5,7 +5,7 @@ import { Email } from "@modules/client/domain/client/email";
 import { Password } from "@modules/client/domain/client/password";
 import { IClientRepository } from "@modules/client/application/repository/IClientRepository";
 import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
-import { EmailValidatorService } from "@core/application/services/EmailValidatorService";
+import { EmailValidatorService } from "@_shared/application/services/EmailValidatorService";
 import { InvalidClientEmailError } from "@modules/client/domain/client/errors/InvalidClientEmailError";
 import { InvalidClientNameError } from "@modules/client/domain/client/errors/InvalidClientNameError";
 import { InvalidClientPasswordError } from "@modules/client/domain/client/errors/InvalidClientPasswordError";
