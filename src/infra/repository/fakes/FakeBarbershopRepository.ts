@@ -1,4 +1,4 @@
-import { Barbershop } from "@modules/barbershop/domain/Barbershop";
+import { Barbershop } from "@modules/barbershop/domain/barbershop/Barbershop";
 import { IBarbershopRepository } from "@modules/barbershop/application/repository/IBarbershopRepository";
 import {
   BarbershopMapper,
@@ -9,7 +9,9 @@ export class FakeBarbershopRepository implements IBarbershopRepository {
   private readonly barbershops: IPersistenceBarbershop[] = [];
 
   public async create(data: Barbershop): Promise<Barbershop> {
-    this.barbershops.push(BarbershopMapper.toPersistence(data));
+    const toPersistence = await BarbershopMapper.toPersistence(data);
+
+    this.barbershops.push(toPersistence);
 
     return Promise.resolve(data);
   }
@@ -39,8 +41,8 @@ export class FakeBarbershopRepository implements IBarbershopRepository {
       (barbershop) => barbershop.id_barbershop === data.id
     );
 
-    this.barbershops[finded] = BarbershopMapper.toPersistence(data);
+    this.barbershops[finded] = await BarbershopMapper.toPersistence(data);
 
-    return Promise.resolve(Barbershop.create(data, data.id));
+    return data;
   }
 }

@@ -26,6 +26,14 @@ interface IBarbershopProps {
   updatedAt?: Date;
 }
 
+interface IBarbershopUpdateProps {
+  street?: Street;
+  neighborhood?: Neighborhood;
+  number?: StreetNumber;
+  phone?: Phone;
+  avatarUrl?: AvatarUrl;
+}
+
 export class Barbershop extends Entity<IBarbershopProps> {
   get name(): Name {
     return this.props.name;
@@ -82,5 +90,25 @@ export class Barbershop extends Entity<IBarbershopProps> {
     Barbershop
   > {
     return right(new Barbershop(props, id));
+  }
+
+  public update(toUpdate: IBarbershopUpdateProps): Either<void, Barbershop> {
+    const updated = new Barbershop(
+      {
+        name: this.name,
+        email: this.email,
+        password: this.password,
+        avatarUrl: toUpdate.avatarUrl || this.avatarUrl,
+        neighborhood: toUpdate.neighborhood || this.neighborhood,
+        number: toUpdate.number || this.number,
+        phone: toUpdate.phone || this.phone,
+        street: toUpdate.street || this.street,
+        createdAt: this.createdAt,
+        updatedAt: new Date(),
+      },
+      this.id
+    );
+
+    return right(updated);
   }
 }

@@ -1,7 +1,7 @@
 import { describe, beforeEach, it, expect } from "vitest";
 import { faker } from "@faker-js/faker";
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
-import { Barbershop } from "@modules/barbershop/domain/Barbershop";
+import { BarbershopFactory } from "@test/factory/BarbershopFactory";
 import { CreateBarbershop } from "./CreateBarbershop";
 import { BarbershopEmailAlreadyUsedError } from "./errors/BarbershopEmailAlreadyUsedError";
 
@@ -32,20 +32,24 @@ describe("CreateBarbershop.ts", () => {
     expect(result.value).toBeTypeOf("string");
   });
 
-  it("should not be able create Barbershop if email already exists", async () => {
-    const email = faker.internet.email();
+  it("should not create Client with invalid data", async () => {
+    const result = await createBarbershop.execute({
+      name: "",
+      email: "",
+      password: "",
+    });
 
-    await fakeRepositoryFactory.barbershopRepository.create(
-      Barbershop.create({
-        name: faker.person.fullName(),
-        email,
-        password: faker.internet.password(),
-      })
-    );
+    expect(result.isLeft()).toBeTruthy();
+  });
+
+  it("should not be able create Barbershop if email already exists", async () => {
+    const barbershop = BarbershopFactory.create();
+
+    await fakeRepositoryFactory.barbershopRepository.create(barbershop);
 
     const result = await createBarbershop.execute({
       name: faker.person.fullName(),
-      email,
+      email: barbershop.email.value,
       password: faker.internet.password(),
     });
 

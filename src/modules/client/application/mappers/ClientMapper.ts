@@ -15,17 +15,16 @@ export interface IPersistenceClient {
 export class ClientMapper {
   static toDomain(raw: IPersistenceClient): Client {
     const name = Name.create(raw.name);
-    const email = Email.create(raw.email);
-    const password = Password.create(raw.password, true);
-
     if (name.isLeft()) {
       throw new Error("Name value is invalid");
     }
 
+    const email = Email.create(raw.email);
     if (email.isLeft()) {
       throw new Error("Email value is invalid");
     }
 
+    const password = Password.create(raw.password, true);
     if (password.isLeft()) {
       throw new Error("Password value is invalid");
     }

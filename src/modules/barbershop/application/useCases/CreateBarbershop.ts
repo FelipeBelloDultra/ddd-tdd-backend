@@ -1,4 +1,7 @@
-import { Barbershop } from "@modules/barbershop/domain/Barbershop";
+import { Barbershop } from "@modules/barbershop/domain/barbershop/Barbershop";
+import { Name } from "@_shared/domain/Name";
+import { Email } from "@_shared/domain/Email";
+import { Password } from "@_shared/domain/Password";
 import { IBarbershopRepository } from "@modules/barbershop/application/repository/IBarbershopRepository";
 import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
 import { Either, left, right } from "@core/logic/Either";
@@ -33,14 +36,37 @@ export class CreateBarbershop {
   public async execute(
     data: ICreateBarbershop
   ): Promise<ICreateBarbershopResponse> {
+    const email = Email.create(data.email);
+    if (email.isLeft()) {
+      return left(email.value);
+    }
+
     if (await this.emailValidatorService.isUsed(data.email)) {
       return left(new BarbershopEmailAlreadyUsedError());
     }
 
-    const barbershop = Barbershop.create(data);
+    const name = Name.create(data.name);
+    if (name.isLeft()) {
+      return left(name.value);
+    }
+
+    const password = Password.create(data.password);
+    if (password.isLeft()) {
+      return left(password.value);
+    }
+
+    const barbershop = Barbershop.create({
+      name: name.value,
+      email: email.value,
+      password: password.value,
+    });
+
+    if (barbershop.isLeft()) {
+      return left(barbershop.value);
+    }
 
     const createdBarbershop = await this.barbershopRepository.create(
-      barbershop
+      barbershop.value
     );
 
     return right(createdBarbershop.id);

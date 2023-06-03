@@ -6,9 +6,6 @@ import { Password } from "@_shared/domain/Password";
 import { IClientRepository } from "@modules/client/application/repository/IClientRepository";
 import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
 import { EmailValidatorService } from "@_shared/application/services/EmailValidatorService";
-import { InvalidClientEmailError } from "@modules/client/domain/client/errors/InvalidClientEmailError";
-import { InvalidClientNameError } from "@modules/client/domain/client/errors/InvalidClientNameError";
-import { InvalidClientPasswordError } from "@modules/client/domain/client/errors/InvalidClientPasswordError";
 import { ClientEmailAlreadyUsedError } from "./errors/ClientEmailAlreadyUsedError";
 
 interface ICreateClient {
@@ -17,13 +14,7 @@ interface ICreateClient {
   password: string;
 }
 
-type ICreateClientResponse = Either<
-  | InvalidClientEmailError
-  | InvalidClientNameError
-  | InvalidClientPasswordError
-  | ClientEmailAlreadyUsedError,
-  string
->;
+type ICreateClientResponse = Either<ClientEmailAlreadyUsedError, string>;
 
 export class CreateClient {
   private readonly clientRepository: IClientRepository;

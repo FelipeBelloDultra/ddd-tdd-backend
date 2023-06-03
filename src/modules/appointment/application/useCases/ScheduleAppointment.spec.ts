@@ -9,7 +9,7 @@ import {
 } from "vitest";
 import { faker } from "@faker-js/faker";
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
-import { Barbershop } from "@modules/barbershop/domain/Barbershop";
+import { BarbershopFactory } from "@test/factory/BarbershopFactory";
 import { Employee } from "@modules/employee/domain/Employee";
 import { Appointment } from "@modules/appointment/domain/Appointment";
 import { ScheduleAppointment } from "./ScheduleAppointment";
@@ -19,11 +19,7 @@ import { AppointmentAlreadyBookedError } from "./errors/AppointmentAlreadyBooked
 
 const fakeRepositoryFactory = FakeRepositoryFactory.create();
 
-const barbershop = Barbershop.create({
-  name: faker.person.fullName(),
-  email: faker.internet.email(),
-  password: faker.internet.password(),
-});
+const barbershop = BarbershopFactory.create();
 const employee = Employee.create({
   name: faker.person.fullName(),
   email: faker.internet.email(),
@@ -40,7 +36,9 @@ describe("ScheduleAppointment.ts", () => {
   });
 
   beforeEach(async () => {
-    await fakeRepositoryFactory.barbershopRepository.create(barbershop);
+    await fakeRepositoryFactory.barbershopRepository.create(
+      BarbershopFactory.create()
+    );
     await fakeRepositoryFactory.employeeRepository.create(employee);
 
     scheduleAppointment = new ScheduleAppointment({
