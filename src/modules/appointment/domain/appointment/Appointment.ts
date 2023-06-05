@@ -1,17 +1,19 @@
+import { Either, right } from "@core/logic/Either";
 import { Entity } from "@core/domain/Entity";
+
+import { AppointmentDate } from "./AppointmentDate";
+
+import { InvalidAppointmentDateError } from "./errors/InvalidAppointmentDateError";
 
 interface IAppointmentProps {
   employeeId: string;
   clientId: string;
-  date: Date;
+  date: AppointmentDate;
   createdAt?: Date;
   updatedAt?: Date;
 }
 
 export class Appointment extends Entity<IAppointmentProps> {
-  private START_WORK_TIME_AT = 8;
-  private FINISH_WORK_TIME_AT = 17;
-
   get employeeId(): string {
     return this.props.employeeId;
   }
@@ -20,7 +22,7 @@ export class Appointment extends Entity<IAppointmentProps> {
     return this.props.clientId;
   }
 
-  get date(): Date {
+  get date(): AppointmentDate {
     return this.props.date;
   }
 
@@ -36,19 +38,10 @@ export class Appointment extends Entity<IAppointmentProps> {
     super(props, id);
   }
 
-  public static create(props: IAppointmentProps, id?: string): Appointment {
-    return new Appointment(props, id);
-  }
-
-  public hourIsAvailable(): boolean {
-    const hours = this.date.getHours();
-
-    if (this.date.getTime() < new Date().getTime()) return false;
-
-    if (hours < this.START_WORK_TIME_AT || hours > this.FINISH_WORK_TIME_AT) {
-      return false;
-    }
-
-    return true;
+  public static create(
+    props: IAppointmentProps,
+    id?: string
+  ): Either<InvalidAppointmentDateError, Appointment> {
+    return right(new Appointment(props, id));
   }
 }

@@ -1,4 +1,4 @@
-import { Appointment } from "@modules/appointment/domain/Appointment";
+import { Appointment } from "@modules/appointment/domain/appointment/Appointment";
 import { IAppointmentRepository } from "@modules/appointment/application/repository/IAppointmentRepository";
 import {
   AppointmentMapper,

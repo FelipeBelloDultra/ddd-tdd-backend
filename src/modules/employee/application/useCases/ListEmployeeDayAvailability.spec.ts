@@ -10,9 +10,8 @@ import {
 
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 
-import { Appointment } from "@modules/appointment/domain/Appointment";
-
 import { BaseFactory } from "@test/factory/BaseFactory";
+import { AppointmentFactory } from "@test/factory/AppointmentFactory";
 
 import { ListEmployeeDayAvailability } from "./ListEmployeeDayAvailability";
 
@@ -41,7 +40,7 @@ describe("ListEmployeeDayAvailability.ts", () => {
   });
 
   it("should list available appointments", async () => {
-    vi.setSystemTime(new Date(`${YEAR}-${MONTH}-02T08:00:00`));
+    vi.setSystemTime(new Date(`${YEAR}-${MONTH}-${DAY}T08:00:00`));
     vi.spyOn(Date, "now").mockImplementationOnce(() =>
       new Date(`${YEAR}-${MONTH}-${DAY}T10:00:00`).getTime()
     );
@@ -50,16 +49,14 @@ describe("ListEmployeeDayAvailability.ts", () => {
 
     await Promise.all([
       fakeRepositoryFactory.appointmentRepository.create(
-        Appointment.create({
+        AppointmentFactory.create({
           employeeId,
-          clientId: BaseFactory.makeUuid(),
           date: new Date(`${YEAR}-${MONTH}-${DAY}T14:00:00`),
         })
       ),
       fakeRepositoryFactory.appointmentRepository.create(
-        Appointment.create({
+        AppointmentFactory.create({
           employeeId,
-          clientId: BaseFactory.makeUuid(),
           date: new Date(`${YEAR}-${MONTH}-${DAY}T16:00:00`),
         })
       ),

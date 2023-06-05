@@ -11,15 +11,14 @@ import {
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 
 import { Employee } from "@modules/employee/domain/Employee";
-import { Appointment } from "@modules/appointment/domain/Appointment";
 
 import { BarbershopFactory } from "@test/factory/BarbershopFactory";
+import { AppointmentFactory } from "@test/factory/AppointmentFactory";
 import { BaseFactory } from "@test/factory/BaseFactory";
 
 import { ScheduleAppointment } from "./ScheduleAppointment";
 
 import { EmployeeNotFoundError } from "./errors/EmployeeNotFoundError";
-import { UnavailableHoursError } from "./errors/UnavailableHoursError";
 import { AppointmentAlreadyBookedError } from "./errors/AppointmentAlreadyBookedError";
 
 const fakeRepositoryFactory = FakeRepositoryFactory.create();
@@ -74,28 +73,27 @@ describe("ScheduleAppointment.ts", () => {
     const date = new Date("2000-01-01T07:00:00");
     vi.setSystemTime(date);
 
-    const error = await scheduleAppointment.execute({
+    const result = await scheduleAppointment.execute({
       employeeId: employee.id,
       clientId: BaseFactory.makeUuid(),
       date: new Date(),
     });
 
-    expect(error.isLeft());
-    expect(error.value).toEqual(new UnavailableHoursError());
+    expect(result.isLeft()).toBeTruthy();
   });
 
   it("should not be able schedule an appointment if employee does not exists", async () => {
     const date = new Date("2000-01-01T07:00:00");
     vi.setSystemTime(date);
 
-    const error = await scheduleAppointment.execute({
+    const result = await scheduleAppointment.execute({
       employeeId: "non-existent-employee-id",
       clientId: BaseFactory.makeUuid(),
       date: new Date(),
     });
 
-    expect(error.isLeft());
-    expect(error.value).toEqual(new EmployeeNotFoundError());
+    expect(result.isLeft());
+    expect(result.value).toEqual(new EmployeeNotFoundError());
   });
 
   it("should not be able to schedule if another schedule exists", async () => {
@@ -103,21 +101,17 @@ describe("ScheduleAppointment.ts", () => {
     vi.setSystemTime(date);
 
     await fakeRepositoryFactory.appointmentRepository.create(
-      Appointment.create({
-        employeeId: employee.id,
-        clientId: BaseFactory.makeUuid(),
-        date: new Date(),
-      })
+      AppointmentFactory.create({ employeeId: employee.id, date: new Date() })
     );
 
-    const error = await scheduleAppointment.execute({
+    const result = await scheduleAppointment.execute({
       employeeId: employee.id,
       clientId: BaseFactory.makeUuid(),
       date: new Date(),
     });
 
-    expect(error.isLeft());
-    expect(error.value).toEqual(new AppointmentAlreadyBookedError());
+    expect(result.isLeft());
+    expect(result.value).toEqual(new AppointmentAlreadyBookedError());
   });
 
   afterAll(() => {

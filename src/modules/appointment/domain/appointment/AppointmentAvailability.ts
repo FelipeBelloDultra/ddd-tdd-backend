@@ -45,7 +45,7 @@ export class AppointmentAvailability {
     const availability = arrayDateByDaysOfMonth.map((day) => {
       const compareDate = new Date(year, month - 1, day, 23, 59, 59);
       const appointmentsInDay = this.appointments.filter(
-        (appointment) => DateService.getDate(appointment.date) === day
+        (appointment) => DateService.getDate(appointment.date.value) === day
       );
 
       return {
@@ -74,7 +74,7 @@ export class AppointmentAvailability {
 
     const availability = eachHourArray.map((hour) => {
       const hasAppointmentInHour = this.appointments.some(
-        (appointment) => new Date(appointment.date).getHours() === hour
+        (appointment) => new Date(appointment.date.value).getHours() === hour
       );
 
       const compareDate = new Date(year, month - 1, day, hour);

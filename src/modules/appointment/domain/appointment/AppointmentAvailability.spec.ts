@@ -4,6 +4,7 @@ import { BaseFactory } from "@test/factory/BaseFactory";
 
 import { AppointmentAvailability } from "./AppointmentAvailability";
 import { Appointment } from "./Appointment";
+import { AppointmentDate } from "./AppointmentDate";
 
 const YEAR = "2000";
 const MONTH = "02";
@@ -14,21 +15,25 @@ const START_WORK_TIME_AT = 8;
 describe("AppointmentAvailability.ts", () => {
   beforeAll(() => {
     vi.useFakeTimers();
-    vi.setSystemTime(new Date(`${YEAR}-${MONTH}-02T08:00:00`));
   });
 
   it("should return an appointment availability by month", () => {
+    vi.setSystemTime(new Date(`${YEAR}-${MONTH}-02T08:00:00`));
+
     const employeeId = BaseFactory.makeUuid();
     const scheduledHoursPerDay = Array.from(
       { length: MAX_APPOINTMENTS_PER_DAY },
       (_, index) => (index + START_WORK_TIME_AT).toString().padStart(2, "0")
     );
-    const appointments = scheduledHoursPerDay.map((hour) =>
-      Appointment.create({
-        employeeId,
-        clientId: BaseFactory.makeUuid(),
-        date: new Date(`${YEAR}-${MONTH}-02T${hour}:00:00`),
-      })
+    const appointments = scheduledHoursPerDay.map(
+      (hour) =>
+        Appointment.create({
+          employeeId,
+          clientId: BaseFactory.makeUuid(),
+          date: AppointmentDate.create(
+            new Date(`${YEAR}-${MONTH}-02T${hour}:00:00`)
+          ).value as AppointmentDate,
+        }).value as Appointment
     );
 
     const appointmentAvailability = new AppointmentAvailability(appointments);
@@ -47,6 +52,8 @@ describe("AppointmentAvailability.ts", () => {
   });
 
   it("should return an appointment availability by day", () => {
+    vi.setSystemTime(new Date(`${YEAR}-${MONTH}-${DAY}T08:00:00`));
+
     vi.spyOn(Date, "now").mockImplementationOnce(() =>
       new Date(`${YEAR}-${MONTH}-${DAY}T10:00:00`).getTime()
     );
@@ -57,13 +64,17 @@ describe("AppointmentAvailability.ts", () => {
       Appointment.create({
         employeeId,
         clientId: BaseFactory.makeUuid(),
-        date: new Date(`${YEAR}-${MONTH}-${DAY}T14:00:00`),
-      }),
+        date: AppointmentDate.create(
+          new Date(`${YEAR}-${MONTH}-${DAY}T14:00:00`)
+        ).value as AppointmentDate,
+      }).value as Appointment,
       Appointment.create({
         employeeId,
         clientId: BaseFactory.makeUuid(),
-        date: new Date(`${YEAR}-${MONTH}-${DAY}T16:00:00`),
-      }),
+        date: AppointmentDate.create(
+          new Date(`${YEAR}-${MONTH}-${DAY}T16:00:00`)
+        ).value as AppointmentDate,
+      }).value as Appointment,
     ];
 
     const appointmentAvailability = new AppointmentAvailability(appointments);

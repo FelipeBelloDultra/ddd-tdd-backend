@@ -1,12 +1,12 @@
 import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
 import { Either, left, right } from "@core/logic/Either";
 
-import { Appointment } from "@modules/appointment/domain/Appointment";
+import { Appointment } from "@modules/appointment/domain/appointment/Appointment";
+import { AppointmentDate } from "@modules/appointment/domain/appointment/AppointmentDate";
 import { IAppointmentRepository } from "@modules/appointment/application/repository/IAppointmentRepository";
 import { IEmployeeRepository } from "@modules/employee/application/repository/IEmployeeRepository";
 
 import { EmployeeNotFoundError } from "./errors/EmployeeNotFoundError";
-import { UnavailableHoursError } from "./errors/UnavailableHoursError";
 import { AppointmentAlreadyBookedError } from "./errors/AppointmentAlreadyBookedError";
 
 interface IScheduleAppointment {
@@ -16,7 +16,7 @@ interface IScheduleAppointment {
 }
 
 type IScheduleAppointmentResponse = Either<
-  EmployeeNotFoundError | UnavailableHoursError | AppointmentAlreadyBookedError,
+  EmployeeNotFoundError | AppointmentAlreadyBookedError,
   string
 >;
 
@@ -41,14 +41,20 @@ export class ScheduleAppointment {
       return left(new EmployeeNotFoundError());
     }
 
+    const date = AppointmentDate.create(data.date);
+
+    if (date.isLeft()) {
+      return left(date.value);
+    }
+
     const appointment = Appointment.create({
       employeeId: data.employeeId,
       clientId: data.clientId,
-      date: data.date,
+      date: date.value,
     });
 
-    if (!appointment.hourIsAvailable()) {
-      return left(new UnavailableHoursError());
+    if (appointment.isLeft()) {
+      return left(appointment.value);
     }
 
     const findAppointmentInSameDate =
@@ -57,8 +63,8 @@ export class ScheduleAppointment {
     if (findAppointmentInSameDate)
       return left(new AppointmentAlreadyBookedError());
 
-    await this.appointmentRepository.create(appointment);
+    await this.appointmentRepository.create(appointment.value);
 
-    return right(appointment.id);
+    return right(appointment.value.id);
   }
 }

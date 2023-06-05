@@ -10,9 +10,8 @@ import {
 
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 
-import { Appointment } from "@modules/appointment/domain/Appointment";
-
 import { BaseFactory } from "@test/factory/BaseFactory";
+import { AppointmentFactory } from "@test/factory/AppointmentFactory";
 
 import { DateService } from "@core/domain/DateService";
 
@@ -83,9 +82,8 @@ describe("ListEmployeeMonthAvailability.ts", () => {
 
     const promises = scheduledHoursPerDay.map((hour) =>
       fakeRepositoryFactory.appointmentRepository.create(
-        Appointment.create({
+        AppointmentFactory.create({
           employeeId,
-          clientId: BaseFactory.makeUuid(),
           date: new Date(`${YEAR}-${MONTH}-02T${hour}:00:00`),
         })
       )
