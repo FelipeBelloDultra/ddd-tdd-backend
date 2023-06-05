@@ -11,7 +11,7 @@ import {
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 
 import { BaseFactory } from "@test/factory/BaseFactory";
-import { AppointmentFactory } from "@test/factory/AppointmentFactory";
+import { AppointmentFactory } from "@test/factory/entity/AppointmentFactory";
 
 import { ListEmployeeDayAvailability } from "./ListEmployeeDayAvailability";
 

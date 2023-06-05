@@ -3,7 +3,7 @@ import { describe, beforeEach, it, expect } from "vitest";
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 
 import { BaseFactory } from "@test/factory/BaseFactory";
-import { BarbershopFactory } from "@test/factory/BarbershopFactory";
+import { BarbershopFactory } from "@test/factory/entity/BarbershopFactory";
 
 import { CreateBarbershop } from "./CreateBarbershop";
 
@@ -47,7 +47,7 @@ describe("CreateBarbershop.ts", () => {
   });
 
   it("should not be able create Barbershop if email already exists", async () => {
-    const barbershop = BarbershopFactory.create();
+    const barbershop = BarbershopFactory.create({});
 
     await fakeRepositoryFactory.barbershopRepository.create(barbershop);
 

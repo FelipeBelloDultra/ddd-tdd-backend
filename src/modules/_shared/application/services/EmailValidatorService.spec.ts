@@ -2,9 +2,9 @@ import { describe, beforeEach, it, expect } from "vitest";
 
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 
-import { ClientFactory } from "@test/factory/ClientFactory";
-import { BarbershopFactory } from "@test/factory/BarbershopFactory";
-import { EmployeeFactory } from "@test/factory/EmployeeFactory";
+import { ClientFactory } from "@test/factory/entity/ClientFactory";
+import { BarbershopFactory } from "@test/factory/entity/BarbershopFactory";
+import { EmployeeFactory } from "@test/factory/entity/EmployeeFactory";
 import { BaseFactory } from "@test/factory/BaseFactory";
 
 import { EmailValidatorService } from "./EmailValidatorService";
@@ -32,7 +32,9 @@ describe("EmailValidatorService.ts", () => {
   });
 
   it("should return true if email was registred by Client", async () => {
-    await fakeRepositoryFactory.clientRepository.create(ClientFactory.create());
+    await fakeRepositoryFactory.clientRepository.create(
+      ClientFactory.create({})
+    );
 
     await expect(
       emailValidatorService.isUsed(registredEmail)
@@ -53,7 +55,7 @@ describe("EmailValidatorService.ts", () => {
 
   it("should return true if email was registred by Barbershop", async () => {
     await fakeRepositoryFactory.barbershopRepository.create(
-      BarbershopFactory.create()
+      BarbershopFactory.create({})
     );
 
     await expect(

@@ -3,8 +3,8 @@ import { describe, beforeEach, it, expect } from "vitest";
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 
 import { BaseFactory } from "@test/factory/BaseFactory";
-import { BarbershopFactory } from "@test/factory/BarbershopFactory";
-import { EmployeeFactory } from "@test/factory/EmployeeFactory";
+import { BarbershopFactory } from "@test/factory/entity/BarbershopFactory";
+import { EmployeeFactory } from "@test/factory/entity/EmployeeFactory";
 
 import { EmployeeEmailAlreadyUsedError } from "./errors/EmployeeEmailAlreadyUsedError";
 import { EmployeeBarbershopNotFoundError } from "./errors/EmployeeBarbershopNotFoundError";
@@ -13,7 +13,7 @@ import { CreateEmployee } from "./CreateEmployee";
 
 const fakeRepositoryFactory = FakeRepositoryFactory.create();
 
-const barbershop = BarbershopFactory.create();
+const barbershop = BarbershopFactory.create({});
 
 let createEmployee: CreateEmployee;
 

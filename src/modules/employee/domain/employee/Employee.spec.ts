@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 
-import { EmployeeFactory } from "@test/factory/EmployeeFactory";
+import { EmployeeFactory } from "@test/factory/entity/EmployeeFactory";
 
 import { Employee } from "./Employee";
 

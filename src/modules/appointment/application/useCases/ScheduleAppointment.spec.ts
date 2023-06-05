@@ -10,9 +10,9 @@ import {
 
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 
-import { BarbershopFactory } from "@test/factory/BarbershopFactory";
-import { AppointmentFactory } from "@test/factory/AppointmentFactory";
-import { EmployeeFactory } from "@test/factory/EmployeeFactory";
+import { BarbershopFactory } from "@test/factory/entity/BarbershopFactory";
+import { AppointmentFactory } from "@test/factory/entity/AppointmentFactory";
+import { EmployeeFactory } from "@test/factory/entity/EmployeeFactory";
 import { BaseFactory } from "@test/factory/BaseFactory";
 
 import { ScheduleAppointment } from "./ScheduleAppointment";
@@ -22,7 +22,7 @@ import { AppointmentAlreadyBookedError } from "./errors/AppointmentAlreadyBooked
 
 const fakeRepositoryFactory = FakeRepositoryFactory.create();
 
-const barbershop = BarbershopFactory.create();
+const barbershop = BarbershopFactory.create({});
 const employee = EmployeeFactory.create({
   barbershopId: barbershop.id,
 });
@@ -36,7 +36,7 @@ describe("ScheduleAppointment.ts", () => {
 
   beforeEach(async () => {
     await fakeRepositoryFactory.barbershopRepository.create(
-      BarbershopFactory.create()
+      BarbershopFactory.create({})
     );
     await fakeRepositoryFactory.employeeRepository.create(employee);
 

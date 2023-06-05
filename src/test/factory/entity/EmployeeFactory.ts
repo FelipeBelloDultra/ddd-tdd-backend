@@ -5,7 +5,7 @@ import { Email } from "@modules/_shared/domain/Email";
 import { Phone } from "@modules/_shared/domain/Phone";
 import { AvatarUrl } from "@modules/_shared/domain/AvatarUrl";
 
-import { BaseFactory } from "./BaseFactory";
+import { BaseFactory } from "../BaseFactory";
 
 interface ICreateEmployeeFactory {
   barbershopId?: string;

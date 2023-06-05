@@ -3,13 +3,13 @@ import { describe, beforeEach, it, expect } from "vitest";
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 
 import { BaseFactory } from "@test/factory/BaseFactory";
-import { BarbershopFactory } from "@test/factory/BarbershopFactory";
+import { BarbershopFactory } from "@test/factory/entity/BarbershopFactory";
 
 import { UpdateBarbershop } from "./UpdateBarbershop";
 
 const fakeRepositoryFactory = FakeRepositoryFactory.create();
 
-const barbershop = BarbershopFactory.create();
+const barbershop = BarbershopFactory.create({});
 
 let updateBarbershop: UpdateBarbershop;
 

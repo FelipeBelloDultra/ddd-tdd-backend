@@ -1,6 +1,6 @@
 import { describe, beforeAll, it, vi, afterAll, expect } from "vitest";
 
-import { AppointmentFactory } from "@test/factory/AppointmentFactory";
+import { AppointmentFactory } from "@test/factory/entity/AppointmentFactory";
 
 import { Appointment } from "./Appointment";
 

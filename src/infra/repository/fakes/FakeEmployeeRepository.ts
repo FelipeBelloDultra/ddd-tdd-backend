@@ -5,7 +5,7 @@ import {
   IPersistenceEmployee,
 } from "@modules/employee/application/mappers/EmployeeMapper";
 
-import { EmployeeFactory } from "@test/factory/EmployeeFactory";
+import { EmployeeFactory } from "@test/factory/entity/EmployeeFactory";
 
 export class FakeEmployeeRepository implements IEmployeeRepository {
   private readonly employees: IPersistenceEmployee[];

@@ -1,20 +1,20 @@
 import { describe, it, expect } from "vitest";
 
 import { BaseFactory } from "@test/factory/BaseFactory";
-import { BarbershopFactory } from "@test/factory/BarbershopFactory";
+import { BarbershopFactory } from "@test/factory/entity/BarbershopFactory";
 
 import { Barbershop } from "./Barbershop";
 import { Street } from "./Street";
 
 describe("Barbershop.ts", () => {
   it("should create Barbershop instance", () => {
-    const barbershop = Barbershop.create(BarbershopFactory.create());
+    const barbershop = Barbershop.create(BarbershopFactory.create({}));
 
     expect(barbershop.isRight()).toBeTruthy();
   });
 
   it("should update Barbershop instance", () => {
-    const createdBarbershop = BarbershopFactory.create();
+    const createdBarbershop = BarbershopFactory.create({});
     const street = Street.create(BaseFactory.makeAddressStreet())
       .value as Street;
 

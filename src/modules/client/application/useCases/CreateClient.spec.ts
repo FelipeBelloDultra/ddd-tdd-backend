@@ -3,7 +3,7 @@ import { describe, beforeEach, it, expect } from "vitest";
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 
 import { BaseFactory } from "@test/factory/BaseFactory";
-import { ClientFactory } from "@test/factory/ClientFactory";
+import { ClientFactory } from "@test/factory/entity/ClientFactory";
 
 import { ClientEmailAlreadyUsedError } from "./errors/ClientEmailAlreadyUsedError";
 
@@ -47,7 +47,7 @@ describe("CreateClient.ts", () => {
   });
 
   it("should not be able create Client if email already exists", async () => {
-    const client = ClientFactory.create();
+    const client = ClientFactory.create({});
 
     await fakeRepositoryFactory.clientRepository.create(client);
 

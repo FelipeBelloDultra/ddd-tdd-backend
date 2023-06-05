@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 
 import { Employee } from "@modules/employee/domain/employee/Employee";
 
-import { BaseFactory } from "./BaseFactory";
+import { BaseFactory } from "../BaseFactory";
 import { EmployeeFactory } from "./EmployeeFactory";
 
 describe("EmployeeFactory.ts", () => {
