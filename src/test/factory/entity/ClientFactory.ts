@@ -9,14 +9,14 @@ import { BaseFactory } from "@test/factory/BaseFactory";
 interface ICreateClientFactory {
   name?: string;
   email?: string;
-  passwrd?: string;
+  password?: string;
 }
 export class ClientFactory {
   static create(data: ICreateClientFactory): Client {
     const client = Client.create({
       name: Name.create(data.name || BaseFactory.makeFullName()).value as Name,
       email: Email.create(data.email || BaseFactory.makeEmail()).value as Email,
-      password: Password.create(data.passwrd || BaseFactory.makePassword())
+      password: Password.create(data.password || BaseFactory.makePassword())
         .value as Password,
     });
 

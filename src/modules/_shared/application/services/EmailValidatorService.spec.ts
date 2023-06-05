@@ -7,6 +7,8 @@ import { BarbershopFactory } from "@test/factory/entity/BarbershopFactory";
 import { EmployeeFactory } from "@test/factory/entity/EmployeeFactory";
 import { BaseFactory } from "@test/factory/BaseFactory";
 
+import { Barbershop } from "@modules/barbershop/domain/barbershop/Barbershop";
+
 import { EmailValidatorService } from "./EmailValidatorService";
 
 const fakeRepositoryFactory = FakeRepositoryFactory.create();
@@ -61,5 +63,18 @@ describe("EmailValidatorService.ts", () => {
     await expect(
       emailValidatorService.isUsed(registredEmail)
     ).resolves.toBeTruthy();
+  });
+
+  it("should return registred email", async () => {
+    const createdBarbershop =
+      await fakeRepositoryFactory.barbershopRepository.create(
+        BarbershopFactory.create({})
+      );
+
+    const result = await emailValidatorService.findByEmail(
+      createdBarbershop.email.value
+    );
+
+    expect(result).toBeInstanceOf(Barbershop);
   });
 });

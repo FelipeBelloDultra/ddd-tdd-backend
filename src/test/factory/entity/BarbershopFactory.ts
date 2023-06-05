@@ -9,7 +9,7 @@ import { BaseFactory } from "../BaseFactory";
 interface ICreateBarbershopFactory {
   name?: string;
   email?: string;
-  passwrd?: string;
+  password?: string;
 }
 
 export class BarbershopFactory {
@@ -17,7 +17,7 @@ export class BarbershopFactory {
     const barbershop = Barbershop.create({
       name: Name.create(data.name || BaseFactory.makeFullName()).value as Name,
       email: Email.create(data.email || BaseFactory.makeEmail()).value as Email,
-      password: Password.create(data.passwrd || BaseFactory.makePassword())
+      password: Password.create(data.password || BaseFactory.makePassword())
         .value as Password,
     });
 
