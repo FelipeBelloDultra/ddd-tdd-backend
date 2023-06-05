@@ -1,13 +1,13 @@
 import { Barbershop } from "@modules/barbershop/domain/barbershop/Barbershop";
-import { AvatarUrl } from "@modules/barbershop/domain/barbershop/AvatarUrl";
 import { Neighborhood } from "@modules/barbershop/domain/barbershop/Neighborhood";
 import { Street } from "@modules/barbershop/domain/barbershop/Street";
 import { StreetNumber } from "@modules/barbershop/domain/barbershop/StreetNumber";
-import { Phone } from "@modules/barbershop/domain/barbershop/Phone";
 
+import { Phone } from "@_shared/domain/Phone";
 import { Name } from "@_shared/domain/Name";
 import { Email } from "@_shared/domain/Email";
 import { Password } from "@_shared/domain/Password";
+import { AvatarUrl } from "@_shared/domain/AvatarUrl";
 
 export interface IPersistenceBarbershop {
   id_barbershop: string;

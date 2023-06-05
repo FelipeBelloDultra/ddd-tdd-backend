@@ -1,6 +1,6 @@
 import { Either, right, left } from "@core/logic/Either";
 
-import { InvalidBarbershopPhoneError } from "./errors/InvalidBarbershopPhoneError";
+import { InvalidPhoneError } from "./errors/InvalidPhoneError";
 
 export class Phone {
   private readonly phone: string;
@@ -28,9 +28,9 @@ export class Phone {
     return true;
   }
 
-  static create(phone: string): Either<InvalidBarbershopPhoneError, Phone> {
+  static create(phone: string): Either<InvalidPhoneError, Phone> {
     if (!this.validate(phone)) {
-      return left(new InvalidBarbershopPhoneError(phone));
+      return left(new InvalidPhoneError(phone));
     }
 
     return right(new Phone(phone));

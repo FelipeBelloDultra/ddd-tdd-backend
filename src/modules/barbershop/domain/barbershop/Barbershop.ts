@@ -4,6 +4,8 @@ import { Either, right } from "@core/logic/Either";
 import { Email } from "@_shared/domain/Email";
 import { Name } from "@_shared/domain/Name";
 import { Password } from "@_shared/domain/Password";
+import { Phone } from "@_shared/domain/Phone";
+import { AvatarUrl } from "@_shared/domain/AvatarUrl";
 
 import { InvalidBarbershopEmailError } from "./errors/InvalidBarbershopEmailError";
 import { InvalidBarbershopNameError } from "./errors/InvalidBarbershopNameError";
@@ -13,8 +15,6 @@ import { InvalidBarbershopPhoneError } from "./errors/InvalidBarbershopPhoneErro
 import { Street } from "./Street";
 import { StreetNumber } from "./StreetNumber";
 import { Neighborhood } from "./Neighborhood";
-import { Phone } from "./Phone";
-import { AvatarUrl } from "./AvatarUrl";
 
 interface IBarbershopProps {
   name: Name;
