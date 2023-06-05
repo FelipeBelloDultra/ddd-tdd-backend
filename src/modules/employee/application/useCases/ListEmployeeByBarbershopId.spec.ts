@@ -2,8 +2,6 @@ import { describe, beforeEach, it, expect } from "vitest";
 
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 
-import { Employee } from "@modules/employee/domain/Employee";
-
 import { ListEmployeeByBarbershopId } from "./ListEmployeeByBarbershopId";
 
 const fakeRepositoryFactory = FakeRepositoryFactory.create();
@@ -24,17 +22,16 @@ describe("ListEmployeeByBarbershopId.ts", () => {
 
   it("should return an list of employees by barbershop id", async () => {
     const barbershopId = "123";
-    const employeeList = await listEmployeeByBarbershopId.execute({
+    const result = await listEmployeeByBarbershopId.execute({
       barbershopId,
     });
 
-    const result = employeeList.value as Employee[];
+    if (result.isLeft()) {
+      throw new Error();
+    }
 
-    const everyEmployeeHasSameBarbershopId =
-      result.length > 0
-        ? result.every((employee) => employee.barbershopId === barbershopId)
-        : false;
-
-    expect(everyEmployeeHasSameBarbershopId).toBeTruthy();
+    expect(
+      result.value.every((employee) => employee.barbershopId === barbershopId)
+    ).toBeTruthy();
   });
 });

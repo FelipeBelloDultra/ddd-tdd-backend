@@ -10,10 +10,9 @@ import {
 
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 
-import { Employee } from "@modules/employee/domain/Employee";
-
 import { BarbershopFactory } from "@test/factory/BarbershopFactory";
 import { AppointmentFactory } from "@test/factory/AppointmentFactory";
+import { EmployeeFactory } from "@test/factory/EmployeeFactory";
 import { BaseFactory } from "@test/factory/BaseFactory";
 
 import { ScheduleAppointment } from "./ScheduleAppointment";
@@ -24,12 +23,8 @@ import { AppointmentAlreadyBookedError } from "./errors/AppointmentAlreadyBooked
 const fakeRepositoryFactory = FakeRepositoryFactory.create();
 
 const barbershop = BarbershopFactory.create();
-const employee = Employee.create({
-  name: BaseFactory.makeFullName(),
-  email: BaseFactory.makeEmail(),
-  avatarUrl: BaseFactory.makeAvatar(),
+const employee = EmployeeFactory.create({
   barbershopId: barbershop.id,
-  phone: BaseFactory.makePhone(),
 });
 
 let scheduleAppointment: ScheduleAppointment;

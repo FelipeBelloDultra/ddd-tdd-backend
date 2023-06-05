@@ -2,10 +2,9 @@ import { describe, beforeEach, it, expect } from "vitest";
 
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 
-import { Employee } from "@modules/employee/domain/Employee";
-
 import { BaseFactory } from "@test/factory/BaseFactory";
 import { BarbershopFactory } from "@test/factory/BarbershopFactory";
+import { EmployeeFactory } from "@test/factory/EmployeeFactory";
 
 import { EmployeeEmailAlreadyUsedError } from "./errors/EmployeeEmailAlreadyUsedError";
 import { EmployeeBarbershopNotFoundError } from "./errors/EmployeeBarbershopNotFoundError";
@@ -62,11 +61,8 @@ describe("CreateEmployee.ts", () => {
     const email = BaseFactory.makeEmail();
 
     await fakeRepositoryFactory.employeeRepository.create(
-      Employee.create({
-        name: BaseFactory.makeFullName(),
-        email: email,
-        phone: BaseFactory.makePhone(),
-        avatarUrl: BaseFactory.makeAvatar(),
+      EmployeeFactory.create({
+        email,
         barbershopId: barbershop.id,
       })
     );

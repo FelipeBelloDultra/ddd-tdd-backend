@@ -2,10 +2,9 @@ import { describe, beforeEach, it, expect } from "vitest";
 
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 
-import { Employee } from "@modules/employee/domain/Employee";
-
 import { ClientFactory } from "@test/factory/ClientFactory";
 import { BarbershopFactory } from "@test/factory/BarbershopFactory";
+import { EmployeeFactory } from "@test/factory/EmployeeFactory";
 import { BaseFactory } from "@test/factory/BaseFactory";
 
 import { EmailValidatorService } from "./EmailValidatorService";
@@ -42,12 +41,8 @@ describe("EmailValidatorService.ts", () => {
 
   it("should return true if email was registred by Employee", async () => {
     await fakeRepositoryFactory.employeeRepository.create(
-      Employee.create({
-        name: BaseFactory.makeFullName(),
+      EmployeeFactory.create({
         email: registredEmail,
-        avatarUrl: BaseFactory.makeAvatar(),
-        phone: BaseFactory.makePhone(),
-        barbershopId: BaseFactory.makeUuid(),
       })
     );
 

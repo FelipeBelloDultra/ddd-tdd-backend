@@ -10,7 +10,9 @@ export class BaseFactory {
   }
 
   static makeEmail(): string {
-    return faker.internet.email();
+    const email = faker.internet.email().trim().toLowerCase();
+
+    return email;
   }
 
   static makeFullName(): string {

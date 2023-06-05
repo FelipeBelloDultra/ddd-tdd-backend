@@ -1,11 +1,11 @@
-import { Employee } from "@modules/employee/domain/Employee";
+import { Employee } from "@modules/employee/domain/employee/Employee";
 import { IEmployeeRepository } from "@modules/employee/application/repository/IEmployeeRepository";
 import {
   EmployeeMapper,
   IPersistenceEmployee,
 } from "@modules/employee/application/mappers/EmployeeMapper";
 
-import { BaseFactory } from "@test/factory/BaseFactory";
+import { EmployeeFactory } from "@test/factory/EmployeeFactory";
 
 export class FakeEmployeeRepository implements IEmployeeRepository {
   private readonly employees: IPersistenceEmployee[];
@@ -13,28 +13,16 @@ export class FakeEmployeeRepository implements IEmployeeRepository {
   constructor() {
     const firstBarbershopId = "123";
     const firstEmployees = Array.from({ length: 5 }).map(() => {
-      const employee = Employee.create({
+      const employee = EmployeeFactory.create({
         barbershopId: firstBarbershopId,
-        name: BaseFactory.makeFullName(),
-        email: BaseFactory.makeEmail(),
-        phone: BaseFactory.makePhone(),
-        avatarUrl: BaseFactory.makeAvatar(),
-        createdAt: new Date(),
-        updatedAt: new Date(),
       });
 
       return EmployeeMapper.toPersistence(employee);
     });
     const secondBarbershopId = "321";
     const secondEmployees = Array.from({ length: 3 }).map(() => {
-      const employee = Employee.create({
+      const employee = EmployeeFactory.create({
         barbershopId: secondBarbershopId,
-        name: BaseFactory.makeFullName(),
-        email: BaseFactory.makeEmail(),
-        phone: BaseFactory.makePhone(),
-        avatarUrl: BaseFactory.makeAvatar(),
-        createdAt: new Date(),
-        updatedAt: new Date(),
       });
 
       return EmployeeMapper.toPersistence(employee);

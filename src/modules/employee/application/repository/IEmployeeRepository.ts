@@ -1,4 +1,4 @@
-import { Employee } from "@modules/employee/domain/Employee";
+import { Employee } from "@modules/employee/domain/employee/Employee";
 
 export interface IEmployeeRepository {
   findByBarbershopId: (barbershopId: string) => Promise<Employee[]>;
