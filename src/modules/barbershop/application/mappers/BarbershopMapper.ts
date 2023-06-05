@@ -18,9 +18,9 @@ export interface IPersistenceBarbershop {
   neighborhood?: string;
   number?: string;
   phone?: string;
-  avatarUrl?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  avatar_url?: string;
+  created_at?: Date;
+  updated_at?: Date;
 }
 
 export class BarbershopMapper {
@@ -40,8 +40,8 @@ export class BarbershopMapper {
       throw new Error("Password value is invalid");
     }
 
-    const avatarUrl = raw.avatarUrl
-      ? AvatarUrl.create(raw.avatarUrl)
+    const avatarUrl = raw.avatar_url
+      ? AvatarUrl.create(raw.avatar_url)
       : undefined;
     if (avatarUrl?.isLeft()) {
       throw new Error("AvatarUrl value is invalid");
@@ -81,8 +81,8 @@ export class BarbershopMapper {
         number: (streetNumber?.value as StreetNumber) || undefined,
         phone: (phone?.value as Phone) || undefined,
         street: (street?.value as Street) || undefined,
-        createdAt: raw.createdAt,
-        updatedAt: raw.updatedAt,
+        createdAt: raw.created_at,
+        updatedAt: raw.updated_at,
       },
       raw.id_barbershop
     );
@@ -100,13 +100,13 @@ export class BarbershopMapper {
       name: barbershop.name.value,
       email: barbershop.email.value,
       password: hashedPassword,
-      avatarUrl: barbershop.avatarUrl?.value,
+      avatar_url: barbershop.avatarUrl?.value,
       neighborhood: barbershop.neighborhood?.value,
       number: barbershop.number?.value,
       phone: barbershop.phone?.value,
       street: barbershop.street?.value,
-      createdAt: barbershop.createdAt,
-      updatedAt: barbershop.updatedAt,
+      created_at: barbershop.createdAt,
+      updated_at: barbershop.updatedAt,
     };
   }
 }
