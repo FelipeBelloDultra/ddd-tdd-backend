@@ -33,7 +33,7 @@ describe("AuthenticateService.ts", () => {
 
     await fakeRepositoryFactory.clientRepository.create(createdClient);
 
-    const result = await authenticateService.execute(
+    const result = await authenticateService.authenticate(
       {
         email: createdClient.email.value,
         password: "password",
@@ -65,7 +65,7 @@ describe("AuthenticateService.ts", () => {
 
     await fakeRepositoryFactory.barbershopRepository.create(createdBarbershop);
 
-    const result = await authenticateService.execute(
+    const result = await authenticateService.authenticate(
       {
         email: createdBarbershop.email.value,
         password: "password",
@@ -91,7 +91,7 @@ describe("AuthenticateService.ts", () => {
   });
 
   it("should not be able to authenticate if email does not match or entity does not exists", async () => {
-    const result = await authenticateService.execute(
+    const result = await authenticateService.authenticate(
       {
         email: BaseFactory.makeEmail(),
         password: BaseFactory.makePassword(),
@@ -109,7 +109,7 @@ describe("AuthenticateService.ts", () => {
         BarbershopFactory.create({})
       );
 
-    const result = await authenticateService.execute(
+    const result = await authenticateService.authenticate(
       {
         email: createdBarbershop.email.value,
         password: "123456abcdef",

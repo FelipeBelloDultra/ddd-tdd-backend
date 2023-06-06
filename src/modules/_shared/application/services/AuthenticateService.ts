@@ -22,7 +22,7 @@ export class AuthenticateService {
     });
   }
 
-  public async execute(
+  public async authenticate(
     signature: IAuthenticationSignature,
     roles: Array<string>
   ): Promise<Either<InvalidEmailOrPasswordError, Jwt>> {
