@@ -1,9 +1,9 @@
 import { Employee } from "@modules/employee/domain/employee/Employee";
 
-import { Name } from "@modules/_shared/domain/Name";
-import { Email } from "@modules/_shared/domain/Email";
-import { Phone } from "@modules/_shared/domain/Phone";
-import { AvatarUrl } from "@modules/_shared/domain/AvatarUrl";
+import { Name } from "@_shared/domain/Name";
+import { Email } from "@_shared/domain/Email";
+import { Phone } from "@_shared/domain/Phone";
+import { AvatarUrl } from "@_shared/domain/AvatarUrl";
 
 import { BaseFactory } from "../BaseFactory";
 

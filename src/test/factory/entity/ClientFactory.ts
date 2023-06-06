@@ -1,5 +1,7 @@
 import { Client } from "@modules/client/domain/client/Client";
 
+import { Jwt } from "@core/domain/Jwt";
+
 import { Email } from "@_shared/domain/Email";
 import { Password } from "@_shared/domain/Password";
 import { Name } from "@_shared/domain/Name";
@@ -21,5 +23,24 @@ export class ClientFactory {
     });
 
     return client.value as Client;
+  }
+
+  static createAndAuthenticate(data: ICreateClientFactory): {
+    jwt: Jwt;
+    client: Client;
+  } {
+    const client = this.create(data);
+
+    const jwt = Jwt.sign({
+      id: client.id,
+      email: client.email.value,
+      name: client.name.value,
+      roles: ["client"],
+    });
+
+    return {
+      client,
+      jwt,
+    };
   }
 }

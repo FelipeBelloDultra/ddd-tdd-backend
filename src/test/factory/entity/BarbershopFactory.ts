@@ -1,3 +1,5 @@
+import { Jwt } from "@core/domain/Jwt";
+
 import { Barbershop } from "@modules/barbershop/domain/barbershop/Barbershop";
 
 import { Email } from "@_shared/domain/Email";
@@ -22,5 +24,24 @@ export class BarbershopFactory {
     });
 
     return barbershop.value as Barbershop;
+  }
+
+  static createAndAuthenticate(data: ICreateBarbershopFactory): {
+    jwt: Jwt;
+    barbershop: Barbershop;
+  } {
+    const barbershop = this.create(data);
+
+    const jwt = Jwt.sign({
+      id: barbershop.id,
+      email: barbershop.email.value,
+      name: barbershop.name.value,
+      roles: ["barbershop"],
+    });
+
+    return {
+      barbershop,
+      jwt,
+    };
   }
 }
