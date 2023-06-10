@@ -1,5 +1,6 @@
 import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
 import { Either, left, right } from "@core/logic/Either";
+import { IUseCase } from "@core/application/useCases/IUseCase";
 
 import { Appointment } from "@modules/appointment/domain/appointment/Appointment";
 import { AppointmentDate } from "@modules/appointment/domain/appointment/AppointmentDate";
@@ -9,18 +10,18 @@ import { IEmployeeRepository } from "@modules/employee/application/repository/IE
 import { EmployeeNotFoundError } from "./errors/EmployeeNotFoundError";
 import { AppointmentAlreadyBookedError } from "./errors/AppointmentAlreadyBookedError";
 
-interface IScheduleAppointment {
+interface Input {
   employeeId: string;
   clientId: string;
   date: Date;
 }
 
-type IScheduleAppointmentResponse = Either<
+type Output = Either<
   EmployeeNotFoundError | AppointmentAlreadyBookedError,
   string
 >;
 
-export class ScheduleAppointment {
+export class ScheduleAppointment implements IUseCase<Input, Output> {
   private readonly appointmentRepository: IAppointmentRepository;
   private readonly employeeRepository: IEmployeeRepository;
 
@@ -30,9 +31,7 @@ export class ScheduleAppointment {
     this.employeeRepository = repositoryFactory.createEmployeeRepository();
   }
 
-  public async execute(
-    data: IScheduleAppointment
-  ): Promise<IScheduleAppointmentResponse> {
+  public async execute(data: Input): Promise<Output> {
     const existentEmployee = await this.employeeRepository.findById(
       data.employeeId
     );

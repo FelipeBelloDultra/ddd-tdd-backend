@@ -1,5 +1,6 @@
 import { Either, left, right } from "@core/logic/Either";
 import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
+import { IUseCase } from "@core/application/useCases/IUseCase";
 
 import { Name } from "@_shared/domain/Name";
 import { Email } from "@_shared/domain/Email";
@@ -11,15 +12,15 @@ import { IClientRepository } from "@modules/client/application/repository/IClien
 
 import { ClientEmailAlreadyUsedError } from "./errors/ClientEmailAlreadyUsedError";
 
-interface ICreateClient {
+interface Input {
   name: string;
   email: string;
   password: string;
 }
 
-type ICreateClientResponse = Either<ClientEmailAlreadyUsedError, string>;
+type Output = Either<ClientEmailAlreadyUsedError, string>;
 
-export class CreateClient {
+export class CreateClient implements IUseCase<Input, Output> {
   private readonly clientRepository: IClientRepository;
   private readonly emailValidatorService: EmailValidatorService;
 
@@ -33,7 +34,7 @@ export class CreateClient {
     });
   }
 
-  public async execute(data: ICreateClient): Promise<ICreateClientResponse> {
+  public async execute(data: Input): Promise<Output> {
     const email = Email.create(data.email);
     if (email.isLeft()) {
       return left(email.value);

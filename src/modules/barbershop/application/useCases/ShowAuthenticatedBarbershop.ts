@@ -1,30 +1,26 @@
 import { Either, right, left } from "@core/logic/Either";
 import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
+import { IUseCase } from "@core/application/useCases/IUseCase";
 
 import { Barbershop } from "@modules/barbershop/domain/barbershop/Barbershop";
 import { IBarbershopRepository } from "@modules/barbershop/application/repository/IBarbershopRepository";
 
 import { BarbershopNotFoundError } from "./errors/BarbershopNotFoundError";
 
-interface IShowAuthenticatedBarbershop {
+interface Input {
   barbershopId: string;
 }
 
-type IShowAuthenticatedBarbershopResponse = Either<
-  BarbershopNotFoundError,
-  Barbershop
->;
+type Output = Either<BarbershopNotFoundError, Barbershop>;
 
-export class ShowAuthenticatedBarbershop {
+export class ShowAuthenticatedBarbershop implements IUseCase<Input, Output> {
   private readonly barbershopRepository: IBarbershopRepository;
 
   constructor(repositoryFactory: IRepositoryFactory) {
     this.barbershopRepository = repositoryFactory.createBarbershopRepository();
   }
 
-  public async execute({
-    barbershopId,
-  }: IShowAuthenticatedBarbershop): Promise<IShowAuthenticatedBarbershopResponse> {
+  public async execute({ barbershopId }: Input): Promise<Output> {
     const barbershop = await this.barbershopRepository.findById(barbershopId);
 
     if (!barbershop) {

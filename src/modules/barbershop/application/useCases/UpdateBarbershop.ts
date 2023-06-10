@@ -1,5 +1,6 @@
 import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
 import { Either, left, right } from "@core/logic/Either";
+import { IUseCase } from "@core/application/useCases/IUseCase";
 
 import { Barbershop } from "@modules/barbershop/domain/barbershop/Barbershop";
 import { Neighborhood } from "@modules/barbershop/domain/barbershop/Neighborhood";
@@ -12,7 +13,7 @@ import { BarbershopNotFoundError } from "./errors/BarbershopNotFoundError";
 import { Phone } from "@_shared/domain/Phone";
 import { AvatarUrl } from "@_shared/domain/AvatarUrl";
 
-interface IUpdateBarbershop {
+interface Input {
   id: string;
   street?: string;
   neighborhood?: string;
@@ -21,18 +22,16 @@ interface IUpdateBarbershop {
   avatarUrl?: string;
 }
 
-type IUpdateBarbershopResponse = Either<BarbershopNotFoundError, Barbershop>;
+type Output = Either<BarbershopNotFoundError, Barbershop>;
 
-export class UpdateBarbershop {
+export class UpdateBarbershop implements IUseCase<Input, Output> {
   private readonly barbershopRepository: IBarbershopRepository;
 
   constructor(repositoryFactory: IRepositoryFactory) {
     this.barbershopRepository = repositoryFactory.createBarbershopRepository();
   }
 
-  public async execute(
-    data: IUpdateBarbershop
-  ): Promise<IUpdateBarbershopResponse> {
+  public async execute(data: Input): Promise<Output> {
     const findedbyId = await this.barbershopRepository.findById(data.id);
 
     if (!findedbyId) return left(new BarbershopNotFoundError());

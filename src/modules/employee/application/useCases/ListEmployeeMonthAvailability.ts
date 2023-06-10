@@ -1,16 +1,17 @@
 import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
 import { Either, right } from "@core/logic/Either";
+import { IUseCase } from "@core/application/useCases/IUseCase";
 
 import { AppointmentAvailability } from "@modules/appointment/domain/appointment/AppointmentAvailability";
 import { IAppointmentRepository } from "@modules/appointment/application/repository/IAppointmentRepository";
 
-interface IListEmployeeMonthAvailability {
+interface Input {
   employeeId: string;
   month: number;
   year: number;
 }
 
-type IListEmployeeMonthAvailabilityResponse = Either<
+type Output = Either<
   void,
   {
     day: number;
@@ -18,7 +19,7 @@ type IListEmployeeMonthAvailabilityResponse = Either<
   }[]
 >;
 
-export class ListEmployeeMonthAvailability {
+export class ListEmployeeMonthAvailability implements IUseCase<Input, Output> {
   private readonly appointmentRepository: IAppointmentRepository;
 
   constructor(repositoryFactory: IRepositoryFactory) {
@@ -26,9 +27,7 @@ export class ListEmployeeMonthAvailability {
       repositoryFactory.createAppointmentRepository();
   }
 
-  public async execute(
-    data: IListEmployeeMonthAvailability
-  ): Promise<IListEmployeeMonthAvailabilityResponse> {
+  public async execute(data: Input): Promise<Output> {
     const appointments =
       await this.appointmentRepository.findAllInMonthFromEmployee({
         month: data.month,

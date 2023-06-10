@@ -1,5 +1,6 @@
 import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
 import { Either, left, right } from "@core/logic/Either";
+import { IUseCase } from "@core/application/useCases/IUseCase";
 
 import { Name } from "@_shared/domain/Name";
 import { Email } from "@_shared/domain/Email";
@@ -11,18 +12,15 @@ import { Barbershop } from "@modules/barbershop/domain/barbershop/Barbershop";
 
 import { BarbershopEmailAlreadyUsedError } from "./errors/BarbershopEmailAlreadyUsedError";
 
-interface ICreateBarbershop {
+interface Input {
   name: string;
   email: string;
   password: string;
 }
 
-type ICreateBarbershopResponse = Either<
-  BarbershopEmailAlreadyUsedError,
-  string
->;
+type Output = Either<BarbershopEmailAlreadyUsedError, string>;
 
-export class CreateBarbershop {
+export class CreateBarbershop implements IUseCase<Input, Output> {
   private readonly barbershopRepository: IBarbershopRepository;
   private readonly emailValidatorService: EmailValidatorService;
 
@@ -36,9 +34,7 @@ export class CreateBarbershop {
     });
   }
 
-  public async execute(
-    data: ICreateBarbershop
-  ): Promise<ICreateBarbershopResponse> {
+  public async execute(data: Input): Promise<Output> {
     const email = Email.create(data.email);
     if (email.isLeft()) {
       return left(email.value);

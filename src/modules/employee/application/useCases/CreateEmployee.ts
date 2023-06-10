@@ -1,5 +1,6 @@
 import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
 import { Either, left, right } from "@core/logic/Either";
+import { IUseCase } from "@core/application/useCases/IUseCase";
 
 import { Employee } from "@modules/employee/domain/employee/Employee";
 import { IEmployeeRepository } from "@modules/employee/application/repository/IEmployeeRepository";
@@ -14,7 +15,7 @@ import { Email } from "@_shared/domain/Email";
 import { EmployeeEmailAlreadyUsedError } from "./errors/EmployeeEmailAlreadyUsedError";
 import { EmployeeBarbershopNotFoundError } from "./errors/EmployeeBarbershopNotFoundError";
 
-interface ICreateEmployee {
+interface Input {
   name: string;
   email: string;
   phone: string;
@@ -22,12 +23,12 @@ interface ICreateEmployee {
   barbershopId: string;
 }
 
-type ICreateEmployeeResponse = Either<
+type Output = Either<
   EmployeeBarbershopNotFoundError | EmployeeEmailAlreadyUsedError,
   string
 >;
 
-export class CreateEmployee {
+export class CreateEmployee implements IUseCase<Input, Output> {
   private readonly employeeRepository: IEmployeeRepository;
   private readonly barbershopRepository: IBarbershopRepository;
   private readonly emailValidatorService: EmailValidatorService;
@@ -43,9 +44,7 @@ export class CreateEmployee {
     });
   }
 
-  public async execute(
-    data: ICreateEmployee
-  ): Promise<ICreateEmployeeResponse> {
+  public async execute(data: Input): Promise<Output> {
     const email = Email.create(data.email);
     if (email.isLeft()) {
       return left(email.value);
