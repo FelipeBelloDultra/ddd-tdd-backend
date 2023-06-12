@@ -2,10 +2,14 @@ import { Appointment } from "@modules/appointment/domain/appointment/Appointment
 
 import { IFindAllInDayFromEmployeeAppointmentRepository } from "./IFindAllInDayFromEmployeeAppointmentRepository";
 import { IFindAllInMonthFromEmployeeAppointmentRepository } from "./IFindAllInMonthFromEmployeeAppointmentRepository";
+import { IFindByDateAppointmentRepository } from "./IFindByDateAppointmentRepository";
+import { ICreateAppointmentRepository } from "./ICreateAppointmentRepository";
 
 export interface IAppointmentRepository
   extends IFindAllInDayFromEmployeeAppointmentRepository,
-    IFindAllInMonthFromEmployeeAppointmentRepository {
+    IFindAllInMonthFromEmployeeAppointmentRepository,
+    IFindByDateAppointmentRepository,
+    ICreateAppointmentRepository {
   create: (data: Appointment) => Promise<Appointment>;
   findByDate: (
     date: Date,

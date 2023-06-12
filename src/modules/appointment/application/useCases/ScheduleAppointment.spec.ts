@@ -41,12 +41,9 @@ describe("ScheduleAppointment.ts", () => {
     await fakeRepositoryFactory.employeeRepository.create(employee);
 
     scheduleAppointment = new ScheduleAppointment({
-      createBarbershopRepository: () =>
-        fakeRepositoryFactory.barbershopRepository,
-      createEmployeeRepository: () => fakeRepositoryFactory.employeeRepository,
-      createAppointmentRepository: () =>
+      findByIdEmployeeRepository: fakeRepositoryFactory.employeeRepository,
+      scheduleAppointmentRepositories:
         fakeRepositoryFactory.appointmentRepository,
-      createClientRepository: () => fakeRepositoryFactory.clientRepository,
     });
   });
 

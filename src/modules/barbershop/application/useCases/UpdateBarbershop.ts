@@ -6,6 +6,7 @@ import { Neighborhood } from "@modules/barbershop/domain/barbershop/Neighborhood
 import { Street } from "@modules/barbershop/domain/barbershop/Street";
 import { StreetNumber } from "@modules/barbershop/domain/barbershop/StreetNumber";
 import { IUpdateBarbershopRepository } from "@modules/barbershop/application/repository/IUpdateBarbershopRepository";
+import { IFindByIdBarbershopRepository } from "@modules/barbershop/application/repository/IFindByIdBarbershopRepository";
 
 import { BarbershopNotFoundError } from "./errors/BarbershopNotFoundError";
 
@@ -23,12 +24,15 @@ interface Input {
 
 type Output = Either<BarbershopNotFoundError, Barbershop>;
 
+type IUpdateBarbershopRepositories = IUpdateBarbershopRepository &
+  IFindByIdBarbershopRepository;
+
 interface IUpdateBarbershop {
-  updateBarbershopRepository: IUpdateBarbershopRepository;
+  updateBarbershopRepository: IUpdateBarbershopRepositories;
 }
 
 export class UpdateBarbershop implements IUseCase<Input, Output> {
-  private readonly updateBarbershopRepository: IUpdateBarbershopRepository;
+  private readonly updateBarbershopRepository: IUpdateBarbershopRepositories;
 
   constructor({ updateBarbershopRepository }: IUpdateBarbershop) {
     this.updateBarbershopRepository = updateBarbershopRepository;

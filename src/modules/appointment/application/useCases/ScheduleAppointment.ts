@@ -1,14 +1,14 @@
-import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
 import { Either, left, right } from "@core/logic/Either";
 import { IUseCase } from "@core/application/useCases/IUseCase";
 
 import { Appointment } from "@modules/appointment/domain/appointment/Appointment";
 import { AppointmentDate } from "@modules/appointment/domain/appointment/AppointmentDate";
-import { IAppointmentRepository } from "@modules/appointment/application/repository/IAppointmentRepository";
-import { IEmployeeRepository } from "@modules/employee/application/repository/IEmployeeRepository";
+import { IFindByDateAppointmentRepository } from "@modules/appointment/application/repository/IFindByDateAppointmentRepository";
+import { IFindByIdEmployeeRepository } from "@modules/employee/application/repository/IFindByIdEmployeeRepository";
 
 import { EmployeeNotFoundError } from "./errors/EmployeeNotFoundError";
 import { AppointmentAlreadyBookedError } from "./errors/AppointmentAlreadyBookedError";
+import { ICreateAppointmentRepository } from "../repository/ICreateAppointmentRepository";
 
 interface Input {
   employeeId: string;
@@ -21,18 +21,28 @@ type Output = Either<
   string
 >;
 
-export class ScheduleAppointment implements IUseCase<Input, Output> {
-  private readonly appointmentRepository: IAppointmentRepository;
-  private readonly employeeRepository: IEmployeeRepository;
+type IScheduleAppointmentRepositories = ICreateAppointmentRepository &
+  IFindByDateAppointmentRepository;
 
-  constructor(repositoryFactory: IRepositoryFactory) {
-    this.appointmentRepository =
-      repositoryFactory.createAppointmentRepository();
-    this.employeeRepository = repositoryFactory.createEmployeeRepository();
+interface IScheduleAppointment {
+  scheduleAppointmentRepositories: IScheduleAppointmentRepositories;
+  findByIdEmployeeRepository: IFindByIdEmployeeRepository;
+}
+
+export class ScheduleAppointment implements IUseCase<Input, Output> {
+  private readonly scheduleAppointmentRepositories: IScheduleAppointmentRepositories;
+  private readonly findByIdEmployeeRepository: IFindByIdEmployeeRepository;
+
+  constructor({
+    scheduleAppointmentRepositories,
+    findByIdEmployeeRepository,
+  }: IScheduleAppointment) {
+    this.scheduleAppointmentRepositories = scheduleAppointmentRepositories;
+    this.findByIdEmployeeRepository = findByIdEmployeeRepository;
   }
 
   public async execute(data: Input): Promise<Output> {
-    const existentEmployee = await this.employeeRepository.findById(
+    const existentEmployee = await this.findByIdEmployeeRepository.findById(
       data.employeeId
     );
 
@@ -57,12 +67,15 @@ export class ScheduleAppointment implements IUseCase<Input, Output> {
     }
 
     const findAppointmentInSameDate =
-      await this.appointmentRepository.findByDate(data.date, data.employeeId);
+      await this.scheduleAppointmentRepositories.findByDate(
+        data.date,
+        data.employeeId
+      );
 
     if (findAppointmentInSameDate)
       return left(new AppointmentAlreadyBookedError());
 
-    await this.appointmentRepository.create(appointment.value);
+    await this.scheduleAppointmentRepositories.create(appointment.value);
 
     return right(appointment.value.id);
   }

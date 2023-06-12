@@ -1,18 +1,18 @@
-import { IBarbershopRepository } from "@modules/barbershop/application/repository/IBarbershopRepository";
-import { IEmployeeRepository } from "@modules/employee/application/repository/IEmployeeRepository";
 import { Barbershop } from "@modules/barbershop/domain/barbershop/Barbershop";
 import { Client } from "@modules/client/domain/client/Client";
+import { IFindByEmailBarbershopRepository } from "@modules/barbershop/application/repository/IFindByEmailBarbershopRepository";
+import { IFindByEmailEmployeeRepository } from "@modules/employee/application/repository/IFindByEmailEmployeeRepository";
 import { IFindByEmailClientRepository } from "@modules/client/application/repository/IFindByEmailClientRepository";
 
 interface IEmailValidatorService {
-  employeeRepository: IEmployeeRepository;
-  barbershopRepository: IBarbershopRepository;
+  employeeRepository: IFindByEmailEmployeeRepository;
+  barbershopRepository: IFindByEmailBarbershopRepository;
   clientRepository: IFindByEmailClientRepository;
 }
 
 export class EmailValidatorService {
-  private readonly employeeRepository: IEmployeeRepository;
-  private readonly barbershopRepository: IBarbershopRepository;
+  private readonly employeeRepository: IFindByEmailEmployeeRepository;
+  private readonly barbershopRepository: IFindByEmailBarbershopRepository;
   private readonly clientRepository: IFindByEmailClientRepository;
 
   constructor(emailValidatorService: IEmailValidatorService) {
