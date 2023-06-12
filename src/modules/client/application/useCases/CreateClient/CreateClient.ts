@@ -10,7 +10,7 @@ import { EmailValidatorService } from "@_shared/application/services/EmailValida
 import { Client } from "@modules/client/domain/client/Client";
 import { IClientRepository } from "@modules/client/application/repository/IClientRepository";
 
-import { ClientEmailAlreadyUsedError } from "./errors/ClientEmailAlreadyUsedError";
+import { ClientEmailAlreadyUsedError } from "../errors/ClientEmailAlreadyUsedError";
 
 interface Input {
   name: string;

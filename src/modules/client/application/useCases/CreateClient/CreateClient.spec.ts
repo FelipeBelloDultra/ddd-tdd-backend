@@ -5,7 +5,7 @@ import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactor
 import { BaseFactory } from "@test/factory/BaseFactory";
 import { ClientFactory } from "@test/factory/entity/ClientFactory";
 
-import { ClientEmailAlreadyUsedError } from "./errors/ClientEmailAlreadyUsedError";
+import { ClientEmailAlreadyUsedError } from "../errors/ClientEmailAlreadyUsedError";
 
 import { CreateClient } from "./CreateClient";
 
