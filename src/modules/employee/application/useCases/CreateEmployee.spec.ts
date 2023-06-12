@@ -10,24 +10,29 @@ import { EmployeeEmailAlreadyUsedError } from "./errors/EmployeeEmailAlreadyUsed
 import { EmployeeBarbershopNotFoundError } from "./errors/EmployeeBarbershopNotFoundError";
 
 import { CreateEmployee } from "./CreateEmployee";
+import { EmailValidatorService } from "@modules/_shared/application/services/EmailValidatorService";
 
 const fakeRepositoryFactory = FakeRepositoryFactory.create();
 
 const barbershop = BarbershopFactory.create({});
 
 let createEmployee: CreateEmployee;
+let emailValidatorService: EmailValidatorService;
 
 describe("CreateEmployee.ts", () => {
   beforeEach(async () => {
     await fakeRepositoryFactory.barbershopRepository.create(barbershop);
 
+    emailValidatorService = new EmailValidatorService({
+      barbershopRepository: fakeRepositoryFactory.barbershopRepository,
+      clientRepository: fakeRepositoryFactory.clientRepository,
+      employeeRepository: fakeRepositoryFactory.employeeRepository,
+    });
+
     createEmployee = new CreateEmployee({
-      createBarbershopRepository: () =>
-        fakeRepositoryFactory.barbershopRepository,
-      createEmployeeRepository: () => fakeRepositoryFactory.employeeRepository,
-      createAppointmentRepository: () =>
-        fakeRepositoryFactory.appointmentRepository,
-      createClientRepository: () => fakeRepositoryFactory.clientRepository,
+      createEmployeeRepository: fakeRepositoryFactory.employeeRepository,
+      findByIdBarbershopRepository: fakeRepositoryFactory.barbershopRepository,
+      emailValidatorService,
     });
   });
 

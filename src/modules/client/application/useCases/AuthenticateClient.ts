@@ -13,8 +13,16 @@ interface Input {
 
 type Output = Either<InvalidEmailOrPasswordError, Jwt>;
 
+interface IAuthenticateClient {
+  authenticateService: AuthenticateService;
+}
+
 export class AuthenticateClient implements IUseCase<Input, Output> {
-  constructor(private readonly authenticateService: AuthenticateService) {}
+  private readonly authenticateService: AuthenticateService;
+
+  constructor({ authenticateService }: IAuthenticateClient) {
+    this.authenticateService = authenticateService;
+  }
 
   public async execute(data: Input): Promise<Output> {
     const authenticated = await this.authenticateService.authenticate(

@@ -28,7 +28,7 @@ describe.concurrent("AuthenticateClient.ts", () => {
       createClientRepository: () => fakeRepositoryFactory.clientRepository,
     });
 
-    authenticateClient = new AuthenticateClient(authenticateService);
+    authenticateClient = new AuthenticateClient({ authenticateService });
   });
 
   it("should authenticate an client", async () => {

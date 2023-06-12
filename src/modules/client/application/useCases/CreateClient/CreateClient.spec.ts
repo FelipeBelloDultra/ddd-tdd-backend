@@ -24,10 +24,10 @@ describe("CreateClient.ts", () => {
       employeeRepository: fakeRepositoryFactory.employeeRepository,
     });
 
-    createClient = new CreateClient(
-      fakeRepositoryFactory.clientRepository,
-      emailValidatorService
-    );
+    createClient = new CreateClient({
+      createClientRepository: fakeRepositoryFactory.clientRepository,
+      emailValidatorService,
+    });
   });
 
   it("should create Client", async () => {

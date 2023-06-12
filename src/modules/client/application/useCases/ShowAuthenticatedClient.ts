@@ -12,10 +12,16 @@ interface Input {
 
 type Output = Either<ClientNotFoundError, Client>;
 
+interface IShowAuthenticatedClient {
+  findByIdClientRepository: IFindByIdClientRepository;
+}
+
 export class ShowAuthenticatedClient implements IUseCase<Input, Output> {
-  constructor(
-    private readonly findByIdClientRepository: IFindByIdClientRepository
-  ) {}
+  private readonly findByIdClientRepository: IFindByIdClientRepository;
+
+  constructor({ findByIdClientRepository }: IShowAuthenticatedClient) {
+    this.findByIdClientRepository = findByIdClientRepository;
+  }
 
   public async execute({ clientId }: Input): Promise<Output> {
     const client = await this.findByIdClientRepository.findById(clientId);

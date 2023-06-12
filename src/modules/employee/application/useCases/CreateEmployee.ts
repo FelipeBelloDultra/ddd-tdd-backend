@@ -1,10 +1,8 @@
-import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
 import { Either, left, right } from "@core/logic/Either";
 import { IUseCase } from "@core/application/useCases/IUseCase";
 
 import { Employee } from "@modules/employee/domain/employee/Employee";
-import { IEmployeeRepository } from "@modules/employee/application/repository/IEmployeeRepository";
-import { IBarbershopRepository } from "@modules/barbershop/application/repository/IBarbershopRepository";
+import { IFindByIdBarbershopRepository } from "@modules/barbershop/application/repository/IFindByIdBarbershopRepository";
 
 import { EmailValidatorService } from "@_shared/application/services/EmailValidatorService";
 import { AvatarUrl } from "@_shared/domain/AvatarUrl";
@@ -14,6 +12,7 @@ import { Email } from "@_shared/domain/Email";
 
 import { EmployeeEmailAlreadyUsedError } from "./errors/EmployeeEmailAlreadyUsedError";
 import { EmployeeBarbershopNotFoundError } from "./errors/EmployeeBarbershopNotFoundError";
+import { ICreateEmployeeRepository } from "../repository/ICreateEmployeeRepository";
 
 interface Input {
   name: string;
@@ -28,20 +27,25 @@ type Output = Either<
   string
 >;
 
+interface ICreateEmployee {
+  createEmployeeRepository: ICreateEmployeeRepository;
+  findByIdBarbershopRepository: IFindByIdBarbershopRepository;
+  emailValidatorService: EmailValidatorService;
+}
+
 export class CreateEmployee implements IUseCase<Input, Output> {
-  private readonly employeeRepository: IEmployeeRepository;
-  private readonly barbershopRepository: IBarbershopRepository;
+  private readonly createEmployeeRepository: ICreateEmployeeRepository;
+  private readonly findByIdBarbershopRepository: IFindByIdBarbershopRepository;
   private readonly emailValidatorService: EmailValidatorService;
 
-  constructor(repositoryFactory: IRepositoryFactory) {
-    this.employeeRepository = repositoryFactory.createEmployeeRepository();
-    this.barbershopRepository = repositoryFactory.createBarbershopRepository();
-
-    this.emailValidatorService = new EmailValidatorService({
-      barbershopRepository: repositoryFactory.createBarbershopRepository(),
-      employeeRepository: repositoryFactory.createEmployeeRepository(),
-      clientRepository: repositoryFactory.createClientRepository(),
-    });
+  constructor({
+    createEmployeeRepository,
+    emailValidatorService,
+    findByIdBarbershopRepository,
+  }: ICreateEmployee) {
+    this.createEmployeeRepository = createEmployeeRepository;
+    this.findByIdBarbershopRepository = findByIdBarbershopRepository;
+    this.emailValidatorService = emailValidatorService;
   }
 
   public async execute(data: Input): Promise<Output> {
@@ -50,7 +54,7 @@ export class CreateEmployee implements IUseCase<Input, Output> {
       return left(email.value);
     }
 
-    const existingBarbershop = await this.barbershopRepository.findById(
+    const existingBarbershop = await this.findByIdBarbershopRepository.findById(
       data.barbershopId
     );
 
@@ -84,7 +88,7 @@ export class CreateEmployee implements IUseCase<Input, Output> {
       return left(employee.value);
     }
 
-    const createdEmployee = await this.employeeRepository.create(
+    const createdEmployee = await this.createEmployeeRepository.create(
       employee.value
     );
 

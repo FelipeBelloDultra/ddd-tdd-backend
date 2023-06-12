@@ -15,10 +15,10 @@ export function makeCreateContactControllerFactory(): IController {
     clientRepository,
     employeeRepository: fakeRepositoryFactory.employeeRepository,
   });
-  const createClient = new CreateClient(
-    clientRepository,
-    emailValidatorService
-  );
+  const createClient = new CreateClient({
+    createClientRepository: clientRepository,
+    emailValidatorService: emailValidatorService,
+  });
   const createClientController = new CreateClientController(createClient);
 
   return createClientController;

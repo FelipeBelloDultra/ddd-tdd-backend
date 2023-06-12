@@ -19,11 +19,22 @@ interface Input {
 
 type Output = Either<ClientEmailAlreadyUsedError, string>;
 
+interface ICreateClient {
+  createClientRepository: ICreateClientRepository;
+  emailValidatorService: EmailValidatorService;
+}
+
 export class CreateClient implements IUseCase<Input, Output> {
-  constructor(
-    private readonly createClientRepository: ICreateClientRepository,
-    private readonly emailValidatorService: EmailValidatorService
-  ) {}
+  private readonly createClientRepository: ICreateClientRepository;
+  private readonly emailValidatorService: EmailValidatorService;
+
+  constructor({
+    createClientRepository,
+    emailValidatorService,
+  }: ICreateClient) {
+    this.createClientRepository = createClientRepository;
+    this.emailValidatorService = emailValidatorService;
+  }
 
   public async execute(data: Input): Promise<Output> {
     const email = Email.create(data.email);
