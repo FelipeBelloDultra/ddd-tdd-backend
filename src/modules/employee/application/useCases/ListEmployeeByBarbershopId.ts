@@ -1,9 +1,8 @@
-import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
 import { Either, right } from "@core/logic/Either";
 import { IUseCase } from "@core/application/useCases/IUseCase";
 
 import { Employee } from "@modules/employee/domain/employee/Employee";
-import { IEmployeeRepository } from "@modules/employee/application/repository/IEmployeeRepository";
+import { IFindByBarbershopIdEmployeeRepository } from "../repository/IFindByBarbershopIdEmployeeRepository";
 
 interface Input {
   barbershopId: string;
@@ -11,17 +10,25 @@ interface Input {
 
 type Output = Either<void, Employee[]>;
 
-export class ListEmployeeByBarbershopId implements IUseCase<Input, Output> {
-  private readonly employeeRepository: IEmployeeRepository;
+interface IListEmployeeByBarbershopId {
+  findByBarbershopIdEmployeeRepository: IFindByBarbershopIdEmployeeRepository;
+}
 
-  constructor(repositoryFactory: IRepositoryFactory) {
-    this.employeeRepository = repositoryFactory.createEmployeeRepository();
+export class ListEmployeeByBarbershopId implements IUseCase<Input, Output> {
+  private readonly findByBarbershopIdEmployeeRepository: IFindByBarbershopIdEmployeeRepository;
+
+  constructor({
+    findByBarbershopIdEmployeeRepository,
+  }: IListEmployeeByBarbershopId) {
+    this.findByBarbershopIdEmployeeRepository =
+      findByBarbershopIdEmployeeRepository;
   }
 
   public async execute(data: Input): Promise<Output> {
-    const findedEmployee = await this.employeeRepository.findByBarbershopId(
-      data.barbershopId
-    );
+    const findedEmployee =
+      await this.findByBarbershopIdEmployeeRepository.findByBarbershopId(
+        data.barbershopId
+      );
 
     return right(findedEmployee);
   }

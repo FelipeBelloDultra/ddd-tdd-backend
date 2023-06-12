@@ -1,9 +1,8 @@
-import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
 import { Either, right } from "@core/logic/Either";
 import { IUseCase } from "@core/application/useCases/IUseCase";
 
 import { AppointmentAvailability } from "@modules/appointment/domain/appointment/AppointmentAvailability";
-import { IAppointmentRepository } from "@modules/appointment/application/repository/IAppointmentRepository";
+import { IFindAllInDayFromEmployeeAppointmentRepository } from "@modules/appointment/application/repository/IFindAllInDayFromEmployeeAppointmentRepository";
 
 interface Input {
   employeeId: string;
@@ -20,22 +19,30 @@ type Output = Either<
   }[]
 >;
 
-export class ListEmployeeDayAvailability implements IUseCase<Input, Output> {
-  private readonly appointmentRepository: IAppointmentRepository;
+interface IListEmployeeDayAvailability {
+  findAllInDayFromEmployeeAppointmentRepository: IFindAllInDayFromEmployeeAppointmentRepository;
+}
 
-  constructor(repositoryFactory: IRepositoryFactory) {
-    this.appointmentRepository =
-      repositoryFactory.createAppointmentRepository();
+export class ListEmployeeDayAvailability implements IUseCase<Input, Output> {
+  private readonly findAllInDayFromEmployeeAppointmentRepository: IFindAllInDayFromEmployeeAppointmentRepository;
+
+  constructor({
+    findAllInDayFromEmployeeAppointmentRepository,
+  }: IListEmployeeDayAvailability) {
+    this.findAllInDayFromEmployeeAppointmentRepository =
+      findAllInDayFromEmployeeAppointmentRepository;
   }
 
   public async execute(data: Input): Promise<Output> {
     const appointments =
-      await this.appointmentRepository.findAllInDayFromEmployee({
-        month: data.month,
-        year: data.year,
-        employeeId: data.employeeId,
-        day: data.day,
-      });
+      await this.findAllInDayFromEmployeeAppointmentRepository.findAllInDayFromEmployee(
+        {
+          month: data.month,
+          year: data.year,
+          employeeId: data.employeeId,
+          day: data.day,
+        }
+      );
 
     const appointmentAvailability = new AppointmentAvailability(appointments);
 

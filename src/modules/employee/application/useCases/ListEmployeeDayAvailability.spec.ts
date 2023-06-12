@@ -30,12 +30,8 @@ describe("ListEmployeeDayAvailability.ts", () => {
 
   beforeEach(() => {
     listEmployeeDayAvailability = new ListEmployeeDayAvailability({
-      createBarbershopRepository: () =>
-        fakeRepositoryFactory.barbershopRepository,
-      createEmployeeRepository: () => fakeRepositoryFactory.employeeRepository,
-      createAppointmentRepository: () =>
+      findAllInDayFromEmployeeAppointmentRepository:
         fakeRepositoryFactory.appointmentRepository,
-      createClientRepository: () => fakeRepositoryFactory.clientRepository,
     });
   });
 

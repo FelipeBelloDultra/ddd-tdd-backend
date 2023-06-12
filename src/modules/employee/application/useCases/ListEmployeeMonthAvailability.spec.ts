@@ -33,12 +33,8 @@ describe("ListEmployeeMonthAvailability.ts", () => {
 
   beforeEach(() => {
     listEmployeeMonthAvailability = new ListEmployeeMonthAvailability({
-      createBarbershopRepository: () =>
-        fakeRepositoryFactory.barbershopRepository,
-      createEmployeeRepository: () => fakeRepositoryFactory.employeeRepository,
-      createAppointmentRepository: () =>
+      findAllInMonthFromEmployeeAppointmentRepository:
         fakeRepositoryFactory.appointmentRepository,
-      createClientRepository: () => fakeRepositoryFactory.clientRepository,
     });
   });
 

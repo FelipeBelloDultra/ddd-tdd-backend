@@ -11,12 +11,8 @@ let listEmployeeByBarbershopId: ListEmployeeByBarbershopId;
 describe("ListEmployeeByBarbershopId.ts", () => {
   beforeEach(() => {
     listEmployeeByBarbershopId = new ListEmployeeByBarbershopId({
-      createBarbershopRepository: () =>
-        fakeRepositoryFactory.barbershopRepository,
-      createEmployeeRepository: () => fakeRepositoryFactory.employeeRepository,
-      createAppointmentRepository: () =>
-        fakeRepositoryFactory.appointmentRepository,
-      createClientRepository: () => fakeRepositoryFactory.clientRepository,
+      findByBarbershopIdEmployeeRepository:
+        fakeRepositoryFactory.employeeRepository,
     });
   });
 
