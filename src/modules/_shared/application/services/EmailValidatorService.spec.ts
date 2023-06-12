@@ -71,7 +71,7 @@ describe("EmailValidatorService.ts", () => {
         BarbershopFactory.create({})
       );
 
-    const result = await emailValidatorService.findByEmail(
+    const result = await emailValidatorService.findByAuthenticatedEmail(
       createdBarbershop.email.value
     );
 

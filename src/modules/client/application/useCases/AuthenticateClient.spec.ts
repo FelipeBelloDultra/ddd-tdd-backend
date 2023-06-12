@@ -6,6 +6,8 @@ import { ClientFactory } from "@test/factory/entity/ClientFactory";
 
 import { Jwt } from "@core/domain/Jwt";
 
+import { AuthenticateService } from "@modules/_shared/application/services/AuthenticateService";
+
 import { InvalidEmailOrPasswordError } from "./errors/InvalidEmailOrPasswordError";
 
 import { AuthenticateClient } from "./AuthenticateClient";
@@ -13,10 +15,11 @@ import { AuthenticateClient } from "./AuthenticateClient";
 const fakeRepositoryFactory = FakeRepositoryFactory.create();
 
 let authenticateClient: AuthenticateClient;
+let authenticateService: AuthenticateService;
 
 describe.concurrent("AuthenticateClient.ts", () => {
   beforeEach(async () => {
-    authenticateClient = new AuthenticateClient({
+    authenticateService = new AuthenticateService({
       createBarbershopRepository: () =>
         fakeRepositoryFactory.barbershopRepository,
       createEmployeeRepository: () => fakeRepositoryFactory.employeeRepository,
@@ -24,6 +27,8 @@ describe.concurrent("AuthenticateClient.ts", () => {
         fakeRepositoryFactory.appointmentRepository,
       createClientRepository: () => fakeRepositoryFactory.clientRepository,
     });
+
+    authenticateClient = new AuthenticateClient(authenticateService);
   });
 
   it("should authenticate an client", async () => {

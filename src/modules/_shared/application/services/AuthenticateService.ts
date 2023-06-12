@@ -26,9 +26,10 @@ export class AuthenticateService {
     signature: IAuthenticationSignature,
     roles: Array<string>
   ): Promise<Either<InvalidEmailOrPasswordError, Jwt>> {
-    const findedByEmail = await this.emailValidatorService.findByEmail(
-      signature.email
-    );
+    const findedByEmail =
+      await this.emailValidatorService.findByAuthenticatedEmail(
+        signature.email
+      );
 
     if (!findedByEmail) {
       return left(new InvalidEmailOrPasswordError());

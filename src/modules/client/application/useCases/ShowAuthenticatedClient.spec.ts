@@ -16,14 +16,9 @@ let showAuthenticatedClient: ShowAuthenticatedClient;
 
 describe("ShowAuthenticatedClient.ts", () => {
   beforeEach(async () => {
-    showAuthenticatedClient = new ShowAuthenticatedClient({
-      createBarbershopRepository: () =>
-        fakeRepositoryFactory.barbershopRepository,
-      createEmployeeRepository: () => fakeRepositoryFactory.employeeRepository,
-      createAppointmentRepository: () =>
-        fakeRepositoryFactory.appointmentRepository,
-      createClientRepository: () => fakeRepositoryFactory.clientRepository,
-    });
+    showAuthenticatedClient = new ShowAuthenticatedClient(
+      fakeRepositoryFactory.clientRepository
+    );
   });
 
   it("should show the authenticated client", async () => {

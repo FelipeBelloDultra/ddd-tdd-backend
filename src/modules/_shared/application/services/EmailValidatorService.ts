@@ -1,19 +1,19 @@
 import { IBarbershopRepository } from "@modules/barbershop/application/repository/IBarbershopRepository";
 import { IEmployeeRepository } from "@modules/employee/application/repository/IEmployeeRepository";
-import { IClientRepository } from "@modules/client/application/repository/IClientRepository";
-import { Client } from "@modules/client/domain/client/Client";
 import { Barbershop } from "@modules/barbershop/domain/barbershop/Barbershop";
+import { Client } from "@modules/client/domain/client/Client";
+import { IFindByEmailClientRepository } from "@modules/client/application/repository/IFindByEmailClientRepository";
 
 interface IEmailValidatorService {
   employeeRepository: IEmployeeRepository;
   barbershopRepository: IBarbershopRepository;
-  clientRepository: IClientRepository;
+  clientRepository: IFindByEmailClientRepository;
 }
 
 export class EmailValidatorService {
   private readonly employeeRepository: IEmployeeRepository;
   private readonly barbershopRepository: IBarbershopRepository;
-  private readonly clientRepository: IClientRepository;
+  private readonly clientRepository: IFindByEmailClientRepository;
 
   constructor(emailValidatorService: IEmailValidatorService) {
     this.employeeRepository = emailValidatorService.employeeRepository;
@@ -29,7 +29,7 @@ export class EmailValidatorService {
     );
   }
 
-  public async findByEmail(
+  public async findByAuthenticatedEmail(
     email: string
   ): Promise<Client | Barbershop | undefined> {
     return (
