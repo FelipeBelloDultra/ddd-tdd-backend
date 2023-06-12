@@ -2,6 +2,8 @@ import { expect, describe, it, beforeEach } from "vitest";
 
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 
+import { AuthenticateService } from "@modules/_shared/application/services/AuthenticateService";
+
 import { BarbershopFactory } from "@test/factory/entity/BarbershopFactory";
 
 import { Jwt } from "@core/domain/Jwt";
@@ -13,16 +15,21 @@ import { AuthenticateBarbershop } from "./AuthenticateBarbershop";
 const fakeRepositoryFactory = FakeRepositoryFactory.create();
 
 let authenticateBarbershop: AuthenticateBarbershop;
+let authenticateService: AuthenticateService;
 
 describe.concurrent("AuthenticateBarbershop.ts", () => {
   beforeEach(async () => {
-    authenticateBarbershop = new AuthenticateBarbershop({
+    authenticateService = new AuthenticateService({
       createBarbershopRepository: () =>
         fakeRepositoryFactory.barbershopRepository,
       createEmployeeRepository: () => fakeRepositoryFactory.employeeRepository,
       createAppointmentRepository: () =>
         fakeRepositoryFactory.appointmentRepository,
       createClientRepository: () => fakeRepositoryFactory.clientRepository,
+    });
+
+    authenticateBarbershop = new AuthenticateBarbershop({
+      authenticateService,
     });
   });
 

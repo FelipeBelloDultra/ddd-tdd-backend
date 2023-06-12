@@ -1,4 +1,3 @@
-import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
 import { Either, left, right } from "@core/logic/Either";
 import { IUseCase } from "@core/application/useCases/IUseCase";
 
@@ -7,7 +6,7 @@ import { Email } from "@_shared/domain/Email";
 import { Password } from "@_shared/domain/Password";
 import { EmailValidatorService } from "@_shared/application/services/EmailValidatorService";
 
-import { IBarbershopRepository } from "@modules/barbershop/application/repository/IBarbershopRepository";
+import { ICreateBarbershopRepository } from "@modules/barbershop/application/repository/ICreateBarbershopRepository";
 import { Barbershop } from "@modules/barbershop/domain/barbershop/Barbershop";
 
 import { BarbershopEmailAlreadyUsedError } from "./errors/BarbershopEmailAlreadyUsedError";
@@ -20,18 +19,21 @@ interface Input {
 
 type Output = Either<BarbershopEmailAlreadyUsedError, string>;
 
+interface ICreateBarbershop {
+  createBarbershopRepository: ICreateBarbershopRepository;
+  emailValidatorService: EmailValidatorService;
+}
+
 export class CreateBarbershop implements IUseCase<Input, Output> {
-  private readonly barbershopRepository: IBarbershopRepository;
+  private readonly createBarbershopRepository: ICreateBarbershopRepository;
   private readonly emailValidatorService: EmailValidatorService;
 
-  constructor(repositoryFactory: IRepositoryFactory) {
-    this.barbershopRepository = repositoryFactory.createBarbershopRepository();
-
-    this.emailValidatorService = new EmailValidatorService({
-      barbershopRepository: repositoryFactory.createBarbershopRepository(),
-      employeeRepository: repositoryFactory.createEmployeeRepository(),
-      clientRepository: repositoryFactory.createClientRepository(),
-    });
+  constructor({
+    createBarbershopRepository,
+    emailValidatorService,
+  }: ICreateBarbershop) {
+    this.createBarbershopRepository = createBarbershopRepository;
+    this.emailValidatorService = emailValidatorService;
   }
 
   public async execute(data: Input): Promise<Output> {
@@ -64,7 +66,7 @@ export class CreateBarbershop implements IUseCase<Input, Output> {
       return left(barbershop.value);
     }
 
-    const createdBarbershop = await this.barbershopRepository.create(
+    const createdBarbershop = await this.createBarbershopRepository.create(
       barbershop.value
     );
 

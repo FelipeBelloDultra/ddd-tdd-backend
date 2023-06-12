@@ -1,6 +1,5 @@
 import { Either, left, right } from "@core/logic/Either";
 import { Jwt } from "@core/domain/Jwt";
-import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
 import { IUseCase } from "@core/application/useCases/IUseCase";
 
 import { AuthenticateService } from "@_shared/application/services/AuthenticateService";
@@ -14,11 +13,15 @@ interface Input {
 
 type Output = Either<InvalidEmailOrPasswordError, Jwt>;
 
+interface IAuthenticateBarbershop {
+  authenticateService: AuthenticateService;
+}
+
 export class AuthenticateBarbershop implements IUseCase<Input, Output> {
   private readonly authenticateService: AuthenticateService;
 
-  constructor(repositoryFactory: IRepositoryFactory) {
-    this.authenticateService = new AuthenticateService(repositoryFactory);
+  constructor({ authenticateService }: IAuthenticateBarbershop) {
+    this.authenticateService = authenticateService;
   }
 
   public async execute(data: Input): Promise<Output> {

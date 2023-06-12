@@ -1,4 +1,3 @@
-import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
 import { Either, left, right } from "@core/logic/Either";
 import { IUseCase } from "@core/application/useCases/IUseCase";
 
@@ -6,7 +5,7 @@ import { Barbershop } from "@modules/barbershop/domain/barbershop/Barbershop";
 import { Neighborhood } from "@modules/barbershop/domain/barbershop/Neighborhood";
 import { Street } from "@modules/barbershop/domain/barbershop/Street";
 import { StreetNumber } from "@modules/barbershop/domain/barbershop/StreetNumber";
-import { IBarbershopRepository } from "@modules/barbershop/application/repository/IBarbershopRepository";
+import { IUpdateBarbershopRepository } from "@modules/barbershop/application/repository/IUpdateBarbershopRepository";
 
 import { BarbershopNotFoundError } from "./errors/BarbershopNotFoundError";
 
@@ -24,15 +23,19 @@ interface Input {
 
 type Output = Either<BarbershopNotFoundError, Barbershop>;
 
-export class UpdateBarbershop implements IUseCase<Input, Output> {
-  private readonly barbershopRepository: IBarbershopRepository;
+interface IUpdateBarbershop {
+  updateBarbershopRepository: IUpdateBarbershopRepository;
+}
 
-  constructor(repositoryFactory: IRepositoryFactory) {
-    this.barbershopRepository = repositoryFactory.createBarbershopRepository();
+export class UpdateBarbershop implements IUseCase<Input, Output> {
+  private readonly updateBarbershopRepository: IUpdateBarbershopRepository;
+
+  constructor({ updateBarbershopRepository }: IUpdateBarbershop) {
+    this.updateBarbershopRepository = updateBarbershopRepository;
   }
 
   public async execute(data: Input): Promise<Output> {
-    const findedbyId = await this.barbershopRepository.findById(data.id);
+    const findedbyId = await this.updateBarbershopRepository.findById(data.id);
 
     if (!findedbyId) return left(new BarbershopNotFoundError());
 
@@ -65,7 +68,7 @@ export class UpdateBarbershop implements IUseCase<Input, Output> {
       street,
     });
 
-    const updatedUser = await this.barbershopRepository.update(
+    const updatedUser = await this.updateBarbershopRepository.update(
       barbershop.value as Barbershop
     );
 

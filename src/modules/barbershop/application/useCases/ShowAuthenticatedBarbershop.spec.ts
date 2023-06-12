@@ -17,12 +17,7 @@ let showAuthenticatedBarbershop: ShowAuthenticatedBarbershop;
 describe("ShowAuthenticatedBarbershop.ts", () => {
   beforeEach(async () => {
     showAuthenticatedBarbershop = new ShowAuthenticatedBarbershop({
-      createBarbershopRepository: () =>
-        fakeRepositoryFactory.barbershopRepository,
-      createEmployeeRepository: () => fakeRepositoryFactory.employeeRepository,
-      createAppointmentRepository: () =>
-        fakeRepositoryFactory.appointmentRepository,
-      createClientRepository: () => fakeRepositoryFactory.clientRepository,
+      findByIdBarbershopRepository: fakeRepositoryFactory.barbershopRepository,
     });
   });
 

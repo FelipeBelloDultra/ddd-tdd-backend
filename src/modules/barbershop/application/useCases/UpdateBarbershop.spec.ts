@@ -18,12 +18,7 @@ describe("UpdateBarbershop.ts", () => {
     await fakeRepositoryFactory.barbershopRepository.create(barbershop);
 
     updateBarbershop = new UpdateBarbershop({
-      createBarbershopRepository: () =>
-        fakeRepositoryFactory.barbershopRepository,
-      createEmployeeRepository: () => fakeRepositoryFactory.employeeRepository,
-      createAppointmentRepository: () =>
-        fakeRepositoryFactory.appointmentRepository,
-      createClientRepository: () => fakeRepositoryFactory.clientRepository,
+      updateBarbershopRepository: fakeRepositoryFactory.barbershopRepository,
     });
   });
 

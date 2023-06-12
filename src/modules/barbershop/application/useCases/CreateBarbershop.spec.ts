@@ -2,6 +2,8 @@ import { describe, beforeEach, it, expect } from "vitest";
 
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 
+import { EmailValidatorService } from "@modules/_shared/application/services/EmailValidatorService";
+
 import { BaseFactory } from "@test/factory/BaseFactory";
 import { BarbershopFactory } from "@test/factory/entity/BarbershopFactory";
 
@@ -12,16 +14,19 @@ import { BarbershopEmailAlreadyUsedError } from "./errors/BarbershopEmailAlready
 const fakeRepositoryFactory = FakeRepositoryFactory.create();
 
 let createBarbershop: CreateBarbershop;
+let emailValidatorService: EmailValidatorService;
 
 describe("CreateBarbershop.ts", () => {
   beforeEach(() => {
+    emailValidatorService = new EmailValidatorService({
+      barbershopRepository: fakeRepositoryFactory.barbershopRepository,
+      clientRepository: fakeRepositoryFactory.clientRepository,
+      employeeRepository: fakeRepositoryFactory.employeeRepository,
+    });
+
     createBarbershop = new CreateBarbershop({
-      createBarbershopRepository: () =>
-        fakeRepositoryFactory.barbershopRepository,
-      createEmployeeRepository: () => fakeRepositoryFactory.employeeRepository,
-      createAppointmentRepository: () =>
-        fakeRepositoryFactory.appointmentRepository,
-      createClientRepository: () => fakeRepositoryFactory.clientRepository,
+      createBarbershopRepository: fakeRepositoryFactory.barbershopRepository,
+      emailValidatorService,
     });
   });
 
