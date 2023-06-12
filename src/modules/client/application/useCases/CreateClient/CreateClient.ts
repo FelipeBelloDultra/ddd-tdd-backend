@@ -1,5 +1,4 @@
 import { Either, left, right } from "@core/logic/Either";
-import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
 import { IUseCase } from "@core/application/useCases/IUseCase";
 
 import { Name } from "@_shared/domain/Name";
@@ -8,7 +7,7 @@ import { Password } from "@_shared/domain/Password";
 import { EmailValidatorService } from "@_shared/application/services/EmailValidatorService";
 
 import { Client } from "@modules/client/domain/client/Client";
-import { IClientRepository } from "@modules/client/application/repository/IClientRepository";
+import { ICreateClientRepository } from "@modules/client/application/repository/ICreateClientRepository";
 
 import { ClientEmailAlreadyUsedError } from "../errors/ClientEmailAlreadyUsedError";
 
@@ -21,18 +20,10 @@ interface Input {
 type Output = Either<ClientEmailAlreadyUsedError, string>;
 
 export class CreateClient implements IUseCase<Input, Output> {
-  private readonly clientRepository: IClientRepository;
-  private readonly emailValidatorService: EmailValidatorService;
-
-  constructor(repositoryFactory: IRepositoryFactory) {
-    this.clientRepository = repositoryFactory.createClientRepository();
-
-    this.emailValidatorService = new EmailValidatorService({
-      barbershopRepository: repositoryFactory.createBarbershopRepository(),
-      employeeRepository: repositoryFactory.createEmployeeRepository(),
-      clientRepository: repositoryFactory.createClientRepository(),
-    });
-  }
+  constructor(
+    private readonly createClientRepository: ICreateClientRepository,
+    private readonly emailValidatorService: EmailValidatorService
+  ) {}
 
   public async execute(data: Input): Promise<Output> {
     const email = Email.create(data.email);
@@ -64,7 +55,9 @@ export class CreateClient implements IUseCase<Input, Output> {
       return left(client.value);
     }
 
-    const createdClient = await this.clientRepository.create(client.value);
+    const createdClient = await this.createClientRepository.create(
+      client.value
+    );
 
     return right(createdClient.id);
   }

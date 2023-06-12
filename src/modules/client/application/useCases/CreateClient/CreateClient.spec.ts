@@ -2,6 +2,8 @@ import { describe, beforeEach, it, expect } from "vitest";
 
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 
+import { EmailValidatorService } from "@modules/_shared/application/services/EmailValidatorService";
+
 import { BaseFactory } from "@test/factory/BaseFactory";
 import { ClientFactory } from "@test/factory/entity/ClientFactory";
 
@@ -12,17 +14,20 @@ import { CreateClient } from "./CreateClient";
 const fakeRepositoryFactory = FakeRepositoryFactory.create();
 
 let createClient: CreateClient;
+let emailValidatorService: EmailValidatorService;
 
 describe("CreateClient.ts", () => {
   beforeEach(() => {
-    createClient = new CreateClient({
-      createBarbershopRepository: () =>
-        fakeRepositoryFactory.barbershopRepository,
-      createEmployeeRepository: () => fakeRepositoryFactory.employeeRepository,
-      createAppointmentRepository: () =>
-        fakeRepositoryFactory.appointmentRepository,
-      createClientRepository: () => fakeRepositoryFactory.clientRepository,
+    emailValidatorService = new EmailValidatorService({
+      barbershopRepository: fakeRepositoryFactory.barbershopRepository,
+      clientRepository: fakeRepositoryFactory.clientRepository,
+      employeeRepository: fakeRepositoryFactory.employeeRepository,
     });
+
+    createClient = new CreateClient(
+      fakeRepositoryFactory.clientRepository,
+      emailValidatorService
+    );
   });
 
   it("should create Client", async () => {
