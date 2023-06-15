@@ -1,6 +1,6 @@
 import { IController } from "@core/infra/IController";
 
-import { PrismaRepositoryFactory } from "@infra/factory/prisma/PrismaRepositoryFactory";
+import { PrismaRepositoryFactory } from "@infra/database/factories/prisma/PrismaRepositoryFactory";
 
 import { ShowAuthenticatedClient } from "@modules/client/application/useCases/ShowAuthenticatedClient/ShowAuthenticatedClient";
 import { ShowAuthenticatedClientController } from "@modules/client/application/useCases/ShowAuthenticatedClient/ShowAuthenticatedClientController";

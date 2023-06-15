@@ -1,4 +1,4 @@
-import { prisma } from "@infra/prisma";
+import { queries } from "@infra/database/queries";
 
 import { Employee } from "@modules/employee/domain/employee/Employee";
 import { EmployeeMapper } from "@modules/employee/application/mappers/EmployeeMapper";
@@ -9,7 +9,7 @@ export class PrismaEmployeeRepository implements IEmployeeRepository {
   public async create(data: Employee): Promise<Employee> {
     const toPersistence = EmployeeMapper.toPersistence(data);
 
-    await prisma.employee.create({
+    await queries.employee.create({
       data: toPersistence,
     });
 
@@ -17,7 +17,7 @@ export class PrismaEmployeeRepository implements IEmployeeRepository {
   }
 
   public async findByBarbershopId(barbershopId: string): Promise<Employee[]> {
-    const finded = await prisma.employee.findMany({
+    const finded = await queries.employee.findMany({
       where: {
         barbershop_id: barbershopId,
       },
@@ -31,7 +31,7 @@ export class PrismaEmployeeRepository implements IEmployeeRepository {
   }
 
   public async findByEmail(email: string): Promise<Employee | undefined> {
-    const finded = await prisma.employee.findUnique({ where: { email } });
+    const finded = await queries.employee.findUnique({ where: { email } });
 
     if (!finded) return undefined;
 
@@ -39,7 +39,7 @@ export class PrismaEmployeeRepository implements IEmployeeRepository {
   }
 
   public async findById(id: string): Promise<Employee | undefined> {
-    const finded = await prisma.employee.findUnique({
+    const finded = await queries.employee.findUnique({
       where: { id_employee: id },
     });
 

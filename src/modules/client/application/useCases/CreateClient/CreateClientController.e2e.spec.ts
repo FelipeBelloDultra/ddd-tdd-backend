@@ -6,13 +6,13 @@ import { ClientFactory } from "@test/factory/entity/ClientFactory";
 import { BaseRequest } from "@test/factory/BaseRequest";
 import { BaseFactory } from "@test/factory/BaseFactory";
 
-import { prisma } from "@infra/prisma";
+import { queries } from "@infra/database/queries";
 
 const CREATED_CLIENT = ClientFactory.create({});
 
 describe("E2E - /clients - [POST]", () => {
   beforeAll(async () => {
-    await prisma.client.create({
+    await queries.client.create({
       data: await ClientMapper.toPersistence(CREATED_CLIENT),
     });
   });

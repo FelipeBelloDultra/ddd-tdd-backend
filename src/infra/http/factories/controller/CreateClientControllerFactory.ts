@@ -1,6 +1,6 @@
 import { IController } from "@core/infra/IController";
 
-import { PrismaRepositoryFactory } from "@infra/factory/prisma/PrismaRepositoryFactory";
+import { PrismaRepositoryFactory } from "@infra/database/factories/prisma/PrismaRepositoryFactory";
 
 import { EmailValidatorService } from "@_shared/application/services/EmailValidatorService";
 

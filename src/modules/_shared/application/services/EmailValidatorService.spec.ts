@@ -1,6 +1,6 @@
 import { describe, beforeEach, it, expect } from "vitest";
 
-import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
+import { FakeRepositoryFactory } from "@infra/database/factories/fakes/FakeRepositoryFactory";
 
 import { ClientFactory } from "@test/factory/entity/ClientFactory";
 import { BarbershopFactory } from "@test/factory/entity/BarbershopFactory";

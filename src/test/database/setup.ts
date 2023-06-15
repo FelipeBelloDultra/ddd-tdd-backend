@@ -1,10 +1,10 @@
-import { prisma } from "@infra/prisma";
+import { queries } from "@infra/database/queries";
 
 export async function teardown() {
-  await prisma.appointment.deleteMany();
-  await prisma.client.deleteMany();
-  await prisma.employee.deleteMany();
-  await prisma.barbershop.deleteMany();
+  await queries.appointment.deleteMany();
+  await queries.client.deleteMany();
+  await queries.employee.deleteMany();
+  await queries.barbershop.deleteMany();
 
-  await prisma.$disconnect();
+  await queries.$disconnect();
 }

@@ -1,4 +1,4 @@
-import { prisma } from "@infra/prisma";
+import { queries } from "@infra/database/queries";
 
 import { Barbershop } from "@modules/barbershop/domain/barbershop/Barbershop";
 import { BarbershopMapper } from "@modules/barbershop/application/mappers/BarbershopMapper";
@@ -9,7 +9,7 @@ export class PrismaBarbershopRepository implements IBarbershopRepository {
   public async create(data: Barbershop): Promise<Barbershop> {
     const toPersistence = await BarbershopMapper.toPersistence(data);
 
-    await prisma.barbershop.create({
+    await queries.barbershop.create({
       data: toPersistence,
     });
 
@@ -17,7 +17,7 @@ export class PrismaBarbershopRepository implements IBarbershopRepository {
   }
 
   public async findByEmail(email: string): Promise<Barbershop | undefined> {
-    const finded = await prisma.barbershop.findUnique({
+    const finded = await queries.barbershop.findUnique({
       where: { email },
     });
 
@@ -27,7 +27,7 @@ export class PrismaBarbershopRepository implements IBarbershopRepository {
   }
 
   public async findById(id: string): Promise<Barbershop | undefined> {
-    const finded = await prisma.barbershop.findUnique({
+    const finded = await queries.barbershop.findUnique({
       where: { id_barbershop: id },
     });
 
@@ -39,7 +39,7 @@ export class PrismaBarbershopRepository implements IBarbershopRepository {
   public async update(data: Barbershop): Promise<Barbershop> {
     const toPersistence = await BarbershopMapper.toPersistence(data);
 
-    const updated = await prisma.barbershop.update({
+    const updated = await queries.barbershop.update({
       where: {
         id_barbershop: toPersistence.id_barbershop,
         email: toPersistence.email,

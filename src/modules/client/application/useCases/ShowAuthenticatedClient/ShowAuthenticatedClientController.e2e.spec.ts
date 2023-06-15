@@ -5,13 +5,13 @@ import { ClientMapper } from "@modules/client/application/mappers/ClientMapper";
 import { ClientFactory } from "@test/factory/entity/ClientFactory";
 import { BaseRequest } from "@test/factory/BaseRequest";
 
-import { prisma } from "@infra/prisma";
+import { queries } from "@infra/database/queries";
 
 const AUTHENTICATED_CLIENT = ClientFactory.createAndAuthenticate({});
 
 describe("E2E - /clients/session/me - [POST]", () => {
   beforeAll(async () => {
-    await prisma.client.create({
+    await queries.client.create({
       data: await ClientMapper.toPersistence(AUTHENTICATED_CLIENT.client),
     });
   });

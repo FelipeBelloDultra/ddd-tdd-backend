@@ -1,4 +1,4 @@
-import { prisma } from "@infra/prisma";
+import { queries } from "@infra/database/queries";
 
 import { Appointment } from "@modules/appointment/domain/appointment/Appointment";
 import {
@@ -12,7 +12,7 @@ export class PrismaAppointmentRepository implements IAppointmentRepository {
   public async create(data: Appointment): Promise<Appointment> {
     const toPersistence = AppointmentMapper.toPersistence(data);
 
-    await prisma.appointment.create({
+    await queries.appointment.create({
       data: toPersistence,
     });
 
@@ -25,7 +25,7 @@ export class PrismaAppointmentRepository implements IAppointmentRepository {
     year: number;
     employeeId: string;
   }): Promise<Appointment[]> {
-    const finded = await prisma.$queryRaw<IPersistenceAppointment[]>`
+    const finded = await queries.$queryRaw<IPersistenceAppointment[]>`
       SELECT *
       FROM appointments
       WHERE
@@ -43,7 +43,7 @@ export class PrismaAppointmentRepository implements IAppointmentRepository {
     year: number;
     employeeId: string;
   }): Promise<Appointment[]> {
-    const finded = await prisma.$queryRaw<IPersistenceAppointment[]>`
+    const finded = await queries.$queryRaw<IPersistenceAppointment[]>`
       SELECT *
       FROM appointments
       WHERE
@@ -59,7 +59,7 @@ export class PrismaAppointmentRepository implements IAppointmentRepository {
     date: Date,
     employeeId: string
   ): Promise<Appointment | undefined> {
-    const finded = await prisma.appointment.findUnique({
+    const finded = await queries.appointment.findUnique({
       where: {
         date: date,
         id_appointment: employeeId,

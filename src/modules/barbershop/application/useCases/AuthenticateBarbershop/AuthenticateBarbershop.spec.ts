@@ -1,6 +1,6 @@
 import { expect, describe, it, beforeEach } from "vitest";
 
-import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
+import { FakeRepositoryFactory } from "@infra/database/factories/fakes/FakeRepositoryFactory";
 
 import { AuthenticateService } from "@_shared/application/services/AuthenticateService";
 

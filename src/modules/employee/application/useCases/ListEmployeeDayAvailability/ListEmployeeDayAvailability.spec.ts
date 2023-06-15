@@ -8,7 +8,7 @@ import {
   expect,
 } from "vitest";
 
-import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
+import { FakeRepositoryFactory } from "@infra/database/factories/fakes/FakeRepositoryFactory";
 
 import { BaseFactory } from "@test/factory/BaseFactory";
 import { AppointmentFactory } from "@test/factory/entity/AppointmentFactory";

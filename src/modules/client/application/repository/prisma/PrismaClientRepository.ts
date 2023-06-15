@@ -1,4 +1,4 @@
-import { prisma } from "@infra/prisma";
+import { queries } from "@infra/database/queries";
 
 import { Client } from "@modules/client/domain/client/Client";
 import { ClientMapper } from "@modules/client/application/mappers/ClientMapper";
@@ -9,7 +9,7 @@ export class PrismaClientRepository implements IClientRepository {
   public async create(data: Client): Promise<Client> {
     const toPersistence = await ClientMapper.toPersistence(data);
 
-    await prisma.client.create({
+    await queries.client.create({
       data: toPersistence,
     });
 
@@ -17,7 +17,7 @@ export class PrismaClientRepository implements IClientRepository {
   }
 
   public async findByEmail(email: string): Promise<Client | undefined> {
-    const finded = await prisma.client.findUnique({
+    const finded = await queries.client.findUnique({
       where: { email },
     });
 
@@ -27,7 +27,7 @@ export class PrismaClientRepository implements IClientRepository {
   }
 
   public async findById(id: string): Promise<Client | undefined> {
-    const finded = await prisma.client.findUnique({
+    const finded = await queries.client.findUnique({
       where: { id_client: id },
     });
 
