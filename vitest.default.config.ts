@@ -1,11 +1,12 @@
-import { defineConfig } from "vitest/config";
 import { resolve } from "node:path";
 
-export default defineConfig({
+export default {
   test: {
     coverage: {
       provider: "c8",
     },
+  },
+  resolve: {
     alias: [
       {
         find: "@modules",
@@ -29,4 +30,4 @@ export default defineConfig({
       },
     ],
   },
-});
+};

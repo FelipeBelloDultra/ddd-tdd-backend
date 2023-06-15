@@ -16,6 +16,8 @@ export class AppointmentFactory {
       employeeId: data.employeeId || BaseFactory.makeUuid(),
       date: AppointmentDate.create(data.date || new Date())
         .value as AppointmentDate,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     });
 
     return appointment.value as Appointment;

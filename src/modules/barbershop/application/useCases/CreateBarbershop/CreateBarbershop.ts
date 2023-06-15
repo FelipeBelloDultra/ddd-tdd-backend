@@ -60,6 +60,8 @@ export class CreateBarbershop implements IUseCase<Input, Output> {
       name: name.value,
       email: email.value,
       password: password.value,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     });
 
     if (barbershop.isLeft()) {

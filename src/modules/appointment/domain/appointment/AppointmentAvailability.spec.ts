@@ -33,6 +33,8 @@ describe("AppointmentAvailability.ts", () => {
           date: AppointmentDate.create(
             new Date(`${YEAR}-${MONTH}-02T${hour}:00:00`)
           ).value as AppointmentDate,
+          createdAt: new Date(),
+          updatedAt: new Date(),
         }).value as Appointment
     );
 
@@ -67,6 +69,8 @@ describe("AppointmentAvailability.ts", () => {
         date: AppointmentDate.create(
           new Date(`${YEAR}-${MONTH}-${DAY}T14:00:00`)
         ).value as AppointmentDate,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       }).value as Appointment,
       Appointment.create({
         employeeId,
@@ -74,6 +78,8 @@ describe("AppointmentAvailability.ts", () => {
         date: AppointmentDate.create(
           new Date(`${YEAR}-${MONTH}-${DAY}T16:00:00`)
         ).value as AppointmentDate,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       }).value as Appointment,
     ];
 

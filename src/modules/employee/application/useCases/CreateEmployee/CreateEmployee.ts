@@ -82,6 +82,8 @@ export class CreateEmployee implements IUseCase<Input, Output> {
       avatarUrl: avatarUrl,
       phone: phone.value,
       barbershopId: data.barbershopId,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     });
 
     if (employee.isLeft()) {

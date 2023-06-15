@@ -1,14 +1,22 @@
-import { describe, it, expect } from "vitest";
-import { BaseFactory } from "@test/factory/BaseFactory";
-import { BaseRequest } from "@test/factory/BaseRequest";
+import { describe, it, expect, beforeAll } from "vitest";
 
-const toCreateClient = {
-  name: BaseFactory.makeFullName(),
-  email: BaseFactory.makeEmail(),
-  password: BaseFactory.makePassword(),
-};
+import { ClientMapper } from "@modules/client/application/mappers/ClientMapper";
+
+import { ClientFactory } from "@test/factory/entity/ClientFactory";
+import { BaseRequest } from "@test/factory/BaseRequest";
+import { BaseFactory } from "@test/factory/BaseFactory";
+
+import { prisma } from "@infra/prisma/client";
+
+const CREATED_CLIENT = ClientFactory.create({});
 
 describe("E2E - /clients - [POST]", () => {
+  beforeAll(async () => {
+    await prisma.client.create({
+      data: await ClientMapper.toPersistence(CREATED_CLIENT),
+    });
+  });
+
   it("should create an client", async () => {
     const result = await BaseRequest.post("clients").send({
       name: BaseFactory.makeFullName(),
@@ -20,11 +28,9 @@ describe("E2E - /clients - [POST]", () => {
   });
 
   it("should not create a new client if email already exists", async () => {
-    await BaseRequest.post("clients").send(toCreateClient);
-
     const result = await BaseRequest.post("clients").send({
       name: BaseFactory.makeFullName(),
-      email: toCreateClient.email,
+      email: CREATED_CLIENT.email.value,
       password: BaseFactory.makePassword(),
     });
 

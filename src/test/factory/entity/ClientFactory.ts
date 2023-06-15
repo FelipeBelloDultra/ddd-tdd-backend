@@ -20,6 +20,8 @@ export class ClientFactory {
       email: Email.create(data.email || BaseFactory.makeEmail()).value as Email,
       password: Password.create(data.password || BaseFactory.makePassword())
         .value as Password,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     });
 
     return client.value as Client;

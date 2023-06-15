@@ -6,9 +6,10 @@
   "scripts": {
     "dev": "tsx watch src/infra/http/server.ts",
     "build": "tsc -p tsconfig.build.json",
-    "test:all": "vitest src/**",
-    "test:e2e": "vitest e2e.spec",
-    "test:cov": "vitest --coverage"
+    "test:unit": "vitest -c vitest.unit.config.ts",
+    "test:e2e": "vitest -c vitest.e2e.config.ts",
+    "test:all": "vitest -c vitest.all.config.ts",
+    "test:cov": "vitest --coverage -c vitest.all.config.ts"
   },
   "keywords": [],
   "author": "",
