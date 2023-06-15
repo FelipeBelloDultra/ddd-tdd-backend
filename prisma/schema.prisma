@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Client {
+  id_client String @id
+  name String
+  email String @unique
+  password String
+  appointments Appointment[]
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
+  @@map("clients")
+}
+
+model Barbershop {
+  id_barbershop String @id
+  name String
+  email String @unique
+  password String
+  street String?
+  neighborhood String?
+  number String?
+  phone String?
+  employees Employee[]
+  avatar_url String?
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
+  @@map("barbershops")
+}
+
+model Employee {
+  id_employee String @id
+  name String
+  email String @unique
+  phone String
+  avatar_url String
+  barbershop Barbershop @relation(fields: [barbershop_id], references: [id_barbershop])
+  appointments Appointment[]
+  barbershop_id String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
+  @@map("employees")
+}
+
+model Appointment {
+  id_appointment String @unique
+  employee Employee @relation(fields: [employee_id], references: [id_employee])
+  employee_id String
+  client Client @relation(fields: [client_id], references: [id_client])
+  client_id String
+  date DateTime @unique
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
+  @@map("appointments")
+}
