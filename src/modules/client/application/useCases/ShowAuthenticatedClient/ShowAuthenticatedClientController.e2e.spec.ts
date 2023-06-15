@@ -22,5 +22,20 @@ describe("E2E - /clients/session/me - [POST]", () => {
     });
 
     expect(result.status).toBe(200);
+    expect(result.body).toHaveProperty("id", AUTHENTICATED_CLIENT.client.id);
+    expect(result.body).toHaveProperty(
+      "email",
+      AUTHENTICATED_CLIENT.client.email.value
+    );
+    expect(result.body).not.toHaveProperty("password");
+  });
+
+  it("should not show an authenticated client if id is invalid", async () => {
+    const result = await BaseRequest.post("clients/session/me").send({
+      clientId: "invalid-id",
+    });
+
+    expect(result.status).toBe(400);
+    expect(result.body).toHaveProperty("error", "Client does not exist");
   });
 });

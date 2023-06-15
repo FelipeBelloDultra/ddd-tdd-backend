@@ -11,20 +11,23 @@ import { Jwt } from "@core/domain/Jwt";
 import { InvalidEmailOrPasswordError } from "./errors/InvalidEmailOrPasswordError";
 
 import { AuthenticateService } from "./AuthenticateService";
+import { EmailValidatorService } from "./EmailValidatorService";
 
 const fakeRepositoryFactory = FakeRepositoryFactory.create();
 
 let authenticateService: AuthenticateService;
+let emailValidatorService: EmailValidatorService;
 
 describe("AuthenticateService.ts", () => {
   beforeEach(async () => {
+    emailValidatorService = new EmailValidatorService({
+      barbershopRepository: fakeRepositoryFactory.barbershopRepository,
+      clientRepository: fakeRepositoryFactory.clientRepository,
+      employeeRepository: fakeRepositoryFactory.employeeRepository,
+    });
+
     authenticateService = new AuthenticateService({
-      createBarbershopRepository: () =>
-        fakeRepositoryFactory.barbershopRepository,
-      createEmployeeRepository: () => fakeRepositoryFactory.employeeRepository,
-      createAppointmentRepository: () =>
-        fakeRepositoryFactory.appointmentRepository,
-      createClientRepository: () => fakeRepositoryFactory.clientRepository,
+      emailValidatorService,
     });
   });
 

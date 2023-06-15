@@ -3,6 +3,7 @@ import { expect, describe, it, beforeEach } from "vitest";
 import { FakeRepositoryFactory } from "@infra/database/factories/fakes/FakeRepositoryFactory";
 
 import { AuthenticateService } from "@_shared/application/services/AuthenticateService";
+import { EmailValidatorService } from "@_shared/application/services/EmailValidatorService";
 
 import { BarbershopFactory } from "@test/factory/entity/BarbershopFactory";
 
@@ -16,16 +17,18 @@ const fakeRepositoryFactory = FakeRepositoryFactory.create();
 
 let authenticateBarbershop: AuthenticateBarbershop;
 let authenticateService: AuthenticateService;
+let emailValidatorService: EmailValidatorService;
 
 describe.concurrent("AuthenticateBarbershop.ts", () => {
   beforeEach(async () => {
+    emailValidatorService = new EmailValidatorService({
+      barbershopRepository: fakeRepositoryFactory.barbershopRepository,
+      clientRepository: fakeRepositoryFactory.clientRepository,
+      employeeRepository: fakeRepositoryFactory.employeeRepository,
+    });
+
     authenticateService = new AuthenticateService({
-      createBarbershopRepository: () =>
-        fakeRepositoryFactory.barbershopRepository,
-      createEmployeeRepository: () => fakeRepositoryFactory.employeeRepository,
-      createAppointmentRepository: () =>
-        fakeRepositoryFactory.appointmentRepository,
-      createClientRepository: () => fakeRepositoryFactory.clientRepository,
+      emailValidatorService,
     });
 
     authenticateBarbershop = new AuthenticateBarbershop({

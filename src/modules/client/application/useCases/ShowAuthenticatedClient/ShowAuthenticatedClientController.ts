@@ -22,7 +22,14 @@ export class ShowAuthenticatedClientController implements IController {
         return clientError(result.value);
       }
 
-      return ok(result);
+      const { id, name, email, createdAt } = result.value;
+
+      return ok({
+        id,
+        name: name.value,
+        email: email.value,
+        createdAt,
+      });
     } catch (error) {
       return fail(error as Error);
     }

@@ -1,6 +1,5 @@
 import { Either, right, left } from "@core/logic/Either";
 import { Jwt } from "@core/domain/Jwt";
-import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
 
 import { InvalidEmailOrPasswordError } from "./errors/InvalidEmailOrPasswordError";
 
@@ -11,15 +10,15 @@ interface IAuthenticationSignature {
   password: string;
 }
 
+interface IAuthenticateService {
+  emailValidatorService: EmailValidatorService;
+}
+
 export class AuthenticateService {
   private readonly emailValidatorService: EmailValidatorService;
 
-  constructor(repositoryFactory: IRepositoryFactory) {
-    this.emailValidatorService = new EmailValidatorService({
-      barbershopRepository: repositoryFactory.createBarbershopRepository(),
-      employeeRepository: repositoryFactory.createEmployeeRepository(),
-      clientRepository: repositoryFactory.createClientRepository(),
-    });
+  constructor({ emailValidatorService }: IAuthenticateService) {
+    this.emailValidatorService = emailValidatorService;
   }
 
   public async authenticate(

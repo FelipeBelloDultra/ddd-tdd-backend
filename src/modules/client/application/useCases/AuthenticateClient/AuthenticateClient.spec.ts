@@ -7,6 +7,7 @@ import { ClientFactory } from "@test/factory/entity/ClientFactory";
 import { Jwt } from "@core/domain/Jwt";
 
 import { AuthenticateService } from "@_shared/application/services/AuthenticateService";
+import { EmailValidatorService } from "@_shared/application/services/EmailValidatorService";
 
 import { AuthenticateClient } from "./AuthenticateClient";
 
@@ -16,16 +17,18 @@ const fakeRepositoryFactory = FakeRepositoryFactory.create();
 
 let authenticateClient: AuthenticateClient;
 let authenticateService: AuthenticateService;
+let emailValidatorService: EmailValidatorService;
 
 describe.concurrent("AuthenticateClient.ts", () => {
   beforeEach(async () => {
+    emailValidatorService = new EmailValidatorService({
+      barbershopRepository: fakeRepositoryFactory.barbershopRepository,
+      clientRepository: fakeRepositoryFactory.clientRepository,
+      employeeRepository: fakeRepositoryFactory.employeeRepository,
+    });
+
     authenticateService = new AuthenticateService({
-      createBarbershopRepository: () =>
-        fakeRepositoryFactory.barbershopRepository,
-      createEmployeeRepository: () => fakeRepositoryFactory.employeeRepository,
-      createAppointmentRepository: () =>
-        fakeRepositoryFactory.appointmentRepository,
-      createClientRepository: () => fakeRepositoryFactory.clientRepository,
+      emailValidatorService,
     });
 
     authenticateClient = new AuthenticateClient({ authenticateService });
