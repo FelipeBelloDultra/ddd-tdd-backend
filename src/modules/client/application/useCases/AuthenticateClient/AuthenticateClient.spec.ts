@@ -59,7 +59,7 @@ describe.concurrent("AuthenticateClient.ts", () => {
     expect(decoded.value.id).toBe(createdClient.id);
     expect(decoded.value.email).toBe(createdClient.email.value);
     expect(decoded.value.name).toBe(createdClient.name.value);
-    expect(decoded.value.roles).toEqual(["client"]);
+    expect(decoded.value.roles).toEqual("client");
   });
 
   it("should not authenticate client if email does not exist or password is incorrect", async () => {

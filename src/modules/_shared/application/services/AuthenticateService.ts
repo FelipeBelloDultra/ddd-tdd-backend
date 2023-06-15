@@ -23,7 +23,7 @@ export class AuthenticateService {
 
   public async authenticate(
     signature: IAuthenticationSignature,
-    roles: Array<string>
+    roles: string
   ): Promise<Either<InvalidEmailOrPasswordError, Jwt>> {
     const findedByEmail =
       await this.emailValidatorService.findByAuthenticatedEmail(

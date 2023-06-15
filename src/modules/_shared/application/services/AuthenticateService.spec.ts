@@ -41,7 +41,7 @@ describe("AuthenticateService.ts", () => {
         email: createdClient.email.value,
         password: "password",
       },
-      ["client:all"]
+      "client"
     );
 
     if (result.isLeft()) {
@@ -73,7 +73,7 @@ describe("AuthenticateService.ts", () => {
         email: createdBarbershop.email.value,
         password: "password",
       },
-      ["admin"]
+      "admin"
     );
 
     if (result.isLeft()) {
@@ -99,7 +99,7 @@ describe("AuthenticateService.ts", () => {
         email: BaseFactory.makeEmail(),
         password: BaseFactory.makePassword(),
       },
-      ["client:all"]
+      "client"
     );
 
     expect(result.isLeft()).toBeTruthy();
@@ -117,7 +117,7 @@ describe("AuthenticateService.ts", () => {
         email: createdBarbershop.email.value,
         password: "123456abcdef",
       },
-      ["admin"]
+      "admin"
     );
 
     expect(result.isLeft()).toBeTruthy();

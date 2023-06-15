@@ -10,7 +10,7 @@ interface ISignature {
   id: string;
   name?: string;
   email?: string;
-  roles: Array<string>;
+  roles: string;
 }
 
 interface IJwtProps {

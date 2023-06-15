@@ -37,7 +37,7 @@ export class ClientFactory {
       id: client.id,
       email: client.email.value,
       name: client.name.value,
-      roles: ["client"],
+      roles: "client",
     });
 
     return {

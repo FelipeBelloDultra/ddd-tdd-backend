@@ -10,7 +10,7 @@ const user = {
   id: BaseFactory.makeUuid(),
   email: BaseFactory.makeEmail(),
   name: BaseFactory.makeFullName(),
-  roles: ["admin"],
+  roles: "admin",
 };
 
 describe("TokenGenerator.ts", () => {

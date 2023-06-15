@@ -38,7 +38,7 @@ export class BarbershopFactory {
       id: barbershop.id,
       email: barbershop.email.value,
       name: barbershop.name.value,
-      roles: ["barbershop"],
+      roles: "barbershop",
     });
 
     return {

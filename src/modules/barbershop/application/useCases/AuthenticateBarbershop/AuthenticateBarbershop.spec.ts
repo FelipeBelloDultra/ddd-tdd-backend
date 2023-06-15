@@ -63,7 +63,7 @@ describe.concurrent("AuthenticateBarbershop.ts", () => {
     expect(decoded.value.id).toBe(createdBarbershop.id);
     expect(decoded.value.email).toBe(createdBarbershop.email.value);
     expect(decoded.value.name).toBe(createdBarbershop.name.value);
-    expect(decoded.value.roles).toEqual(["barbershop"]);
+    expect(decoded.value.roles).toEqual("barbershop");
   });
 
   it("should not authenticate barbershop if email does not exist or password is incorrect", async () => {

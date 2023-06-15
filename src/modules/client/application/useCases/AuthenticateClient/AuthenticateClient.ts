@@ -27,7 +27,7 @@ export class AuthenticateClient implements IUseCase<Input, Output> {
   public async execute(data: Input): Promise<Output> {
     const authenticated = await this.authenticateService.authenticate(
       { email: data.email, password: data.password },
-      ["client"]
+      "client"
     );
 
     if (authenticated.isLeft()) {
