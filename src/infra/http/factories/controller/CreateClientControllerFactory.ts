@@ -2,7 +2,7 @@ import { IController } from "@core/infra/IController";
 
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 
-import { EmailValidatorService } from "@modules/_shared/application/services/EmailValidatorService";
+import { EmailValidatorService } from "@_shared/application/services/EmailValidatorService";
 
 import { CreateClient } from "@modules/client/application/useCases/CreateClient/CreateClient";
 import { CreateClientController } from "@modules/client/application/useCases/CreateClient/CreateClientController";

@@ -2,14 +2,14 @@ import { describe, beforeEach, it, expect } from "vitest";
 
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 
-import { EmailValidatorService } from "@modules/_shared/application/services/EmailValidatorService";
+import { EmailValidatorService } from "@_shared/application/services/EmailValidatorService";
 
 import { BaseFactory } from "@test/factory/BaseFactory";
 import { BarbershopFactory } from "@test/factory/entity/BarbershopFactory";
 
-import { CreateBarbershop } from "./CreateBarbershop";
-
 import { BarbershopEmailAlreadyUsedError } from "./errors/BarbershopEmailAlreadyUsedError";
+
+import { CreateBarbershop } from "./CreateBarbershop";
 
 const fakeRepositoryFactory = FakeRepositoryFactory.create();
 

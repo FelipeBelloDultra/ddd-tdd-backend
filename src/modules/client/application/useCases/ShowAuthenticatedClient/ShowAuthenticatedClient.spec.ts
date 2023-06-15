@@ -6,9 +6,9 @@ import { ClientFactory } from "@test/factory/entity/ClientFactory";
 
 import { Client } from "@modules/client/domain/client/Client";
 
-import { ClientNotFoundError } from "./errors/ClientNotFoundError";
-
 import { ShowAuthenticatedClient } from "./ShowAuthenticatedClient";
+
+import { ClientNotFoundError } from "./errors/ClientNotFoundError";
 
 const fakeRepositoryFactory = FakeRepositoryFactory.create();
 

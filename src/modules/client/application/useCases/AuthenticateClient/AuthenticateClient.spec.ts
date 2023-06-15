@@ -6,11 +6,11 @@ import { ClientFactory } from "@test/factory/entity/ClientFactory";
 
 import { Jwt } from "@core/domain/Jwt";
 
-import { AuthenticateService } from "@modules/_shared/application/services/AuthenticateService";
-
-import { InvalidEmailOrPasswordError } from "./errors/InvalidEmailOrPasswordError";
+import { AuthenticateService } from "@_shared/application/services/AuthenticateService";
 
 import { AuthenticateClient } from "./AuthenticateClient";
+
+import { InvalidEmailOrPasswordError } from "./errors/InvalidEmailOrPasswordError";
 
 const fakeRepositoryFactory = FakeRepositoryFactory.create();
 

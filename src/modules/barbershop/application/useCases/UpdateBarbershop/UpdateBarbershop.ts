@@ -8,10 +8,10 @@ import { StreetNumber } from "@modules/barbershop/domain/barbershop/StreetNumber
 import { IUpdateBarbershopRepository } from "@modules/barbershop/application/repository/IUpdateBarbershopRepository";
 import { IFindByIdBarbershopRepository } from "@modules/barbershop/application/repository/IFindByIdBarbershopRepository";
 
-import { BarbershopNotFoundError } from "./errors/BarbershopNotFoundError";
-
 import { Phone } from "@_shared/domain/Phone";
 import { AvatarUrl } from "@_shared/domain/AvatarUrl";
+
+import { BarbershopNotFoundError } from "./errors/BarbershopNotFoundError";
 
 interface Input {
   id: string;

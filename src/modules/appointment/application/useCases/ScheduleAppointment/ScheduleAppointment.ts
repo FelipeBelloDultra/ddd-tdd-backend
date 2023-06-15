@@ -4,11 +4,11 @@ import { IUseCase } from "@core/application/useCases/IUseCase";
 import { Appointment } from "@modules/appointment/domain/appointment/Appointment";
 import { AppointmentDate } from "@modules/appointment/domain/appointment/AppointmentDate";
 import { IFindByDateAppointmentRepository } from "@modules/appointment/application/repository/IFindByDateAppointmentRepository";
+import { ICreateAppointmentRepository } from "@modules/appointment/application/repository/ICreateAppointmentRepository";
 import { IFindByIdEmployeeRepository } from "@modules/employee/application/repository/IFindByIdEmployeeRepository";
 
 import { EmployeeNotFoundError } from "./errors/EmployeeNotFoundError";
 import { AppointmentAlreadyBookedError } from "./errors/AppointmentAlreadyBookedError";
-import { ICreateAppointmentRepository } from "../repository/ICreateAppointmentRepository";
 
 interface Input {
   employeeId: string;

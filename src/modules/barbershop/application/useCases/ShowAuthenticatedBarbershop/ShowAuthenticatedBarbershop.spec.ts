@@ -6,9 +6,9 @@ import { BarbershopFactory } from "@test/factory/entity/BarbershopFactory";
 
 import { Barbershop } from "@modules/barbershop/domain/barbershop/Barbershop";
 
-import { BarbershopNotFoundError } from "./errors/BarbershopNotFoundError";
-
 import { ShowAuthenticatedBarbershop } from "./ShowAuthenticatedBarbershop";
+
+import { BarbershopNotFoundError } from "./errors/BarbershopNotFoundError";
 
 const fakeRepositoryFactory = FakeRepositoryFactory.create();
 

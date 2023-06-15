@@ -15,10 +15,10 @@ import { AppointmentFactory } from "@test/factory/entity/AppointmentFactory";
 import { EmployeeFactory } from "@test/factory/entity/EmployeeFactory";
 import { BaseFactory } from "@test/factory/BaseFactory";
 
-import { ScheduleAppointment } from "./ScheduleAppointment";
-
 import { EmployeeNotFoundError } from "./errors/EmployeeNotFoundError";
 import { AppointmentAlreadyBookedError } from "./errors/AppointmentAlreadyBookedError";
+
+import { ScheduleAppointment } from "./ScheduleAppointment";
 
 const fakeRepositoryFactory = FakeRepositoryFactory.create();
 

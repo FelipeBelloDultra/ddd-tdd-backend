@@ -2,6 +2,7 @@ import { Either, left, right } from "@core/logic/Either";
 import { IUseCase } from "@core/application/useCases/IUseCase";
 
 import { Employee } from "@modules/employee/domain/employee/Employee";
+import { ICreateEmployeeRepository } from "@modules/employee/application/repository/ICreateEmployeeRepository";
 import { IFindByIdBarbershopRepository } from "@modules/barbershop/application/repository/IFindByIdBarbershopRepository";
 
 import { EmailValidatorService } from "@_shared/application/services/EmailValidatorService";
@@ -12,7 +13,6 @@ import { Email } from "@_shared/domain/Email";
 
 import { EmployeeEmailAlreadyUsedError } from "./errors/EmployeeEmailAlreadyUsedError";
 import { EmployeeBarbershopNotFoundError } from "./errors/EmployeeBarbershopNotFoundError";
-import { ICreateEmployeeRepository } from "../repository/ICreateEmployeeRepository";
 
 interface Input {
   name: string;

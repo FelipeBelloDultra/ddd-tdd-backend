@@ -6,11 +6,12 @@ import { BaseFactory } from "@test/factory/BaseFactory";
 import { BarbershopFactory } from "@test/factory/entity/BarbershopFactory";
 import { EmployeeFactory } from "@test/factory/entity/EmployeeFactory";
 
-import { EmployeeEmailAlreadyUsedError } from "./errors/EmployeeEmailAlreadyUsedError";
-import { EmployeeBarbershopNotFoundError } from "./errors/EmployeeBarbershopNotFoundError";
+import { EmailValidatorService } from "@_shared/application/services/EmailValidatorService";
 
 import { CreateEmployee } from "./CreateEmployee";
-import { EmailValidatorService } from "@modules/_shared/application/services/EmailValidatorService";
+
+import { EmployeeEmailAlreadyUsedError } from "./errors/EmployeeEmailAlreadyUsedError";
+import { EmployeeBarbershopNotFoundError } from "./errors/EmployeeBarbershopNotFoundError";
 
 const fakeRepositoryFactory = FakeRepositoryFactory.create();
 

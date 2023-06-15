@@ -2,7 +2,7 @@ import { Either, right } from "@core/logic/Either";
 import { IUseCase } from "@core/application/useCases/IUseCase";
 
 import { Employee } from "@modules/employee/domain/employee/Employee";
-import { IFindByBarbershopIdEmployeeRepository } from "../repository/IFindByBarbershopIdEmployeeRepository";
+import { IFindByBarbershopIdEmployeeRepository } from "@modules/employee/application/repository/IFindByBarbershopIdEmployeeRepository";
 
 interface Input {
   barbershopId: string;

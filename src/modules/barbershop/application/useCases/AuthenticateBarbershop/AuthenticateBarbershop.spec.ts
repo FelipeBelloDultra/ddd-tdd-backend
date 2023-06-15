@@ -2,15 +2,15 @@ import { expect, describe, it, beforeEach } from "vitest";
 
 import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
 
-import { AuthenticateService } from "@modules/_shared/application/services/AuthenticateService";
+import { AuthenticateService } from "@_shared/application/services/AuthenticateService";
 
 import { BarbershopFactory } from "@test/factory/entity/BarbershopFactory";
 
 import { Jwt } from "@core/domain/Jwt";
 
-import { InvalidEmailOrPasswordError } from "./errors/InvalidEmailOrPasswordError";
-
 import { AuthenticateBarbershop } from "./AuthenticateBarbershop";
+
+import { InvalidEmailOrPasswordError } from "./errors/InvalidEmailOrPasswordError";
 
 const fakeRepositoryFactory = FakeRepositoryFactory.create();
 
