@@ -17,9 +17,10 @@ describe("E2E - /clients/session/me - [POST]", () => {
   });
 
   it("should show an authenticated client", async () => {
-    const result = await BaseRequest.post("clients/session/me").send({
-      clientId: AUTHENTICATED_CLIENT.jwt.authenticatedId,
-    });
+    const result = await BaseRequest.post("clients/session/me").set(
+      "x-access-token",
+      AUTHENTICATED_CLIENT.jwt.token
+    );
 
     expect(result.status).toBe(200);
     expect(result.body).toHaveProperty("id", AUTHENTICATED_CLIENT.client.id);
@@ -31,11 +32,12 @@ describe("E2E - /clients/session/me - [POST]", () => {
   });
 
   it("should not show an authenticated client if id is invalid", async () => {
-    const result = await BaseRequest.post("clients/session/me").send({
-      clientId: "invalid-id",
-    });
+    const result = await BaseRequest.post("clients/session/me").set(
+      "x-access-token",
+      "invalid-id"
+    );
 
-    expect(result.status).toBe(400);
-    expect(result.body).toHaveProperty("error", "Client does not exist");
+    expect(result.status).toBe(403);
+    expect(result.body).toHaveProperty("error", "Access denied");
   });
 });

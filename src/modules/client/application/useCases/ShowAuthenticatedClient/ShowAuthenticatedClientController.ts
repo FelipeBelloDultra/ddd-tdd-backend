@@ -4,7 +4,7 @@ import { clientError, fail, ok } from "@core/infra/HttpResponse";
 import { ShowAuthenticatedClient } from "./ShowAuthenticatedClient";
 
 interface IShowAuthenticatedClientControllerRequest {
-  clientId: string;
+  authenticatedId: string;
 }
 
 export class ShowAuthenticatedClientController implements IController {
@@ -15,7 +15,7 @@ export class ShowAuthenticatedClientController implements IController {
   public async handle(request: IShowAuthenticatedClientControllerRequest) {
     try {
       const result = await this.showAuthenticatedClient.execute({
-        clientId: request.clientId,
+        clientId: request.authenticatedId,
       });
 
       if (result.isLeft()) {
