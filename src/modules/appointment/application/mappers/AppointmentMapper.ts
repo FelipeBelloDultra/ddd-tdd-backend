@@ -1,14 +1,9 @@
+import { Appointment as IPersistenceAppointment } from "@prisma/client";
+
 import { Appointment } from "@modules/appointment/domain/appointment/Appointment";
 import { AppointmentDate } from "@modules/appointment/domain/appointment/AppointmentDate";
 
-export interface IPersistenceAppointment {
-  id_appointment: string;
-  employee_id: string;
-  client_id: string;
-  date: Date;
-  created_at?: Date;
-  updated_at?: Date;
-}
+export { IPersistenceAppointment };
 
 export class AppointmentMapper {
   static toDomain(raw: IPersistenceAppointment): Appointment {

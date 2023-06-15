@@ -1,3 +1,5 @@
+import { Employee as IPersistenceEmployee } from "@prisma/client";
+
 import { Employee } from "@modules/employee/domain/employee/Employee";
 
 import { AvatarUrl } from "@_shared/domain/AvatarUrl";
@@ -5,16 +7,7 @@ import { Email } from "@_shared/domain/Email";
 import { Name } from "@_shared/domain/Name";
 import { Phone } from "@_shared/domain/Phone";
 
-export interface IPersistenceEmployee {
-  id_employee: string;
-  name: string;
-  email: string;
-  phone: string;
-  avatar_url: string;
-  barbershop_id: string;
-  created_at?: Date;
-  updated_at?: Date;
-}
+export { IPersistenceEmployee };
 
 export class EmployeeMapper {
   static toDomain(raw: IPersistenceEmployee): Employee {

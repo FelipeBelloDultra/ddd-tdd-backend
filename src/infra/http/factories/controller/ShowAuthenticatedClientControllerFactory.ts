@@ -1,14 +1,14 @@
 import { IController } from "@core/infra/IController";
 
-import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
+import { PrismaRepositoryFactory } from "@infra/factory/prisma/PrismaRepositoryFactory";
 
 import { ShowAuthenticatedClient } from "@modules/client/application/useCases/ShowAuthenticatedClient/ShowAuthenticatedClient";
 import { ShowAuthenticatedClientController } from "@modules/client/application/useCases/ShowAuthenticatedClient/ShowAuthenticatedClientController";
 
 export function makeShowAuthenticatedClientControllerFactory(): IController {
-  const fakeRepositoryFactory = FakeRepositoryFactory.create();
+  const prismaRepositoryFactory = PrismaRepositoryFactory.create();
   const showAuthenticatedClient = new ShowAuthenticatedClient({
-    findByIdClientRepository: fakeRepositoryFactory.clientRepository,
+    findByIdClientRepository: prismaRepositoryFactory.clientRepository,
   });
   const showAuthenticatedClientController =
     new ShowAuthenticatedClientController(showAuthenticatedClient);

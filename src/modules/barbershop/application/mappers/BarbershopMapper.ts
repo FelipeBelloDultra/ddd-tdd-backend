@@ -1,3 +1,5 @@
+import { Barbershop as IPersistenceBarbershop } from "@prisma/client";
+
 import { Barbershop } from "@modules/barbershop/domain/barbershop/Barbershop";
 import { Neighborhood } from "@modules/barbershop/domain/barbershop/Neighborhood";
 import { Street } from "@modules/barbershop/domain/barbershop/Street";
@@ -9,19 +11,7 @@ import { Email } from "@_shared/domain/Email";
 import { Password } from "@_shared/domain/Password";
 import { AvatarUrl } from "@_shared/domain/AvatarUrl";
 
-export interface IPersistenceBarbershop {
-  id_barbershop: string;
-  name: string;
-  email: string;
-  password: string;
-  street?: string;
-  neighborhood?: string;
-  number?: string;
-  phone?: string;
-  avatar_url?: string;
-  created_at?: Date;
-  updated_at?: Date;
-}
+export { IPersistenceBarbershop };
 
 export class BarbershopMapper {
   static toDomain(raw: IPersistenceBarbershop): Barbershop {
@@ -100,11 +90,11 @@ export class BarbershopMapper {
       name: barbershop.name.value,
       email: barbershop.email.value,
       password: hashedPassword,
-      avatar_url: barbershop.avatarUrl?.value,
-      neighborhood: barbershop.neighborhood?.value,
-      number: barbershop.number?.value,
-      phone: barbershop.phone?.value,
-      street: barbershop.street?.value,
+      avatar_url: barbershop.avatarUrl?.value || null,
+      neighborhood: barbershop.neighborhood?.value || null,
+      number: barbershop.number?.value || null,
+      phone: barbershop.phone?.value || null,
+      street: barbershop.street?.value || null,
       created_at: barbershop.createdAt,
       updated_at: barbershop.updatedAt,
     };

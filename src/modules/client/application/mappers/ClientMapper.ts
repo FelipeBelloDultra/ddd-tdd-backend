@@ -1,18 +1,12 @@
+import { Client as IPersistenceClient } from "@prisma/client";
+
 import { Client } from "@modules/client/domain/client/Client";
 
 import { Name } from "@_shared/domain/Name";
 import { Email } from "@_shared/domain/Email";
 import { Password } from "@_shared/domain/Password";
 
-export interface IPersistenceClient {
-  id_client: string;
-  name: string;
-  email: string;
-  password: string;
-  created_at?: Date;
-  updated_at?: Date;
-}
-
+export { IPersistenceClient };
 export class ClientMapper {
   static toDomain(raw: IPersistenceClient): Client {
     const name = Name.create(raw.name);

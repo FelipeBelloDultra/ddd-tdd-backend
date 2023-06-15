@@ -16,8 +16,8 @@ interface IEmployeeProps {
   phone: Phone;
   avatarUrl: AvatarUrl;
   barbershopId: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export class Employee extends Entity<IEmployeeProps> {
@@ -41,11 +41,11 @@ export class Employee extends Entity<IEmployeeProps> {
     return this.props.barbershopId;
   }
 
-  get createdAt(): Date | undefined {
+  get createdAt(): Date {
     return this.props.createdAt;
   }
 
-  get updatedAt(): Date | undefined {
+  get updatedAt(): Date {
     return this.props.updatedAt;
   }
 

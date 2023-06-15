@@ -25,8 +25,8 @@ interface IBarbershopProps {
   number?: StreetNumber;
   phone?: Phone;
   avatarUrl?: AvatarUrl;
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 interface IBarbershopUpdateProps {
@@ -70,11 +70,11 @@ export class Barbershop extends Entity<IBarbershopProps> {
     return this.props.avatarUrl;
   }
 
-  get createdAt(): Date | undefined {
+  get createdAt(): Date {
     return this.props.createdAt;
   }
 
-  get updatedAt(): Date | undefined {
+  get updatedAt(): Date {
     return this.props.updatedAt;
   }
 

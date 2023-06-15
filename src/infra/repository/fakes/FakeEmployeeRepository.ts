@@ -48,6 +48,8 @@ export class FakeEmployeeRepository implements IEmployeeRepository {
           phone: employee.phone,
           avatar_url: employee.avatar_url,
           barbershop_id: employee.barbershop_id,
+          created_at: employee.created_at,
+          updated_at: employee.updated_at,
         })
       );
 
@@ -67,6 +69,8 @@ export class FakeEmployeeRepository implements IEmployeeRepository {
         barbershop_id: finded.barbershop_id,
         id_employee: finded.id_employee,
         phone: finded.phone,
+        created_at: finded.created_at,
+        updated_at: finded.updated_at,
       })
     );
   }

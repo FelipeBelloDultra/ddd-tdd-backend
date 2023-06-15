@@ -1,6 +1,6 @@
 import { IController } from "@core/infra/IController";
 
-import { FakeRepositoryFactory } from "@infra/factory/fakes/FakeRepositoryFactory";
+import { PrismaRepositoryFactory } from "@infra/factory/prisma/PrismaRepositoryFactory";
 
 import { EmailValidatorService } from "@_shared/application/services/EmailValidatorService";
 
@@ -8,12 +8,12 @@ import { CreateClient } from "@modules/client/application/useCases/CreateClient/
 import { CreateClientController } from "@modules/client/application/useCases/CreateClient/CreateClientController";
 
 export function makeCreateContactControllerFactory(): IController {
-  const fakeRepositoryFactory = FakeRepositoryFactory.create();
-  const clientRepository = fakeRepositoryFactory.clientRepository;
+  const prismaRepositoryFactory = PrismaRepositoryFactory.create();
+  const clientRepository = prismaRepositoryFactory.clientRepository;
   const emailValidatorService = new EmailValidatorService({
-    barbershopRepository: fakeRepositoryFactory.barbershopRepository,
+    barbershopRepository: prismaRepositoryFactory.barbershopRepository,
     clientRepository,
-    employeeRepository: fakeRepositoryFactory.employeeRepository,
+    employeeRepository: prismaRepositoryFactory.employeeRepository,
   });
   const createClient = new CreateClient({
     createClientRepository: clientRepository,
