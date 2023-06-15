@@ -1,4 +1,4 @@
-import { prisma } from "@infra/prisma/client";
+import { prisma } from "@infra/prisma";
 
 import { Barbershop } from "@modules/barbershop/domain/barbershop/Barbershop";
 import { BarbershopMapper } from "@modules/barbershop/application/mappers/BarbershopMapper";

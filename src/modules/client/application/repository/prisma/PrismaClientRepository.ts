@@ -1,4 +1,4 @@
-import { prisma } from "@infra/prisma/client";
+import { prisma } from "@infra/prisma";
 
 import { Client } from "@modules/client/domain/client/Client";
 import { ClientMapper } from "@modules/client/application/mappers/ClientMapper";

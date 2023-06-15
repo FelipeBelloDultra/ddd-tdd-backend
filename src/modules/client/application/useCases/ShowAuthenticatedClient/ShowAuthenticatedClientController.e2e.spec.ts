@@ -5,7 +5,7 @@ import { ClientMapper } from "@modules/client/application/mappers/ClientMapper";
 import { ClientFactory } from "@test/factory/entity/ClientFactory";
 import { BaseRequest } from "@test/factory/BaseRequest";
 
-import { prisma } from "@infra/prisma/client";
+import { prisma } from "@infra/prisma";
 
 const AUTHENTICATED_CLIENT = ClientFactory.createAndAuthenticate({});
 

@@ -1,4 +1,4 @@
-import { prisma } from "@infra/prisma/client";
+import { prisma } from "@infra/prisma";
 
 import { Appointment } from "@modules/appointment/domain/appointment/Appointment";
 import {

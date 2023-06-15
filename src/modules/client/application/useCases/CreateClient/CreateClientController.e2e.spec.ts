@@ -6,7 +6,7 @@ import { ClientFactory } from "@test/factory/entity/ClientFactory";
 import { BaseRequest } from "@test/factory/BaseRequest";
 import { BaseFactory } from "@test/factory/BaseFactory";
 
-import { prisma } from "@infra/prisma/client";
+import { prisma } from "@infra/prisma";
 
 const CREATED_CLIENT = ClientFactory.create({});
 

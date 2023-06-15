@@ -1,4 +1,4 @@
-import { prisma } from "@infra/prisma/client";
+import { prisma } from "@infra/prisma";
 
 import { Employee } from "@modules/employee/domain/employee/Employee";
 import { EmployeeMapper } from "@modules/employee/application/mappers/EmployeeMapper";

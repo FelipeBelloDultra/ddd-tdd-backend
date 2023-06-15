@@ -1,4 +1,4 @@
-import { prisma } from "@infra/prisma/client";
+import { prisma } from "@infra/prisma";
 
 export async function teardown() {
   await prisma.appointment.deleteMany();

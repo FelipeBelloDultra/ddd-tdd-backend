@@ -1,14 +1,16 @@
 import { IRepositoryFactory } from "@core/application/factory/IRepositoryFactory";
 
 import { IBarbershopRepository } from "@modules/barbershop/application/repository/IBarbershopRepository";
-import { IEmployeeRepository } from "@modules/employee/application/repository/IEmployeeRepository";
-import { IAppointmentRepository } from "@modules/appointment/application/repository/IAppointmentRepository";
-import { IClientRepository } from "@modules/client/application/repository/IClientRepository";
+import { FakeBarbershopRepository } from "@modules/barbershop/application/repository/fakes/FakeBarbershopRepository";
 
-import { FakeBarbershopRepository } from "@infra/repository/fakes/FakeBarbershopRepository";
-import { FakeEmployeeRepository } from "@infra/repository/fakes/FakeEmployeeRepository";
-import { FakeAppointmentRepository } from "@infra/repository/fakes/FakeAppointmentRepository";
-import { FakeClientRepository } from "@infra/repository/fakes/FakeClientRepository";
+import { IEmployeeRepository } from "@modules/employee/application/repository/IEmployeeRepository";
+import { FakeEmployeeRepository } from "@modules/employee/application/repository/fakes/FakeEmployeeRepository";
+
+import { IAppointmentRepository } from "@modules/appointment/application/repository/IAppointmentRepository";
+import { FakeAppointmentRepository } from "@modules/appointment/application/repository/fakes/FakeAppointmentRepository";
+
+import { IClientRepository } from "@modules/client/application/repository/IClientRepository";
+import { FakeClientRepository } from "@modules/client/application/repository/fakes/FakeClientRepository";
 
 export class FakeRepositoryFactory implements IRepositoryFactory {
   static create() {
