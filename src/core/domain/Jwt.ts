@@ -1,5 +1,7 @@
 import { sign, verify } from "jsonwebtoken";
 
+import authConfig from "@config/auth";
+
 import { Either, right, left } from "@core/logic/Either";
 
 import { InvalidJwtTokenError } from "./errors/InvalidJwtTokenError";
@@ -20,9 +22,6 @@ interface IJwtPayload extends ISignature {
   exp: number;
 }
 
-const EXPIRES_IN = "1d";
-const KEY = "key";
-
 export class Jwt {
   readonly authenticatedId: string;
   readonly token: string;
@@ -40,9 +39,9 @@ export class Jwt {
         name: signature.name,
         roles: signature.roles,
       },
-      KEY,
+      authConfig.secret,
       {
-        expiresIn: EXPIRES_IN,
+        expiresIn: authConfig.expiresIn,
       }
     );
 
@@ -54,7 +53,7 @@ export class Jwt {
 
   static decodeToken(token: string): Either<InvalidJwtTokenError, IJwtPayload> {
     try {
-      const decoded = verify(token, KEY) as IJwtPayload;
+      const decoded = verify(token, authConfig.secret) as IJwtPayload;
 
       return right(decoded);
     } catch (error) {

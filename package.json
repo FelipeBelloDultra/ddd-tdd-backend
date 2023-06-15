@@ -7,9 +7,12 @@
     "dev": "tsx watch src/infra/http/server.ts",
     "build": "tsc -p tsconfig.build.json",
     "test:unit": "vitest -c vitest.unit.config.ts",
-    "test:e2e": "vitest -c vitest.e2e.config.ts",
-    "test:all": "vitest -c vitest.all.config.ts",
-    "test:cov": "vitest --coverage -c vitest.all.config.ts"
+    "test:e2e": "dotenv -e .env.test -- vitest -c vitest.e2e.config.ts",
+    "test:all": "dotenv -e .env.test -- vitest -c vitest.all.config.ts",
+    "test:cov": "dotenv -e .env.test -- vitest --coverage -c vitest.all.config.ts",
+    "db:preview": "prisma studio",
+    "db:migrate:dev": "prisma migrate dev",
+    "db:migrate:dev-test": "dotenv -e .env.test -- prisma migrate dev"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +28,7 @@
     "@typescript-eslint/eslint-plugin": "^5.59.5",
     "@typescript-eslint/parser": "^5.59.5",
     "@vitest/coverage-c8": "^0.31.1",
+    "dotenv-cli": "^7.2.1",
     "eslint": "^8.40.0",
     "prisma": "^4.15.0",
     "supertest": "^6.3.3",
@@ -36,6 +40,7 @@
     "@prisma/client": "^4.15.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
+    "dotenv": "^16.1.4",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0"
   }

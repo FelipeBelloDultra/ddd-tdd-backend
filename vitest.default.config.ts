@@ -21,6 +21,10 @@ export default {
         replacement: resolve(__dirname, "src", "infra"),
       },
       {
+        find: "@config",
+        replacement: resolve(__dirname, "src", "config"),
+      },
+      {
         find: "@_shared",
         replacement: resolve(__dirname, "src", "modules", "_shared"),
       },
