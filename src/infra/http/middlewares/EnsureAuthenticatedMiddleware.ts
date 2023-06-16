@@ -8,7 +8,10 @@ interface IEnsureAuthenticatedMiddlewareRequest {
   accessToken: string;
 }
 
-export class EnsureAuthenticatedMiddleware implements IMiddleware {
+type IMIddlewareHandleInput =
+  IMiddleware<IEnsureAuthenticatedMiddlewareRequest>;
+
+export class EnsureAuthenticatedMiddleware implements IMIddlewareHandleInput {
   constructor(private readonly middlewarePermissions: Array<string>) {}
 
   public async handle(

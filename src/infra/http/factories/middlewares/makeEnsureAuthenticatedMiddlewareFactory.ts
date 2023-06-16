@@ -4,7 +4,7 @@ import { EnsureAuthenticatedMiddleware } from "@infra/http/middlewares/EnsureAut
 
 export function makeEnsureAuthenticatedMiddlewareFactory(
   roles: Array<string>
-): IMiddleware {
+): IMiddleware<{ accessToken: string }> {
   const ensureAuthenticatedMiddleware = new EnsureAuthenticatedMiddleware(
     roles
   );

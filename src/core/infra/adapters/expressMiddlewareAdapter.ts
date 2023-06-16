@@ -6,18 +6,19 @@ import {
 
 import { IMiddleware } from "@core/infra/IMiddleware";
 
-export function adaptMiddleware(middleware: IMiddleware) {
+export function adaptMiddleware<T>(middleware: IMiddleware<T>) {
   return async (
     request: IRequest,
     response: IResponse,
     next: INextFunction
   ) => {
     const requestData = {
-      accessToken: request.headers?.["x-access-token"],
       ...(request.headers || {}),
+      ...request.body,
+      accessToken: request.headers?.["x-access-token"],
     };
 
-    const httpResponse = await middleware.handle(requestData, request.body);
+    const httpResponse = await middleware.handle(requestData);
 
     if (httpResponse === false) {
       return response.status(200).send();
