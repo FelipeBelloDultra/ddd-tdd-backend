@@ -24,8 +24,6 @@ export class EmployeeFactory {
       phone: Phone.create(data.phone || BaseFactory.makePhone()).value as Phone,
       avatarUrl: AvatarUrl.create(data.avatarUrl || BaseFactory.makeAvatar())
         .value as AvatarUrl,
-      createdAt: new Date(),
-      updatedAt: new Date(),
     });
 
     return employee.value as Employee;

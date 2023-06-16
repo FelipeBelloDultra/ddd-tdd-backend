@@ -1,4 +1,4 @@
-import { Employee as IPersistenceEmployee } from "@prisma/client";
+import { Employee as IPrismaEmployee } from "@prisma/client";
 
 import { Employee } from "@modules/employee/domain/employee/Employee";
 
@@ -7,7 +7,10 @@ import { Email } from "@_shared/domain/Email";
 import { Name } from "@_shared/domain/Name";
 import { Phone } from "@_shared/domain/Phone";
 
-export { IPersistenceEmployee };
+export type IPersistenceEmployee = Omit<
+  IPrismaEmployee,
+  "created_at" | "updated_at"
+>;
 
 export class EmployeeMapper {
   static toDomain(raw: IPersistenceEmployee): Employee {
@@ -38,8 +41,6 @@ export class EmployeeMapper {
         phone: phone.value,
         avatarUrl: avatarUrl.value,
         barbershopId: raw.barbershop_id,
-        createdAt: raw.created_at,
-        updatedAt: raw.updated_at,
       },
       raw.id_employee
     );
@@ -55,8 +56,6 @@ export class EmployeeMapper {
       phone: employee.phone.value,
       avatar_url: employee.avatarUrl.value,
       barbershop_id: employee.barbershopId,
-      created_at: employee.createdAt,
-      updated_at: employee.updatedAt,
     };
   }
 }
