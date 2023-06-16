@@ -1,9 +1,12 @@
-import { Appointment as IPersistenceAppointment } from "@prisma/client";
+import { Appointment as PrismaAppointment } from "@prisma/client";
 
 import { Appointment } from "@modules/appointment/domain/appointment/Appointment";
 import { AppointmentDate } from "@modules/appointment/domain/appointment/AppointmentDate";
 
-export { IPersistenceAppointment };
+export type IPersistenceAppointment = Omit<
+  PrismaAppointment,
+  "created_at" | "updated_at"
+>;
 
 export class AppointmentMapper {
   static toDomain(raw: IPersistenceAppointment): Appointment {
@@ -17,8 +20,6 @@ export class AppointmentMapper {
         employeeId: raw.employee_id,
         clientId: raw.client_id,
         date: date.value,
-        createdAt: raw.created_at,
-        updatedAt: raw.updated_at,
       },
       raw.id_appointment
     );
@@ -32,8 +33,6 @@ export class AppointmentMapper {
       employee_id: appointment.employeeId,
       client_id: appointment.clientId,
       date: appointment.date.value,
-      created_at: appointment.createdAt,
-      updated_at: appointment.updatedAt,
     };
   }
 }

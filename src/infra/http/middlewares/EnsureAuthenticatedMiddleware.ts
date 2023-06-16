@@ -30,11 +30,12 @@ export class EnsureAuthenticatedMiddleware implements IMiddleware {
           name: authenticatedName,
         } = decodedAccessToken.value;
 
-        const somePermission = this.middlewarePermissions.some((permission) =>
-          authenticatedRole.includes(permission)
+        const hasSomePermissionToAccess = this.middlewarePermissions.some(
+          (permission) => authenticatedRole.includes(permission)
         );
 
-        if (!somePermission) return forbidden(new AccessDeniedError());
+        if (!hasSomePermissionToAccess)
+          return forbidden(new AccessDeniedError());
 
         return ok({
           authenticatedId,

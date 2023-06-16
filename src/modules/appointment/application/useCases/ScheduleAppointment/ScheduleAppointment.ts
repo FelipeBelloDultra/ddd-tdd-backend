@@ -69,8 +69,6 @@ export class ScheduleAppointment implements IUseCase<Input, Output> {
       employeeId: data.employeeId,
       clientId: data.clientId,
       date: date.value,
-      createdAt: new Date(),
-      updatedAt: new Date(),
     });
 
     if (appointment.isLeft()) {
