@@ -1,6 +1,7 @@
 import { Client } from "@modules/client/domain/client/Client";
 
 import { Jwt } from "@core/domain/Jwt";
+import { IPermissions } from "@core/domain/AvailablePermissions";
 
 import { Email } from "@_shared/domain/Email";
 import { Password } from "@_shared/domain/Password";
@@ -37,7 +38,7 @@ export class ClientFactory {
       id: client.id,
       email: client.email.value,
       name: client.name.value,
-      roles: "client",
+      permissions: [IPermissions.CLIENT],
     });
 
     return {

@@ -10,14 +10,14 @@ const user = {
   id: BaseFactory.makeUuid(),
   email: BaseFactory.makeEmail(),
   name: BaseFactory.makeFullName(),
-  roles: "admin",
+  permissions: ["admin"],
 };
 
 describe("TokenGenerator.ts", () => {
   it("should generate token", () => {
     const tokenGenerator = Jwt.sign({
       id: user.id,
-      roles: user.roles,
+      permissions: user.permissions,
     });
 
     expect(tokenGenerator.token).toBeTypeOf("string");
@@ -26,7 +26,7 @@ describe("TokenGenerator.ts", () => {
   it("should decode generated token", () => {
     const { token } = Jwt.sign({
       id: user.id,
-      roles: user.roles,
+      permissions: user.permissions,
     });
 
     const result = Jwt.decodeToken(token);

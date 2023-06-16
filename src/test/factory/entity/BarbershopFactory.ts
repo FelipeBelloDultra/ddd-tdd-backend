@@ -1,4 +1,5 @@
 import { Jwt } from "@core/domain/Jwt";
+import { IPermissions } from "@core/domain/AvailablePermissions";
 
 import { Barbershop } from "@modules/barbershop/domain/barbershop/Barbershop";
 
@@ -38,7 +39,7 @@ export class BarbershopFactory {
       id: barbershop.id,
       email: barbershop.email.value,
       name: barbershop.name.value,
-      roles: "barbershop",
+      permissions: [IPermissions.BARBERSHOP],
     });
 
     return {

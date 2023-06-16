@@ -10,7 +10,7 @@ interface ISignature {
   id: string;
   name?: string;
   email?: string;
-  roles: string;
+  permissions: Array<string>;
 }
 
 interface IJwtProps {
@@ -37,7 +37,7 @@ export class Jwt {
         id: signature.id,
         email: signature.email,
         name: signature.name,
-        roles: signature.roles,
+        permissions: signature.permissions,
       },
       authConfig.secret,
       {

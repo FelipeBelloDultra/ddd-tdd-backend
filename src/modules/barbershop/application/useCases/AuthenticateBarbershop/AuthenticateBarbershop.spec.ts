@@ -8,6 +8,7 @@ import { EmailValidatorService } from "@_shared/application/services/EmailValida
 import { BarbershopFactory } from "@test/factory/entity/BarbershopFactory";
 
 import { Jwt } from "@core/domain/Jwt";
+import { IPermissions } from "@core/domain/AvailablePermissions";
 
 import { AuthenticateBarbershop } from "./AuthenticateBarbershop";
 
@@ -63,7 +64,7 @@ describe.concurrent("AuthenticateBarbershop.ts", () => {
     expect(decoded.value.id).toBe(createdBarbershop.id);
     expect(decoded.value.email).toBe(createdBarbershop.email.value);
     expect(decoded.value.name).toBe(createdBarbershop.name.value);
-    expect(decoded.value.roles).toEqual("barbershop");
+    expect(decoded.value.permissions).toEqual([IPermissions.BARBERSHOP]);
   });
 
   it("should not authenticate barbershop if email does not exist or password is incorrect", async () => {

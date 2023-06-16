@@ -5,6 +5,7 @@ import { FakeRepositoryFactory } from "@infra/database/factories/fakes/FakeRepos
 import { ClientFactory } from "@test/factory/entity/ClientFactory";
 
 import { Jwt } from "@core/domain/Jwt";
+import { IPermissions } from "@core/domain/AvailablePermissions";
 
 import { AuthenticateService } from "@_shared/application/services/AuthenticateService";
 import { EmailValidatorService } from "@_shared/application/services/EmailValidatorService";
@@ -59,7 +60,7 @@ describe.concurrent("AuthenticateClient.ts", () => {
     expect(decoded.value.id).toBe(createdClient.id);
     expect(decoded.value.email).toBe(createdClient.email.value);
     expect(decoded.value.name).toBe(createdClient.name.value);
-    expect(decoded.value.roles).toEqual("client");
+    expect(decoded.value.permissions).toEqual([IPermissions.CLIENT]);
   });
 
   it("should not authenticate client if email does not exist or password is incorrect", async () => {

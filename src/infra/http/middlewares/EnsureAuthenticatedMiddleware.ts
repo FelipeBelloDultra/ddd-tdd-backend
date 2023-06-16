@@ -9,7 +9,7 @@ interface IEnsureAuthenticatedMiddlewareRequest {
 }
 
 export class EnsureAuthenticatedMiddleware implements IMiddleware {
-  constructor(private readonly roles: Array<string>) {}
+  constructor(private readonly middlewarePermissions: Array<string>) {}
 
   public async handle(
     request: IEnsureAuthenticatedMiddlewareRequest
@@ -24,14 +24,17 @@ export class EnsureAuthenticatedMiddleware implements IMiddleware {
           return forbidden(new AccessDeniedError());
 
         const {
-          roles: authenticatedRole,
+          permissions: authenticatedRole,
           id: authenticatedId,
           email: authenticatedEmail,
           name: authenticatedName,
         } = decodedAccessToken.value;
 
-        if (!this.roles.includes(authenticatedRole))
-          return forbidden(new AccessDeniedError());
+        const somePermission = this.middlewarePermissions.some((permission) =>
+          authenticatedRole.includes(permission)
+        );
+
+        if (!somePermission) return forbidden(new AccessDeniedError());
 
         return ok({
           authenticatedId,

@@ -2,6 +2,7 @@ import { Router } from "express";
 
 import { adaptRoute } from "@core/infra/adapters/expressRouteAdapter";
 import { adaptMiddleware } from "@core/infra/adapters/expressMiddlewareAdapter";
+import { IPermissions } from "@core/domain/AvailablePermissions";
 
 import { makeCreateContactControllerFactory } from "../factories/controller/CreateClientControllerFactory";
 import { makeAuthenticateClientControllerFactory } from "../factories/controller/AuthenticateClientControllerFactory";
@@ -18,7 +19,9 @@ clientsRouter.post(
 );
 clientsRouter.post(
   "/session/me",
-  adaptMiddleware(makeEnsureAuthenticatedMiddlewareFactory(["client"])),
+  adaptMiddleware(
+    makeEnsureAuthenticatedMiddlewareFactory([IPermissions.CLIENT])
+  ),
   adaptRoute(makeShowAuthenticatedClientControllerFactory())
 );
 

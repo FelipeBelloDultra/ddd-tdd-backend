@@ -1,6 +1,7 @@
 import { Either, left, right } from "@core/logic/Either";
 import { Jwt } from "@core/domain/Jwt";
 import { IUseCase } from "@core/application/useCases/IUseCase";
+import { IPermissions } from "@core/domain/AvailablePermissions";
 
 import { AuthenticateService } from "@_shared/application/services/AuthenticateService";
 
@@ -25,10 +26,10 @@ export class AuthenticateClient implements IUseCase<Input, Output> {
   }
 
   public async execute(data: Input): Promise<Output> {
-    const authenticated = await this.authenticateService.authenticate(
-      { email: data.email, password: data.password },
-      "client"
-    );
+    const authenticated = await this.authenticateService.authenticate({
+      signature: { email: data.email, password: data.password },
+      permissions: [IPermissions.CLIENT],
+    });
 
     if (authenticated.isLeft()) {
       return left(authenticated.value);

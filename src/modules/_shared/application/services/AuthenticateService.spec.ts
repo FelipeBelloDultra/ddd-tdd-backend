@@ -7,6 +7,7 @@ import { BarbershopFactory } from "@test/factory/entity/BarbershopFactory";
 import { BaseFactory } from "@test/factory/BaseFactory";
 
 import { Jwt } from "@core/domain/Jwt";
+import { IPermissions } from "@core/domain/AvailablePermissions";
 
 import { InvalidEmailOrPasswordError } from "./errors/InvalidEmailOrPasswordError";
 
@@ -36,13 +37,13 @@ describe("AuthenticateService.ts", () => {
 
     await fakeRepositoryFactory.clientRepository.create(createdClient);
 
-    const result = await authenticateService.authenticate(
-      {
+    const result = await authenticateService.authenticate({
+      signature: {
         email: createdClient.email.value,
         password: "password",
       },
-      "client"
-    );
+      permissions: [IPermissions.BARBERSHOP],
+    });
 
     if (result.isLeft()) {
       throw new Error();
@@ -68,13 +69,13 @@ describe("AuthenticateService.ts", () => {
 
     await fakeRepositoryFactory.barbershopRepository.create(createdBarbershop);
 
-    const result = await authenticateService.authenticate(
-      {
+    const result = await authenticateService.authenticate({
+      signature: {
         email: createdBarbershop.email.value,
         password: "password",
       },
-      "admin"
-    );
+      permissions: ["admin"],
+    });
 
     if (result.isLeft()) {
       throw new Error();
@@ -94,13 +95,13 @@ describe("AuthenticateService.ts", () => {
   });
 
   it("should not be able to authenticate if email does not match or entity does not exists", async () => {
-    const result = await authenticateService.authenticate(
-      {
+    const result = await authenticateService.authenticate({
+      signature: {
         email: BaseFactory.makeEmail(),
         password: BaseFactory.makePassword(),
       },
-      "client"
-    );
+      permissions: [IPermissions.BARBERSHOP],
+    });
 
     expect(result.isLeft()).toBeTruthy();
     expect(result.value).toEqual(new InvalidEmailOrPasswordError());
@@ -112,13 +113,13 @@ describe("AuthenticateService.ts", () => {
         BarbershopFactory.create({})
       );
 
-    const result = await authenticateService.authenticate(
-      {
+    const result = await authenticateService.authenticate({
+      signature: {
         email: createdBarbershop.email.value,
         password: "123456abcdef",
       },
-      "admin"
-    );
+      permissions: ["admin"],
+    });
 
     expect(result.isLeft()).toBeTruthy();
     expect(result.value).toEqual(new InvalidEmailOrPasswordError());

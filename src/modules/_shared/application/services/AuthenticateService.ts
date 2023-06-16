@@ -14,6 +14,11 @@ interface IAuthenticateService {
   emailValidatorService: EmailValidatorService;
 }
 
+interface IAuthenticate {
+  signature: IAuthenticationSignature;
+  permissions: Array<string>;
+}
+
 export class AuthenticateService {
   private readonly emailValidatorService: EmailValidatorService;
 
@@ -21,10 +26,10 @@ export class AuthenticateService {
     this.emailValidatorService = emailValidatorService;
   }
 
-  public async authenticate(
-    signature: IAuthenticationSignature,
-    roles: string
-  ): Promise<Either<InvalidEmailOrPasswordError, Jwt>> {
+  public async authenticate({
+    signature,
+    permissions,
+  }: IAuthenticate): Promise<Either<InvalidEmailOrPasswordError, Jwt>> {
     const findedByEmail =
       await this.emailValidatorService.findByAuthenticatedEmail(
         signature.email
@@ -46,7 +51,7 @@ export class AuthenticateService {
       id: findedByEmail.id,
       name: findedByEmail.name.value,
       email: signature.email,
-      roles,
+      permissions,
     });
 
     return right(jwt);
