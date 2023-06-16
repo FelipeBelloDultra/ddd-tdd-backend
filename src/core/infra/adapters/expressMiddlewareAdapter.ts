@@ -30,7 +30,7 @@ export function adaptMiddleware<T>(middleware: IMiddleware<T>) {
       return next();
     } else {
       return response.status(httpResponse.statusCode).json({
-        error: httpResponse.body.error,
+        error: (httpResponse.body as { error: string }).error,
       });
     }
   };

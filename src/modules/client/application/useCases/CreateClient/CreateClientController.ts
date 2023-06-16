@@ -1,5 +1,5 @@
 import { IController } from "@core/infra/IController";
-import { clientError, created, fail } from "@core/infra/HttpResponse";
+import { HttpResponse } from "@core/infra/HttpResponse";
 
 import { CreateClient } from "./CreateClient";
 
@@ -23,12 +23,12 @@ export class CreateClientController implements IHandleInput {
       });
 
       if (result.isLeft()) {
-        return clientError(result.value);
+        return HttpResponse.clientError(result.value);
       }
 
-      return created();
+      return HttpResponse.created();
     } catch (error) {
-      return fail(error as Error);
+      return HttpResponse.fail(error as Error);
     }
   }
 }

@@ -1,5 +1,5 @@
 import { IController } from "@core/infra/IController";
-import { clientError, fail, ok } from "@core/infra/HttpResponse";
+import { HttpResponse } from "@core/infra/HttpResponse";
 
 import { AuthenticateClient } from "./AuthenticateClient";
 
@@ -21,14 +21,14 @@ export class AuthenticateClientController implements IHandleInput {
       });
 
       if (result.isLeft()) {
-        return clientError(result.value);
+        return HttpResponse.clientError(result.value);
       }
 
       const { token } = result.value;
 
-      return ok({ token });
+      return HttpResponse.ok({ token });
     } catch (error) {
-      return fail(error as Error);
+      return HttpResponse.fail(error as Error);
     }
   }
 }

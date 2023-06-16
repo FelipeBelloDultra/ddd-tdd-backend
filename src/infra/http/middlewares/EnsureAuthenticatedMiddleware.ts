@@ -1,5 +1,5 @@
-import { IHttpResponse, fail, forbidden, ok } from "@core/infra/HttpResponse";
 import { IMiddleware } from "@core/infra/IMiddleware";
+import { HttpResponse } from "@core/infra/HttpResponse";
 import { Jwt } from "@core/domain/Jwt";
 
 import { AccessDeniedError } from "../errors/AccessDeniedError";
@@ -13,9 +13,7 @@ type IHandleInput = IMiddleware<IEnsureAuthenticatedMiddlewareRequest>;
 export class EnsureAuthenticatedMiddleware implements IHandleInput {
   constructor(private readonly middlewarePermissions: Array<string>) {}
 
-  public async handle(
-    request: IEnsureAuthenticatedMiddlewareRequest
-  ): Promise<IHttpResponse> {
+  public async handle(request: IEnsureAuthenticatedMiddlewareRequest) {
     try {
       const { accessToken } = request;
 
@@ -23,7 +21,7 @@ export class EnsureAuthenticatedMiddleware implements IHandleInput {
         const decodedAccessToken = Jwt.decodeToken(accessToken);
 
         if (decodedAccessToken.isLeft())
-          return forbidden(new AccessDeniedError());
+          return HttpResponse.forbidden(new AccessDeniedError());
 
         const {
           permissions: authenticatedPermissions,
@@ -37,9 +35,9 @@ export class EnsureAuthenticatedMiddleware implements IHandleInput {
         );
 
         if (!hasSomePermissionToAccess)
-          return forbidden(new AccessDeniedError());
+          return HttpResponse.forbidden(new AccessDeniedError());
 
-        return ok({
+        return HttpResponse.ok({
           authenticatedId,
           authenticatedPermissions,
           authenticatedName,
@@ -47,9 +45,9 @@ export class EnsureAuthenticatedMiddleware implements IHandleInput {
         });
       }
 
-      return forbidden(new AccessDeniedError());
+      return HttpResponse.forbidden(new AccessDeniedError());
     } catch (error) {
-      return fail(error as Error);
+      return HttpResponse.fail(error as Error);
     }
   }
 }

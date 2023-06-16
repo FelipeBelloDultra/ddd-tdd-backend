@@ -1,5 +1,5 @@
 import { IController } from "@core/infra/IController";
-import { clientError, fail, ok } from "@core/infra/HttpResponse";
+import { HttpResponse } from "@core/infra/HttpResponse";
 
 import { ScheduleAppointment } from "./ScheduleAppointment";
 
@@ -22,17 +22,17 @@ export class ScheduleAppointmentController implements IHandleInput {
         employeeId: request.employeeId,
       });
 
-      if (result.isLeft()) return clientError(result.value);
+      if (result.isLeft()) return HttpResponse.clientError(result.value);
 
       const { employeeId, date, clientId } = result.value;
 
-      return ok({
+      return HttpResponse.ok({
         employeeId,
         date: date.value,
         clientId,
       });
     } catch (error) {
-      return fail(error as Error);
+      return HttpResponse.fail(error as Error);
     }
   }
 }

@@ -17,7 +17,7 @@ export function adaptRoute<T>(controller: IController<T>) {
     }
 
     return response.status(httpResponse.statusCode).json({
-      error: httpResponse.body.error,
+      error: (httpResponse.body as { error: string }).error,
     });
   };
 }

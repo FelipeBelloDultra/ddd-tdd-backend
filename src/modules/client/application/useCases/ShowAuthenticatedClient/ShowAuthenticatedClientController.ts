@@ -1,5 +1,5 @@
 import { IController } from "@core/infra/IController";
-import { clientError, fail, ok } from "@core/infra/HttpResponse";
+import { HttpResponse } from "@core/infra/HttpResponse";
 
 import { ShowAuthenticatedClient } from "./ShowAuthenticatedClient";
 
@@ -21,18 +21,18 @@ export class ShowAuthenticatedClientController implements IHandleInput {
       });
 
       if (result.isLeft()) {
-        return clientError(result.value);
+        return HttpResponse.clientError(result.value);
       }
 
       const { id, name, email } = result.value;
 
-      return ok({
+      return HttpResponse.ok({
         id,
         name: name.value,
         email: email.value,
       });
     } catch (error) {
-      return fail(error as Error);
+      return HttpResponse.fail(error as Error);
     }
   }
 }
