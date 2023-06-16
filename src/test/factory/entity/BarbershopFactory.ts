@@ -22,8 +22,6 @@ export class BarbershopFactory {
       email: Email.create(data.email || BaseFactory.makeEmail()).value as Email,
       password: Password.create(data.password || BaseFactory.makePassword())
         .value as Password,
-      createdAt: new Date(),
-      updatedAt: new Date(),
     });
 
     return barbershop.value as Barbershop;

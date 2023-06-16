@@ -1,10 +1,10 @@
-import { Appointment as PrismaAppointment } from "@prisma/client";
+import { Appointment as IPrismaAppointment } from "@prisma/client";
 
 import { Appointment } from "@modules/appointment/domain/appointment/Appointment";
 import { AppointmentDate } from "@modules/appointment/domain/appointment/AppointmentDate";
 
 export type IPersistenceAppointment = Omit<
-  PrismaAppointment,
+  IPrismaAppointment,
   "created_at" | "updated_at"
 >;
 

@@ -25,8 +25,6 @@ interface IBarbershopProps {
   number?: StreetNumber;
   phone?: Phone;
   avatarUrl?: AvatarUrl;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
 interface IBarbershopUpdateProps {
@@ -70,14 +68,6 @@ export class Barbershop extends Entity<IBarbershopProps> {
     return this.props.avatarUrl;
   }
 
-  get createdAt(): Date {
-    return this.props.createdAt;
-  }
-
-  get updatedAt(): Date {
-    return this.props.updatedAt;
-  }
-
   private constructor(props: IBarbershopProps, id?: string) {
     super(props, id);
   }
@@ -106,8 +96,6 @@ export class Barbershop extends Entity<IBarbershopProps> {
         number: toUpdate.number || this.number,
         phone: toUpdate.phone || this.phone,
         street: toUpdate.street || this.street,
-        createdAt: this.createdAt,
-        updatedAt: new Date(),
       },
       this.id
     );

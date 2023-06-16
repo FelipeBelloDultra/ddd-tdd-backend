@@ -1,4 +1,4 @@
-import { Barbershop as IPersistenceBarbershop } from "@prisma/client";
+import { Barbershop as IPrismaBarbershop } from "@prisma/client";
 
 import { Barbershop } from "@modules/barbershop/domain/barbershop/Barbershop";
 import { Neighborhood } from "@modules/barbershop/domain/barbershop/Neighborhood";
@@ -11,7 +11,10 @@ import { Email } from "@_shared/domain/Email";
 import { Password } from "@_shared/domain/Password";
 import { AvatarUrl } from "@_shared/domain/AvatarUrl";
 
-export { IPersistenceBarbershop };
+export type IPersistenceBarbershop = Omit<
+  IPrismaBarbershop,
+  "created_at" | "updated_at"
+>;
 
 export class BarbershopMapper {
   static toDomain(raw: IPersistenceBarbershop): Barbershop {
@@ -71,8 +74,6 @@ export class BarbershopMapper {
         number: (streetNumber?.value as StreetNumber) || undefined,
         phone: (phone?.value as Phone) || undefined,
         street: (street?.value as Street) || undefined,
-        createdAt: raw.created_at,
-        updatedAt: raw.updated_at,
       },
       raw.id_barbershop
     );
@@ -95,8 +96,6 @@ export class BarbershopMapper {
       number: barbershop.number?.value || null,
       phone: barbershop.phone?.value || null,
       street: barbershop.street?.value || null,
-      created_at: barbershop.createdAt,
-      updated_at: barbershop.updatedAt,
     };
   }
 }
