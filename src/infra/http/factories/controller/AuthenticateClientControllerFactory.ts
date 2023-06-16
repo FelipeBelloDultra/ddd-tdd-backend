@@ -6,9 +6,12 @@ import { AuthenticateService } from "@_shared/application/services/AuthenticateS
 import { EmailValidatorService } from "@_shared/application/services/EmailValidatorService";
 
 import { AuthenticateClient } from "@modules/client/application/useCases/AuthenticateClient/AuthenticateClient";
-import { AuthenticateClientController } from "@modules/client/application/useCases/AuthenticateClient/AuthenticateClientController";
+import {
+  AuthenticateClientController,
+  IAuthenticateClientControllerRequest,
+} from "@modules/client/application/useCases/AuthenticateClient/AuthenticateClientController";
 
-export function makeAuthenticateClientControllerFactory(): IController {
+export function makeAuthenticateClientControllerFactory(): IController<IAuthenticateClientControllerRequest> {
   const prismaRepositoryFactory = PrismaRepositoryFactory.create();
 
   const emailValidatorService = new EmailValidatorService({

@@ -1,7 +1,7 @@
 import { Request as IRequest, Response as IResponse } from "express";
 import { IController } from "@core/infra/IController";
 
-export function adaptRoute(controller: IController) {
+export function adaptRoute<T>(controller: IController<T>) {
   return async (request: IRequest, response: IResponse) => {
     const requestData = {
       ...request.body,

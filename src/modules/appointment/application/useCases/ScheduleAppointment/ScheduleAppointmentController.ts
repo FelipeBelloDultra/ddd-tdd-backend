@@ -3,13 +3,15 @@ import { clientError, fail, ok } from "@core/infra/HttpResponse";
 
 import { ScheduleAppointment } from "./ScheduleAppointment";
 
-interface IScheduleAppointmentControllerRequest {
+export interface IScheduleAppointmentControllerRequest {
   employeeId: string;
   date: Date;
   authenticatedId: string;
 }
 
-export class ScheduleAppointmentController implements IController {
+type IHandleInput = IController<IScheduleAppointmentControllerRequest>;
+
+export class ScheduleAppointmentController implements IHandleInput {
   constructor(private readonly scheduleAppointment: ScheduleAppointment) {}
 
   public async handle(request: IScheduleAppointmentControllerRequest) {

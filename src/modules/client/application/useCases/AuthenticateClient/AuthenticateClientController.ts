@@ -3,12 +3,14 @@ import { clientError, fail, ok } from "@core/infra/HttpResponse";
 
 import { AuthenticateClient } from "./AuthenticateClient";
 
-interface IAuthenticateClientControllerRequest {
+export interface IAuthenticateClientControllerRequest {
   email: string;
   password: string;
 }
 
-export class AuthenticateClientController implements IController {
+type IHandleInput = IController<IAuthenticateClientControllerRequest>;
+
+export class AuthenticateClientController implements IHandleInput {
   constructor(private readonly authenticateClient: AuthenticateClient) {}
 
   public async handle(request: IAuthenticateClientControllerRequest) {

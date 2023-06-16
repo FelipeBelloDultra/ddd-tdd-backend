@@ -5,9 +5,12 @@ import { PrismaRepositoryFactory } from "@infra/database/factories/prisma/Prisma
 import { EmailValidatorService } from "@_shared/application/services/EmailValidatorService";
 
 import { CreateClient } from "@modules/client/application/useCases/CreateClient/CreateClient";
-import { CreateClientController } from "@modules/client/application/useCases/CreateClient/CreateClientController";
+import {
+  CreateClientController,
+  ICreateClientControllerRequest,
+} from "@modules/client/application/useCases/CreateClient/CreateClientController";
 
-export function makeCreateContactControllerFactory(): IController {
+export function makeCreateContactControllerFactory(): IController<ICreateClientControllerRequest> {
   const prismaRepositoryFactory = PrismaRepositoryFactory.create();
   const clientRepository = prismaRepositoryFactory.clientRepository;
   const emailValidatorService = new EmailValidatorService({

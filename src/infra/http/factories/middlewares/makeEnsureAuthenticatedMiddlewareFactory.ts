@@ -1,10 +1,13 @@
 import { IMiddleware } from "@core/infra/IMiddleware";
 
-import { EnsureAuthenticatedMiddleware } from "@infra/http/middlewares/EnsureAuthenticatedMiddleware";
+import {
+  EnsureAuthenticatedMiddleware,
+  IEnsureAuthenticatedMiddlewareRequest,
+} from "@infra/http/middlewares/EnsureAuthenticatedMiddleware";
 
 export function makeEnsureAuthenticatedMiddlewareFactory(
   roles: Array<string>
-): IMiddleware<{ accessToken: string }> {
+): IMiddleware<IEnsureAuthenticatedMiddlewareRequest> {
   const ensureAuthenticatedMiddleware = new EnsureAuthenticatedMiddleware(
     roles
   );

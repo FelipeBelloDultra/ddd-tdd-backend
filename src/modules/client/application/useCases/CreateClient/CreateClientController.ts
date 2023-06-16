@@ -3,13 +3,15 @@ import { clientError, created, fail } from "@core/infra/HttpResponse";
 
 import { CreateClient } from "./CreateClient";
 
-interface ICreateClientControllerRequest {
+export interface ICreateClientControllerRequest {
   name: string;
   email: string;
   password: string;
 }
 
-export class CreateClientController implements IController {
+type IHandleInput = IController<ICreateClientControllerRequest>;
+
+export class CreateClientController implements IHandleInput {
   constructor(private readonly createClient: CreateClient) {}
 
   public async handle(request: ICreateClientControllerRequest) {

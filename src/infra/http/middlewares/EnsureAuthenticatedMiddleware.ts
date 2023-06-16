@@ -4,14 +4,13 @@ import { Jwt } from "@core/domain/Jwt";
 
 import { AccessDeniedError } from "../errors/AccessDeniedError";
 
-interface IEnsureAuthenticatedMiddlewareRequest {
+export interface IEnsureAuthenticatedMiddlewareRequest {
   accessToken: string;
 }
 
-type IMIddlewareHandleInput =
-  IMiddleware<IEnsureAuthenticatedMiddlewareRequest>;
+type IHandleInput = IMiddleware<IEnsureAuthenticatedMiddlewareRequest>;
 
-export class EnsureAuthenticatedMiddleware implements IMIddlewareHandleInput {
+export class EnsureAuthenticatedMiddleware implements IHandleInput {
   constructor(private readonly middlewarePermissions: Array<string>) {}
 
   public async handle(
@@ -27,14 +26,14 @@ export class EnsureAuthenticatedMiddleware implements IMIddlewareHandleInput {
           return forbidden(new AccessDeniedError());
 
         const {
-          permissions: authenticatedRole,
+          permissions: authenticatedPermissions,
           id: authenticatedId,
           email: authenticatedEmail,
           name: authenticatedName,
         } = decodedAccessToken.value;
 
         const hasSomePermissionToAccess = this.middlewarePermissions.some(
-          (permission) => authenticatedRole.includes(permission)
+          (permission) => authenticatedPermissions.includes(permission)
         );
 
         if (!hasSomePermissionToAccess)
@@ -42,7 +41,7 @@ export class EnsureAuthenticatedMiddleware implements IMIddlewareHandleInput {
 
         return ok({
           authenticatedId,
-          authenticatedRole,
+          authenticatedPermissions,
           authenticatedName,
           authenticatedEmail,
         });

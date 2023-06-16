@@ -3,11 +3,13 @@ import { clientError, fail, ok } from "@core/infra/HttpResponse";
 
 import { ShowAuthenticatedClient } from "./ShowAuthenticatedClient";
 
-interface IShowAuthenticatedClientControllerRequest {
+export interface IShowAuthenticatedClientControllerRequest {
   authenticatedId: string;
 }
 
-export class ShowAuthenticatedClientController implements IController {
+type IHandleInput = IController<IShowAuthenticatedClientControllerRequest>;
+
+export class ShowAuthenticatedClientController implements IHandleInput {
   constructor(
     private readonly showAuthenticatedClient: ShowAuthenticatedClient
   ) {}
