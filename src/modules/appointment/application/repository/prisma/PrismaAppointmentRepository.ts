@@ -59,10 +59,10 @@ export class PrismaAppointmentRepository implements IAppointmentRepository {
     date: Date,
     employeeId: string
   ): Promise<Appointment | undefined> {
-    const finded = await queries.appointment.findUnique({
+    const finded = await queries.appointment.findFirst({
       where: {
-        date: date,
-        id_appointment: employeeId,
+        date,
+        employee_id: employeeId,
       },
     });
 
