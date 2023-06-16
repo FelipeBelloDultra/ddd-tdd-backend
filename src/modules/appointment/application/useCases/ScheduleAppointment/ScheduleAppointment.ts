@@ -18,7 +18,7 @@ interface Input {
 
 type Output = Either<
   EmployeeNotFoundError | AppointmentAlreadyBookedError,
-  string
+  Appointment
 >;
 
 type IScheduleAppointmentRepositories = ICreateAppointmentRepository &
@@ -50,7 +50,16 @@ export class ScheduleAppointment implements IUseCase<Input, Output> {
       return left(new EmployeeNotFoundError());
     }
 
-    const date = AppointmentDate.create(data.date);
+    const findAppointmentInSameDate =
+      await this.scheduleAppointmentRepositories.findByDate(
+        data.date,
+        data.employeeId
+      );
+
+    if (findAppointmentInSameDate)
+      return left(new AppointmentAlreadyBookedError());
+
+    const date = AppointmentDate.create(new Date(data.date));
 
     if (date.isLeft()) {
       return left(date.value);
@@ -68,17 +77,8 @@ export class ScheduleAppointment implements IUseCase<Input, Output> {
       return left(appointment.value);
     }
 
-    const findAppointmentInSameDate =
-      await this.scheduleAppointmentRepositories.findByDate(
-        data.date,
-        data.employeeId
-      );
-
-    if (findAppointmentInSameDate)
-      return left(new AppointmentAlreadyBookedError());
-
     await this.scheduleAppointmentRepositories.create(appointment.value);
 
-    return right(appointment.value.id);
+    return right(appointment.value);
   }
 }

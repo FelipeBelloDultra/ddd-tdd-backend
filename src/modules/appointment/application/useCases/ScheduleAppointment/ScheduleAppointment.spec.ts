@@ -58,7 +58,7 @@ describe("ScheduleAppointment.ts", () => {
     });
 
     expect(result.isRight()).toBeTruthy();
-    expect(result.value).toBeTypeOf("string");
+    expect(result.value).toHaveProperty("id");
   });
 
   it("should not schedule a new appointment if hours is not available", async () => {
