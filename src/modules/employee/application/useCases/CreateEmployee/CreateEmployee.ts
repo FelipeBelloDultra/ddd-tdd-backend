@@ -49,16 +49,15 @@ export class CreateEmployee implements IUseCase<Input, Output> {
   }
 
   public async execute(data: Input): Promise<Output> {
+    const existingBarbershop = await this.findByIdBarbershopRepository.findById(
+      data.barbershopId
+    );
+    if (!existingBarbershop) return left(new EmployeeBarbershopNotFoundError());
+
     const email = Email.create(data.email);
     if (email.isLeft()) {
       return left(email.value);
     }
-
-    const existingBarbershop = await this.findByIdBarbershopRepository.findById(
-      data.barbershopId
-    );
-
-    if (!existingBarbershop) return left(new EmployeeBarbershopNotFoundError());
 
     if (await this.emailValidatorService.isUsed(email.value.value)) {
       return left(new EmployeeEmailAlreadyUsedError());

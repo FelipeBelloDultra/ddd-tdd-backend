@@ -8,7 +8,7 @@ export interface ICreateEmployeeControllerRequest {
   email: string;
   phone: string;
   avatarUrl: string;
-  barbershopId: string;
+  authenticatedId: string;
 }
 
 type IHandleInput = IController<ICreateEmployeeControllerRequest>;
@@ -23,7 +23,7 @@ export class CreateEmployeeController implements IHandleInput {
         email: request.email,
         phone: request.phone,
         avatarUrl: request.avatarUrl,
-        barbershopId: request.barbershopId,
+        barbershopId: request.authenticatedId,
       });
 
       if (result.isLeft()) {

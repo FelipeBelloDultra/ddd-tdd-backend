@@ -10,7 +10,7 @@ import {
   ICreateClientControllerRequest,
 } from "@modules/client/application/useCases/CreateClient/CreateClientController";
 
-export function makeCreateContactControllerFactory(): IController<ICreateClientControllerRequest> {
+export function makeCreateClientControllerFactory(): IController<ICreateClientControllerRequest> {
   const prismaRepositoryFactory = PrismaRepositoryFactory.create();
   const clientRepository = prismaRepositoryFactory.clientRepository;
   const emailValidatorService = new EmailValidatorService({
