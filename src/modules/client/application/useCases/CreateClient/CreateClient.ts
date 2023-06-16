@@ -60,8 +60,6 @@ export class CreateClient implements IUseCase<Input, Output> {
       email: email.value,
       name: name.value,
       password: password.value,
-      createdAt: new Date(),
-      updatedAt: new Date(),
     });
 
     if (client.isLeft()) {

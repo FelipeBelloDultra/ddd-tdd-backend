@@ -1,4 +1,4 @@
-import { Client as IPersistenceClient } from "@prisma/client";
+import { Client as IPrismaClient } from "@prisma/client";
 
 import { Client } from "@modules/client/domain/client/Client";
 
@@ -6,7 +6,11 @@ import { Name } from "@_shared/domain/Name";
 import { Email } from "@_shared/domain/Email";
 import { Password } from "@_shared/domain/Password";
 
-export { IPersistenceClient };
+export type IPersistenceClient = Omit<
+  IPrismaClient,
+  "created_at" | "updated_at"
+>;
+
 export class ClientMapper {
   static toDomain(raw: IPersistenceClient): Client {
     const name = Name.create(raw.name);
@@ -29,8 +33,6 @@ export class ClientMapper {
         name: name.value,
         email: email.value,
         password: password.value,
-        createdAt: raw.created_at,
-        updatedAt: raw.updated_at,
       },
       raw.id_client
     );
@@ -46,8 +48,6 @@ export class ClientMapper {
       name: client.name.value,
       email: client.email.value,
       password: hashedPassword,
-      created_at: client.createdAt,
-      updated_at: client.updatedAt,
     };
   }
 }

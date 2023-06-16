@@ -13,8 +13,6 @@ interface IClientProps {
   name: Name;
   email: Email;
   password: Password;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
 export class Client extends Entity<IClientProps> {
@@ -28,14 +26,6 @@ export class Client extends Entity<IClientProps> {
 
   get password(): Password {
     return this.props.password;
-  }
-
-  get createdAt(): Date {
-    return this.props.createdAt;
-  }
-
-  get updatedAt(): Date {
-    return this.props.updatedAt;
   }
 
   private constructor(props: IClientProps, id?: string) {
