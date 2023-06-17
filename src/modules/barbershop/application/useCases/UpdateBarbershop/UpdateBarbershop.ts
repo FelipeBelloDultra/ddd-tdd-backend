@@ -15,6 +15,7 @@ import { BarbershopNotFoundError } from "./errors/BarbershopNotFoundError";
 
 interface Input {
   id: string;
+  email: string;
   street?: string;
   neighborhood?: string;
   number?: string;
@@ -41,7 +42,8 @@ export class UpdateBarbershop implements IUseCase<Input, Output> {
   public async execute(data: Input): Promise<Output> {
     const findedbyId = await this.updateBarbershopRepository.findById(data.id);
 
-    if (!findedbyId) return left(new BarbershopNotFoundError());
+    if (!findedbyId || findedbyId.email.value !== data.email)
+      return left(new BarbershopNotFoundError());
 
     const avatarUrl = data.avatarUrl
       ? (AvatarUrl.create(data.avatarUrl).value as AvatarUrl)

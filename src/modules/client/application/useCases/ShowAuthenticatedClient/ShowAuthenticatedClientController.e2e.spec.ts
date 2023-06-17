@@ -34,7 +34,7 @@ describe("E2E - /clients/session/me - [POST]", () => {
     expect(result.body.data).not.toHaveProperty("password");
   });
 
-  it("should not show an authenticated client if id is invalid", async () => {
+  it("should not show an authenticated client if token is invalid", async () => {
     const result = await BaseRequest.post("clients/session/me").set(
       "x-access-token",
       "invalid-id"

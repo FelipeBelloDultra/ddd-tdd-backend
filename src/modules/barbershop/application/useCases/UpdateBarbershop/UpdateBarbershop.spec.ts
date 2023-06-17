@@ -25,6 +25,7 @@ describe("UpdateBarbershop.ts", () => {
   it("should update all Barbershop fields", async () => {
     const dataToUpdate = {
       id: barbershop.id,
+      email: barbershop.email.value,
       street: BaseFactory.makeAddressStreet(),
       neighborhood: BaseFactory.makeAddressNeighborhood(),
       number: BaseFactory.makeAddressNumber(),
@@ -48,6 +49,7 @@ describe("UpdateBarbershop.ts", () => {
 
     const result = await updateBarbershop.execute({
       id: barbershop.id,
+      email: barbershop.email.value,
       street,
     });
 
@@ -62,6 +64,7 @@ describe("UpdateBarbershop.ts", () => {
   it("should not update Barbershop by id if user does not exists", async () => {
     const result = await updateBarbershop.execute({
       id: "no-exist",
+      email: barbershop.email.value,
       street: BaseFactory.makeAddressStreet(),
     });
 

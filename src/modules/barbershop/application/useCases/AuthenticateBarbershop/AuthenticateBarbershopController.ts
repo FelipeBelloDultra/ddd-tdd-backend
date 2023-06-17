@@ -1,22 +1,24 @@
 import { IController } from "@core/infra/IController";
 import { HttpResponse } from "@core/infra/HttpResponse";
 
-import { AuthenticateClient } from "./AuthenticateClient";
+import { AuthenticateBarbershop } from "./AuthenticateBarbershop";
 import { Presenter } from "./Presenter";
 
-export interface IAuthenticateClientControllerRequest {
+export interface IAuthenticateBarbershopControllerRequest {
   email: string;
   password: string;
 }
 
-type IHandleInput = IController<IAuthenticateClientControllerRequest>;
+type IHandleInput = IController<IAuthenticateBarbershopControllerRequest>;
 
-export class AuthenticateClientController implements IHandleInput {
-  constructor(private readonly authenticateClient: AuthenticateClient) {}
+export class AuthenticateBarbershopController implements IHandleInput {
+  constructor(
+    private readonly authenticateBarbershop: AuthenticateBarbershop
+  ) {}
 
-  public async handle(request: IAuthenticateClientControllerRequest) {
+  public async handle(request: IAuthenticateBarbershopControllerRequest) {
     try {
-      const result = await this.authenticateClient.execute({
+      const result = await this.authenticateBarbershop.execute({
         email: request.email,
         password: request.password,
       });

@@ -42,7 +42,6 @@ export class PrismaBarbershopRepository implements IBarbershopRepository {
     const updated = await queries.barbershop.update({
       where: {
         id_barbershop: toPersistence.id_barbershop,
-        email: toPersistence.email,
       },
       data: toPersistence,
     });

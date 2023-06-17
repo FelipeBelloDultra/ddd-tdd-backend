@@ -8,6 +8,9 @@ export function adaptRoute<T>(controller: IController<T>) {
       ...request.params,
       ...request.query,
       authenticatedId: request.authenticatedId,
+      authenticatedPermissions: request.authenticatedPermissions,
+      authenticatedName: request.authenticatedName,
+      authenticatedEmail: request.authenticatedEmail,
     };
 
     const httpResponse = await controller.handle(requestData);
