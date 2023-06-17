@@ -31,7 +31,7 @@ export class PrismaAppointmentRepository implements IAppointmentRepository {
       WHERE
         employee_id = ${data.employeeId}
         AND EXTRACT(MONTH FROM date) = ${data.month}
-        AND EXTRACT(YEAR FROM date) = ${data.year};
+        AND EXTRACT(YEAR FROM date) = ${data.year}
         AND EXTRACT(DAY FROM date) = ${data.day};
     `;
 

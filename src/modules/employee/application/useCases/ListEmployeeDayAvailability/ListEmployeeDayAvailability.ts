@@ -6,9 +6,9 @@ import { IFindAllInDayFromEmployeeAppointmentRepository } from "@modules/appoint
 
 interface Input {
   employeeId: string;
-  month: number;
-  year: number;
-  day: number;
+  month?: number;
+  year?: number;
+  day?: number;
 }
 
 type Output = Either<
@@ -34,22 +34,30 @@ export class ListEmployeeDayAvailability implements IUseCase<Input, Output> {
   }
 
   public async execute(data: Input): Promise<Output> {
+    const date = new Date();
+
+    const dateValue = {
+      month: data.month || date.getMonth() + 1,
+      year: data.year || date.getFullYear(),
+      day: data.day || date.getDate(),
+    };
+
     const appointments =
       await this.findAllInDayFromEmployeeAppointmentRepository.findAllInDayFromEmployee(
         {
-          month: data.month,
-          year: data.year,
+          day: dateValue.day,
+          month: dateValue.month,
+          year: dateValue.year,
           employeeId: data.employeeId,
-          day: data.day,
         }
       );
 
     const appointmentAvailability = new AppointmentAvailability(appointments);
 
     const availability = appointmentAvailability.checkDay({
-      day: data.day,
-      month: data.month,
-      year: data.year,
+      day: dateValue.day,
+      month: dateValue.month,
+      year: dateValue.year,
     });
 
     return right(availability);

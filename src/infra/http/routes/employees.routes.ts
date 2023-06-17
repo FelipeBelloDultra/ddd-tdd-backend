@@ -8,6 +8,7 @@ import { makeCreateEmployeeControllerFactory } from "../factories/controller/Cre
 
 import { makeEnsureAuthenticatedMiddlewareFactory } from "../factories/middlewares/makeEnsureAuthenticatedMiddlewareFactory";
 import { makeListEmployeeByBarbershopIdControllerFactory } from "../factories/controller/ListEmployeeByBarbershopIdControllerFactory";
+import { makeListEmployeeDayAvailabilityControllerFactory } from "../factories/controller/ListEmployeeDayAvailabilityControllerFactory";
 
 const employeesRouter = Router();
 
@@ -21,6 +22,10 @@ employeesRouter.post(
 employeesRouter.get(
   "/:barbershopId",
   adaptRoute(makeListEmployeeByBarbershopIdControllerFactory())
+);
+employeesRouter.get(
+  "/:employeeId/day-availability",
+  adaptRoute(makeListEmployeeDayAvailabilityControllerFactory())
 );
 
 export { employeesRouter };

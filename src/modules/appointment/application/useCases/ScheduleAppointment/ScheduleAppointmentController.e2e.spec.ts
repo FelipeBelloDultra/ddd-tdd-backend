@@ -154,6 +154,22 @@ describe("E2E - /appointments - [POST]", () => {
     expect(result.body).toHaveProperty("error", "Access denied");
   });
 
+  it("should not schedule an appointment if access-token is from barbershop", async () => {
+    const AUTHENTICATED_BARBERSHOP = BarbershopFactory.createAndAuthenticate(
+      {}
+    );
+
+    const result = await BaseRequest.post("/appointments")
+      .send({
+        employeeId: CREATED_EMPLOYEE.id,
+        date: new Date(),
+      })
+      .set("x-access-token", AUTHENTICATED_BARBERSHOP.jwt.token);
+
+    expect(result.status).toBe(403);
+    expect(result.body).toHaveProperty("error", "Access denied");
+  });
+
   afterAll(() => {
     vi.clearAllTimers();
   });
