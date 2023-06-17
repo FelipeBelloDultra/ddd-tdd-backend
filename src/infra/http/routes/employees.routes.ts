@@ -7,6 +7,7 @@ import { IPermissions } from "@core/domain/AvailablePermissions";
 import { makeCreateEmployeeControllerFactory } from "../factories/controller/CreateEmployeeControllerFactory";
 
 import { makeEnsureAuthenticatedMiddlewareFactory } from "../factories/middlewares/makeEnsureAuthenticatedMiddlewareFactory";
+import { makeListEmployeeByBarbershopIdControllerFactory } from "../factories/controller/ListEmployeeByBarbershopIdControllerFactory";
 
 const employeesRouter = Router();
 
@@ -16,6 +17,10 @@ employeesRouter.post(
     makeEnsureAuthenticatedMiddlewareFactory([IPermissions.BARBERSHOP])
   ),
   adaptRoute(makeCreateEmployeeControllerFactory())
+);
+employeesRouter.get(
+  "/:barbershopId",
+  adaptRoute(makeListEmployeeByBarbershopIdControllerFactory())
 );
 
 export { employeesRouter };
