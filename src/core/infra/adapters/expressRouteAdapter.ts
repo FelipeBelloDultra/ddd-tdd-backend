@@ -12,12 +12,12 @@ export function adaptRoute<T>(controller: IController<T>) {
 
     const httpResponse = await controller.handle(requestData);
 
-    if (httpResponse.ok) {
+    if (!httpResponse.body.error) {
       return response.status(httpResponse.statusCode).json(httpResponse.body);
     }
 
     return response.status(httpResponse.statusCode).json({
-      error: (httpResponse.body as { error: string }).error,
+      error: httpResponse.body.error,
     });
   };
 }

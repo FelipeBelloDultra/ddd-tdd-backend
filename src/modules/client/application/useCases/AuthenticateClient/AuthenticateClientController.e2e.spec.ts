@@ -29,6 +29,10 @@ describe("E2E - /clients/session - [POST]", () => {
     });
 
     expect(result.status).toBe(200);
-    expect(result.body).toHaveProperty("token", AUTHENTICATED_CLIENT.jwt.token);
+    expect(result.body.data).toHaveProperty(
+      "token",
+      AUTHENTICATED_CLIENT.jwt.token
+    );
+    expect(result.body.error).toBeUndefined();
   });
 });

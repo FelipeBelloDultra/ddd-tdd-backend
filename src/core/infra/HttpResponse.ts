@@ -1,31 +1,37 @@
 export interface IHttpResponse {
-  ok: boolean;
   statusCode: number;
-  body: unknown;
+  body: {
+    data?: unknown;
+    error?: string;
+  };
 }
 
 export class HttpResponse {
   public static ok<T>(dto?: T): IHttpResponse {
     return {
-      ok: true,
       statusCode: 200,
-      body: dto,
+      body: {
+        data: dto,
+        error: undefined,
+      },
     };
   }
 
   public static created(): IHttpResponse {
     return {
-      ok: true,
       statusCode: 201,
-      body: undefined,
+      body: {
+        data: undefined,
+        error: undefined,
+      },
     };
   }
 
   public static clientError(error: Error): IHttpResponse {
     return {
-      ok: false,
       statusCode: 400,
       body: {
+        data: undefined,
         error: error.message,
       },
     };
@@ -33,9 +39,9 @@ export class HttpResponse {
 
   public static unauthorized(error: Error): IHttpResponse {
     return {
-      ok: false,
       statusCode: 401,
       body: {
+        data: undefined,
         error: error.message,
       },
     };
@@ -43,9 +49,9 @@ export class HttpResponse {
 
   public static forbidden(error: Error): IHttpResponse {
     return {
-      ok: false,
       statusCode: 403,
       body: {
+        data: undefined,
         error: error.message,
       },
     };
@@ -53,9 +59,9 @@ export class HttpResponse {
 
   public static notFound(error: Error): IHttpResponse {
     return {
-      ok: false,
       statusCode: 404,
       body: {
+        data: undefined,
         error: error.message,
       },
     };
@@ -65,9 +71,9 @@ export class HttpResponse {
     console.log(error);
 
     return {
-      ok: false,
       statusCode: 500,
       body: {
+        data: undefined,
         error: error.message,
       },
     };

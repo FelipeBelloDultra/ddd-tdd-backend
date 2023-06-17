@@ -24,13 +24,13 @@ export function adaptMiddleware<T>(middleware: IMiddleware<T>) {
       return response.status(200).send();
     }
 
-    if (httpResponse.ok) {
-      Object.assign(request, httpResponse.body);
+    if (!httpResponse.body.error) {
+      Object.assign(request, httpResponse.body.data);
 
       return next();
     } else {
       return response.status(httpResponse.statusCode).json({
-        error: (httpResponse.body as { error: string }).error,
+        error: httpResponse.body.error,
       });
     }
   };

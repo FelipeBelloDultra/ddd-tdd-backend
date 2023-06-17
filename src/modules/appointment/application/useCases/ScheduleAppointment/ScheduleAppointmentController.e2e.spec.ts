@@ -62,7 +62,8 @@ describe("E2E - /appointments - [POST]", () => {
       .set("x-access-token", AUTHENTICATED_CLIENT.jwt.token);
 
     expect(result.status).toBe(200);
-    expect(result.body).toHaveProperty("date", CURRENT_DATE.toJSON());
+    expect(result.body.data).toHaveProperty("date", CURRENT_DATE.toJSON());
+    expect(result.body.error).toBeUndefined();
   });
 
   it("should not schedule an appointment if appointment already booked", async () => {

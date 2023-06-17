@@ -23,12 +23,15 @@ describe("E2E - /clients/session/me - [POST]", () => {
     );
 
     expect(result.status).toBe(200);
-    expect(result.body).toHaveProperty("id", AUTHENTICATED_CLIENT.client.id);
-    expect(result.body).toHaveProperty(
+    expect(result.body.data).toHaveProperty(
+      "id",
+      AUTHENTICATED_CLIENT.client.id
+    );
+    expect(result.body.data).toHaveProperty(
       "email",
       AUTHENTICATED_CLIENT.client.email.value
     );
-    expect(result.body).not.toHaveProperty("password");
+    expect(result.body.data).not.toHaveProperty("password");
   });
 
   it("should not show an authenticated client if id is invalid", async () => {
