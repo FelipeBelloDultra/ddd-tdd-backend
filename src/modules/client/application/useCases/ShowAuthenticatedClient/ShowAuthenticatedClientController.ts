@@ -2,6 +2,7 @@ import { IController } from "@core/infra/IController";
 import { HttpResponse } from "@core/infra/HttpResponse";
 
 import { ShowAuthenticatedClient } from "./ShowAuthenticatedClient";
+import { Presenter } from "./Presenter";
 
 export interface IShowAuthenticatedClientControllerRequest {
   authenticatedId: string;
@@ -24,13 +25,9 @@ export class ShowAuthenticatedClientController implements IHandleInput {
         return HttpResponse.clientError(result.value);
       }
 
-      const { id, name, email } = result.value;
+      const toPresent = new Presenter().toJson(result.value);
 
-      return HttpResponse.ok({
-        id,
-        name: name.value,
-        email: email.value,
-      });
+      return HttpResponse.ok(toPresent);
     } catch (error) {
       return HttpResponse.fail(error as Error);
     }

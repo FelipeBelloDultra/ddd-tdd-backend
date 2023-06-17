@@ -2,6 +2,7 @@ import { IController } from "@core/infra/IController";
 import { HttpResponse } from "@core/infra/HttpResponse";
 
 import { ScheduleAppointment } from "./ScheduleAppointment";
+import { Presenter } from "./Presenter";
 
 export interface IScheduleAppointmentControllerRequest {
   employeeId: string;
@@ -24,13 +25,9 @@ export class ScheduleAppointmentController implements IHandleInput {
 
       if (result.isLeft()) return HttpResponse.clientError(result.value);
 
-      const { employeeId, date, clientId } = result.value;
+      const toPresent = new Presenter().toJson(result.value);
 
-      return HttpResponse.ok({
-        employeeId,
-        date: date.value,
-        clientId,
-      });
+      return HttpResponse.ok(toPresent);
     } catch (error) {
       return HttpResponse.fail(error as Error);
     }
