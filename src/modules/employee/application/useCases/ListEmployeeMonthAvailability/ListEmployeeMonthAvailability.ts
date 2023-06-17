@@ -6,8 +6,8 @@ import { IFindAllInMonthFromEmployeeAppointmentRepository } from "@modules/appoi
 
 interface Input {
   employeeId: string;
-  month: number;
-  year: number;
+  month?: number;
+  year?: number;
 }
 
 type Output = Either<
@@ -33,11 +33,18 @@ export class ListEmployeeMonthAvailability implements IUseCase<Input, Output> {
   }
 
   public async execute(data: Input): Promise<Output> {
+    const date = new Date();
+
+    const dateValue = {
+      month: data.month || date.getMonth() + 1,
+      year: data.year || date.getFullYear(),
+    };
+
     const appointments =
       await this.findAllInMonthFromEmployeeAppointmentRepository.findAllInMonthFromEmployee(
         {
-          month: data.month,
-          year: data.year,
+          month: dateValue.month,
+          year: dateValue.year,
           employeeId: data.employeeId,
         }
       );
@@ -45,8 +52,8 @@ export class ListEmployeeMonthAvailability implements IUseCase<Input, Output> {
     const appointmentAvailability = new AppointmentAvailability(appointments);
 
     const availability = appointmentAvailability.checkMonth({
-      month: data.month,
-      year: data.year,
+      month: dateValue.month,
+      year: dateValue.year,
     });
 
     return right(availability);

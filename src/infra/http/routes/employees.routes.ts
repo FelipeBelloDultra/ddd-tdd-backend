@@ -9,6 +9,7 @@ import { makeCreateEmployeeControllerFactory } from "../factories/controller/Cre
 import { makeEnsureAuthenticatedMiddlewareFactory } from "../factories/middlewares/makeEnsureAuthenticatedMiddlewareFactory";
 import { makeListEmployeeByBarbershopIdControllerFactory } from "../factories/controller/ListEmployeeByBarbershopIdControllerFactory";
 import { makeListEmployeeDayAvailabilityControllerFactory } from "../factories/controller/ListEmployeeDayAvailabilityControllerFactory";
+import { makeListEmployeeMonthAvailabilityControllerFactory } from "../factories/controller/ListEmployeeMonthAvailabilityControllerFactory";
 
 const employeesRouter = Router();
 
@@ -26,6 +27,10 @@ employeesRouter.get(
 employeesRouter.get(
   "/:employeeId/day-availability",
   adaptRoute(makeListEmployeeDayAvailabilityControllerFactory())
+);
+employeesRouter.get(
+  "/:employeeId/month-availability",
+  adaptRoute(makeListEmployeeMonthAvailabilityControllerFactory())
 );
 
 export { employeesRouter };
