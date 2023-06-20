@@ -43,8 +43,8 @@ describe("E2E - /clients/session - [POST]", () => {
     });
 
     expect(result.status).toBe(401);
-    expect(result.body).toHaveProperty(
-      "error",
+    expect(result.body.error).toHaveProperty(
+      "message",
       "Invalid e-mail/password combination"
     );
   });

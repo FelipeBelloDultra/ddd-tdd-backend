@@ -87,8 +87,8 @@ describe("E2E - /appointments - [POST]", () => {
       .set("x-access-token", AUTHENTICATED_CLIENT.jwt.token);
 
     expect(result.status).toBe(400);
-    expect(result.body).toHaveProperty(
-      "error",
+    expect(result.body.error).toHaveProperty(
+      "message",
       "This appointment is already booked"
     );
   });
@@ -104,8 +104,8 @@ describe("E2E - /appointments - [POST]", () => {
       .set("x-access-token", AUTHENTICATED_CLIENT.jwt.token);
 
     expect(result.status).toBe(400);
-    expect(result.body).toHaveProperty(
-      "error",
+    expect(result.body.error).toHaveProperty(
+      "message",
       `Hour ${PAST_DATE} is not available`
     );
   });
@@ -121,8 +121,8 @@ describe("E2E - /appointments - [POST]", () => {
       .set("x-access-token", AUTHENTICATED_CLIENT.jwt.token);
 
     expect(result.status).toBe(400);
-    expect(result.body).toHaveProperty(
-      "error",
+    expect(result.body.error).toHaveProperty(
+      "message",
       `Hour ${DATE_BEFORE_WORK_TIME} is not available`
     );
   });
@@ -138,8 +138,8 @@ describe("E2E - /appointments - [POST]", () => {
       .set("x-access-token", AUTHENTICATED_CLIENT.jwt.token);
 
     expect(result.status).toBe(400);
-    expect(result.body).toHaveProperty(
-      "error",
+    expect(result.body.error).toHaveProperty(
+      "message",
       `Hour ${DATE_AFTER_WORK_TIME} is not available`
     );
   });
@@ -151,7 +151,7 @@ describe("E2E - /appointments - [POST]", () => {
     });
 
     expect(result.status).toBe(403);
-    expect(result.body).toHaveProperty("error", "Access denied");
+    expect(result.body.error).toHaveProperty("message", "Access denied");
   });
 
   it("should not schedule an appointment if access-token is from barbershop", async () => {
@@ -167,7 +167,7 @@ describe("E2E - /appointments - [POST]", () => {
       .set("x-access-token", AUTHENTICATED_BARBERSHOP.jwt.token);
 
     expect(result.status).toBe(403);
-    expect(result.body).toHaveProperty("error", "Access denied");
+    expect(result.body.error).toHaveProperty("message", "Access denied");
   });
 
   afterAll(() => {

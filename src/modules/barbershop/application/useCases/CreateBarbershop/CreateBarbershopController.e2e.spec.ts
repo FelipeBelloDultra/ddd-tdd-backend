@@ -35,6 +35,9 @@ describe("E2E - /barbershops - [POST]", () => {
     });
 
     expect(result.status).toBe(400);
-    expect(result.body).toHaveProperty("error", "Email already registered");
+    expect(result.body.error).toHaveProperty(
+      "message",
+      "Email already registered"
+    );
   });
 });

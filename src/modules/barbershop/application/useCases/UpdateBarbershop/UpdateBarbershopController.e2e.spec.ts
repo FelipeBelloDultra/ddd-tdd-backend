@@ -74,7 +74,7 @@ describe("E2E - /barbershops - [PUT]", () => {
       .set("x-access-token", AUTHENTICATED_CLIENT.jwt.token);
 
     expect(result.status).toBe(403);
-    expect(result.body).toHaveProperty("error", "Access denied");
+    expect(result.body.error).toHaveProperty("message", "Access denied");
   });
 
   it("should not update an authenticated barbershop if access-token is invalid", async () => {
@@ -85,7 +85,7 @@ describe("E2E - /barbershops - [PUT]", () => {
       .set("x-access-token", "invalid-access-token");
 
     expect(result.status).toBe(403);
-    expect(result.body).toHaveProperty("error", "Access denied");
+    expect(result.body.error).toHaveProperty("message", "Access denied");
   });
 
   afterEach(async () => {

@@ -41,6 +41,6 @@ describe("E2E - /clients/session/me - [POST]", () => {
     );
 
     expect(result.status).toBe(403);
-    expect(result.body).toHaveProperty("error", "Access denied");
+    expect(result.body.error).toHaveProperty("message", "Access denied");
   });
 });

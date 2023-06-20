@@ -42,7 +42,7 @@ describe("E2E - /employees - [POST]", () => {
     });
 
     expect(result.status).toBe(403);
-    expect(result.body).toHaveProperty("error", "Access denied");
+    expect(result.body.error).toHaveProperty("message", "Access denied");
   });
 
   it("should not create an employee if email already used", async () => {
@@ -56,7 +56,10 @@ describe("E2E - /employees - [POST]", () => {
       .set("x-access-token", AUTHENTICATED_BARBERSHOP.jwt.token);
 
     expect(result.status).toBe(400);
-    expect(result.body).toHaveProperty("error", "Email already registered");
+    expect(result.body.error).toHaveProperty(
+      "message",
+      "Email already registered"
+    );
   });
 
   it("should not create an employee if access token is from client", async () => {
@@ -72,6 +75,6 @@ describe("E2E - /employees - [POST]", () => {
       .set("x-access-token", AUTHENTICATED_CLIENT.jwt.token);
 
     expect(result.status).toBe(403);
-    expect(result.body).toHaveProperty("error", "Access denied");
+    expect(result.body.error).toHaveProperty("message", "Access denied");
   });
 });

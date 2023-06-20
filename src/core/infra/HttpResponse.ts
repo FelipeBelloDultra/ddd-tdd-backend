@@ -2,7 +2,12 @@ export interface IHttpResponse {
   statusCode: number;
   body: {
     data?: unknown;
-    error?: string;
+    error?: {
+      errors?: {
+        [key: string]: string[];
+      };
+      message: string;
+    };
   };
 }
 
@@ -32,7 +37,10 @@ export class HttpResponse {
       statusCode: 400,
       body: {
         data: undefined,
-        error: error.message,
+        error: {
+          message: error.message,
+          errors: {},
+        },
       },
     };
   }
@@ -42,7 +50,10 @@ export class HttpResponse {
       statusCode: 401,
       body: {
         data: undefined,
-        error: error.message,
+        error: {
+          message: error.message,
+          errors: {},
+        },
       },
     };
   }
@@ -52,7 +63,10 @@ export class HttpResponse {
       statusCode: 403,
       body: {
         data: undefined,
-        error: error.message,
+        error: {
+          message: error.message,
+          errors: {},
+        },
       },
     };
   }
@@ -62,7 +76,10 @@ export class HttpResponse {
       statusCode: 404,
       body: {
         data: undefined,
-        error: error.message,
+        error: {
+          message: error.message,
+          errors: {},
+        },
       },
     };
   }
@@ -74,7 +91,10 @@ export class HttpResponse {
       statusCode: 500,
       body: {
         data: undefined,
-        error: error.message,
+        error: {
+          message: error.message,
+          errors: {},
+        },
       },
     };
   }

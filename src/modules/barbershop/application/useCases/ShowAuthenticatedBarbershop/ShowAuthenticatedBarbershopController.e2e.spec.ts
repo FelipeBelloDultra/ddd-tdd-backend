@@ -46,7 +46,7 @@ describe("E2E - /barbershops/session/me - [POST]", () => {
     );
 
     expect(result.status).toBe(403);
-    expect(result.body).toHaveProperty("error", "Access denied");
+    expect(result.body.error).toHaveProperty("message", "Access denied");
   });
 
   it("should not show an authenticated barbershop if token is from client", async () => {
@@ -56,6 +56,6 @@ describe("E2E - /barbershops/session/me - [POST]", () => {
     );
 
     expect(result.status).toBe(403);
-    expect(result.body).toHaveProperty("error", "Access denied");
+    expect(result.body.error).toHaveProperty("message", "Access denied");
   });
 });
