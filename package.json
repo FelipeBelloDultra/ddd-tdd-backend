@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsx watch src/infra/http/server.ts",
-    "build": "tsc -p tsconfig.build.json",
+    "build": "tsup src",
     "test:unit": "vitest -c vitest.unit.config.ts",
     "test:e2e": "dotenv -e .env.test -- vitest -c vitest.e2e.config.ts",
     "test:all": "dotenv -e .env.test -- vitest -c vitest.all.config.ts",
@@ -32,6 +32,7 @@
     "eslint": "^8.40.0",
     "prisma": "^4.15.0",
     "supertest": "^6.3.3",
+    "tsup": "^7.1.0",
     "tsx": "^3.12.7",
     "typescript": "^5.0.4",
     "vitest": "^0.31.0"

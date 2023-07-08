@@ -2,6 +2,7 @@ export interface IHttpResponse {
   statusCode: number;
   body: {
     data?: unknown;
+    middleware?: unknown;
     error?: {
       errors?: {
         [key: string]: string[];
@@ -12,6 +13,16 @@ export interface IHttpResponse {
 }
 
 export class HttpResponse {
+  public static fromMiddleware<T>(dto?: T): IHttpResponse {
+    return {
+      statusCode: 200,
+      body: {
+        middleware: dto,
+        error: undefined,
+      },
+    };
+  }
+
   public static ok<T>(dto?: T): IHttpResponse {
     return {
       statusCode: 200,

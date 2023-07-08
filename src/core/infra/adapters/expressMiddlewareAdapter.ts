@@ -20,19 +20,15 @@ export function adaptMiddleware<T>(middleware: IMiddleware<T>) {
 
     const httpResponse = await middleware.handle(requestData);
 
-    if (httpResponse === false) {
-      return response.status(200).send();
-    }
-
-    if (!httpResponse.body.error) {
-      Object.assign(request, httpResponse.body.data);
+    if (httpResponse.body.middleware) {
+      Object.assign(request, httpResponse.body.middleware);
 
       return next();
-    } else {
-      return response.status(httpResponse.statusCode).json({
-        data: null,
-        error: httpResponse.body.error,
-      });
     }
+
+    return response.status(httpResponse.statusCode).json({
+      data: null,
+      error: httpResponse.body.error,
+    });
   };
 }

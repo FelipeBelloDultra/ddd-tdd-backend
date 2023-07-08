@@ -37,7 +37,7 @@ export class EnsureAuthenticatedMiddleware implements IHandleInput {
         if (!hasSomePermissionToAccess)
           return HttpResponse.forbidden(new AccessDeniedError());
 
-        return HttpResponse.ok({
+        return HttpResponse.fromMiddleware({
           authenticatedId,
           authenticatedPermissions,
           authenticatedName,
